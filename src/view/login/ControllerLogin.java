@@ -89,18 +89,20 @@ public class ControllerLogin extends Application {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////FORMA 2/////////////////////////
 			if(TXTCpf.getText() != null && TXTSenha.getText() != null) {
 			logindao.authenticateUser();
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("ATENÇÃO!!!");
-			alert.setHeaderText("LOGIN REALIZADO COM SUCESSO");
-			alert.setContentText("SEJA BEM VINDO(A)");
-			alert.showAndWait();
+			System.out.println("sucess");
+//			Alert alert = new Alert(AlertType.INFORMATION);
+//			alert.setTitle("ATENÇÃO!!!");
+//			alert.setHeaderText("LOGIN REALIZADO COM SUCESSO");
+//			alert.setContentText("SEJA BEM VINDO(A)");
+//			alert.showAndWait();
 		}
 		else {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("ATENÇÃO!!!");
-			alert.setHeaderText("INCOMPATIBILIDADE NAS INFORMAÇÕES");
-			alert.setContentText("USUÁRIO OU SENHA INVÁLIDO");
-			alert.showAndWait();
+			System.out.println("error");
+//			Alert alert = new Alert(AlertType.INFORMATION);
+//			alert.setTitle("ATENÇÃO!!!");
+//			alert.setHeaderText("INCOMPATIBILIDADE NAS INFORMAÇÕES");
+//			alert.setContentText("USUÁRIO OU SENHA INVÁLIDO");
+//			alert.showAndWait();
 		}
 	}
 

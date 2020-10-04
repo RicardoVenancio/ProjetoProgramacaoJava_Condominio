@@ -54,7 +54,7 @@ public class loginDao extends ConexaoHSQLDB{
 //			return "Invalid user";
 	
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////FORMA 2 /////////////////////
-				public void authenticateUser() {
+				public String authenticateUser() {
 					Sindico sindico = new Sindico();
 
 					String nomesindico = sindico.getNomeSindico();
@@ -73,11 +73,9 @@ public class loginDao extends ConexaoHSQLDB{
 					alert.setContentText("USUÁRIO OU SENHA INVÁLIDOS!");
 					alert.showAndWait();
 				}
-				else {
-					System.out.println("LOGADO COM SUCESSO!");
-				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+					return "LOGADO COM SUCESSO";
 		}
 	}

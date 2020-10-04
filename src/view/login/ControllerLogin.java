@@ -17,6 +17,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
@@ -43,7 +45,7 @@ public class ControllerLogin extends Application {
 
 	// loginDao LoginDao = new loginDao();
 	@FXML
-	void BTNEntra(ActionEvent event) {
+	void BTNEntra(ActionEvent event){
 
 //		String buscaCPF = TXTCpf.getText();
 //		Sindico sindico = null;
@@ -55,10 +57,10 @@ public class ControllerLogin extends Application {
 //			} catch (Exception e) {
 //
 //			}
-//
-////        	if(TXTCpf.getText().equals("10820188999") && TXTSenha.getText().equals("123")) {
-////    		System.out.println("BEM VINDO SENHOR: 10820188999");
-////        	}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////COMPILAÇÃO SEM BANCO/////////////
+//        	if(TXTCpf.getText().equals("10820188999") && TXTSenha.getText().equals("123")) {
+//    		System.out.println("BEM VINDO SENHOR: 10820188999");
+//        	}
 //
 			loginDao logindao = new loginDao();
 //
@@ -68,8 +70,37 @@ public class ControllerLogin extends Application {
 //			}
 //		}
 		
-		if(TXTCpf != null && TXTSenha != null) {
+			
+			
+			
+////////////////////////////////////////////////////////////////////////////////////////////////////////////FORMA 1///////////////////////
+//			Sindico sindico = new Sindico();
+//		if(TXTCpf.getText() != null && TXTSenha.getText() != null) {
+//			
+//			String userValidate = logindao.authenticateUser(sindico);
+//			if(userValidate.equals("SUCCESS")) {
+//				System.out.println("APROVADO!");
+//			}
+//			else {
+//				System.out.println("REPROVADO");
+//			}
+//		}
+		
+////////////////////////////////////////////////////////////////////////////////////////////////////////////FORMA 2/////////////////////////
+			if(TXTCpf.getText() != null && TXTSenha.getText() != null) {
 			logindao.authenticateUser();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("ATENÇÃO!!!");
+			alert.setHeaderText("LOGIN REALIZADO COM SUCESSO");
+			alert.setContentText("SEJA BEM VINDO(A)");
+			alert.showAndWait();
+		}
+		else {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("ATENÇÃO!!!");
+			alert.setHeaderText("INCOMPATIBILIDADE NAS INFORMAÇÕES");
+			alert.setContentText("USUÁRIO OU SENHA INVÁLIDO");
+			alert.showAndWait();
 		}
 	}
 

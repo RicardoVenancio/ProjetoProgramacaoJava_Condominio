@@ -17,6 +17,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -31,8 +33,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import view.login.ControllerLogin;
 
-public class ControllerSindico extends Application implements Initializable{
-
+public class ControllerSindico implements Initializable{
+//utilizar com o método de inicialização//public class ControllerSindico extends Application implements Initializable{
 
 
     @FXML
@@ -84,21 +86,9 @@ public class ControllerSindico extends Application implements Initializable{
     private DatePicker datePickerAdmissao;
 
     
-    //////////////////////////////////////////TESTE LOGIN - DELETAR DEPOIS///////////////////////////
-//    @FXML
-//    private Button TESTELOGIN;
-//
-//    @FXML
-//    void TESTLOGIN(ActionEvent event) {
-//
-//    	new ControllerLogin(),
-//    }
-//    
-    //////////////////////////////////////////TESTE LOGIN - DELETAR DEPOIS///////////////////////////
-    
 
     @FXML
-    void buscarID(ActionEvent event) {
+    void buscarID() {
     	String idString = TXId.getText();
     	Sindico sindico = null;
     	if(!idString.equals("")) {
@@ -132,12 +122,10 @@ public class ControllerSindico extends Application implements Initializable{
        Optional<ButtonType> result = alert.showAndWait();
        
         if (result.get() == ButtonType.OK){
-        	System.out.println("olá");
             Sindico sindico= obtemDadosID();
             int qtde = new sindicoDao().deletar(sindico.getIdSINDICO());
             limpaCampo();
             listarSindicos();
-            
         }
     }
 
@@ -148,6 +136,8 @@ public class ControllerSindico extends Application implements Initializable{
     	int qtde = new sindicoDao().inserir(sindico);
     	listarSindicos();
     	System.out.println(qtde);
+    	navegacaoTelaLogin();
+    	fecharTelaSindico();
     }
     
     @FXML
@@ -191,22 +181,40 @@ public class ControllerSindico extends Application implements Initializable{
     });
     }
     
-    public void execute() {
-        launch();
-    }
-
-    @Override
-    public void start(Stage stage) {
-
+    public void navegacaoTelaLogin() {
         try {
-            AnchorPane pane = (AnchorPane) FXMLLoader.load(getClass().getResource("frontSindico.fxml"));
-            Scene sc = new Scene(pane);
-            stage.setScene(sc);
+            FXMLLoader fxmlLoader = new FXMLLoader(ControllerLogin.class.getResource("frontLogin.fxml"));
+            Parent root1 = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root1));
             stage.show();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }   
-    }   	
+        }
+    }
+    
+    public void fecharTelaSindico() {
+    	Stage stage = (Stage) BTNSalvar.getScene().getWindow();
+    	stage.close();
+    }
+    
+//////////////////////////////////////////////////MÉTODO DE INICIALIZAÇÃO//////////////////////////////////////////////////////////
+//    public void execute() {
+//        launch();
+//    }
+//
+//    @Override
+//    public void start(Stage stage) {
+//
+//        try {
+//            AnchorPane pane = (AnchorPane) FXMLLoader.load(getClass().getResource("frontSindico.fxml"));
+//            Scene sc = new Scene(pane);
+//            stage.setScene(sc);
+//            stage.show();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }   
+//    }   	
 
     
     

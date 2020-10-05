@@ -44,7 +44,6 @@ public class ControllerLogin extends Application {
 	// loginDao LoginDao = new loginDao();
 	@FXML
 	void BTNEntra(ActionEvent event) {
-
 //		String buscaCPF = TXTCpf.getText();
 //		Sindico sindico = null;
 //		if (!buscaCPF.equals("")) {
@@ -55,10 +54,10 @@ public class ControllerLogin extends Application {
 //			} catch (Exception e) {
 //
 //			}
-//
-////        	if(TXTCpf.getText().equals("10820188999") && TXTSenha.getText().equals("123")) {
-////    		System.out.println("BEM VINDO SENHOR: 10820188999");
-////        	}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////COMPILAÇÃO SEM BANCO/////////////
+//        	if(TXTCpf.getText().equals("10820188999") && TXTSenha.getText().equals("123")) {
+//    		System.out.println("BEM VINDO SENHOR: 10820188999");
+//        	}
 //
 			loginDao logindao = new loginDao();
 //
@@ -68,8 +67,39 @@ public class ControllerLogin extends Application {
 //			}
 //		}
 		
-		if(TXTCpf != null && TXTSenha != null) {
+			
+			
+			
+////////////////////////////////////////////////////////////////////////////////////////////////////////////FORMA 1///////////////////////
+//			Sindico sindico = new Sindico();
+//		if(TXTCpf.getText() != null && TXTSenha.getText() != null) {
+//			
+//			String userValidate = logindao.authenticateUser(sindico);
+//			if(userValidate.equals("SUCCESS")) {
+//				System.out.println("APROVADO!");
+//			}
+//			else {
+//				System.out.println("REPROVADO");
+//			}
+//		}
+		
+////////////////////////////////////////////////////////////////////////////////////////////////////////////FORMA 2/////////////////////////
+			if(TXTCpf.getText() != null && TXTSenha.getText() != null) {
 			logindao.authenticateUser();
+			System.out.println("sucess");
+//			Alert alert = new Alert(AlertType.INFORMATION);
+//			alert.setTitle("ATENÇÃO!!!");
+//			alert.setHeaderText("LOGIN REALIZADO COM SUCESSO");
+//			alert.setContentText("SEJA BEM VINDO(A)");
+//			alert.showAndWait();
+		}
+		else {
+			System.out.println("error");
+//			Alert alert = new Alert(AlertType.INFORMATION);
+//			alert.setTitle("ATENÇÃO!!!");
+//			alert.setHeaderText("INCOMPATIBILIDADE NAS INFORMAÇÕES");
+//			alert.setContentText("USUÁRIO OU SENHA INVÁLIDO");
+//			alert.showAndWait();
 		}
 	}
 

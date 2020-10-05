@@ -132,7 +132,7 @@ public class ControllerLogin extends Application {
 
 	@FXML
 	void BTNSairsistema(ActionEvent event) {
-
+   		 System.exit(0);
 	}
 
 	public void fecharTelaLogin() {

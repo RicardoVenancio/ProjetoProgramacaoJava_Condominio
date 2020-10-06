@@ -17,6 +17,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
@@ -44,49 +46,13 @@ public class ControllerLogin extends Application {
 	// loginDao LoginDao = new loginDao();
 	@FXML
 	void BTNEntra(ActionEvent event) {
-//		String buscaCPF = TXTCpf.getText();
-//		Sindico sindico = null;
-//		if (!buscaCPF.equals("")) {
-//			try {
-//				// int id = Integer.valueOf(buscaCPF);
-//				float id = Float.valueOf(buscaCPF);
-//				sindico = new loginDao().findByID(id);
-//			} catch (Exception e) {
-//
-//			}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////COMPILAÇÃO SEM BANCO/////////////
-//        	if(TXTCpf.getText().equals("10820188999") && TXTSenha.getText().equals("123")) {
-//    		System.out.println("BEM VINDO SENHOR: 10820188999");
-//        	}
-//
+
 			loginDao logindao = new loginDao();
-//
-//			if (TXTCpf.getText().equals(logindao.authenticateUser())
-//					&& TXTSenha.getText().equals(logindao.authenticateSenha())) {
-//				System.out.println("BEM VINDO SENHOR");
-//			}
-//		}
-		
+
+			if(!TXTCpf.getText().isEmpty() && !TXTSenha.getText().isEmpty()) {
+			String resultado = logindao.authenticateUser(TXTCpf.getText(),TXTSenha.getText());
 			
-			
-			
-////////////////////////////////////////////////////////////////////////////////////////////////////////////FORMA 1///////////////////////
-//			Sindico sindico = new Sindico();
-//		if(TXTCpf.getText() != null && TXTSenha.getText() != null) {
-//			
-//			String userValidate = logindao.authenticateUser(sindico);
-//			if(userValidate.equals("SUCCESS")) {
-//				System.out.println("APROVADO!");
-//			}
-//			else {
-//				System.out.println("REPROVADO");
-//			}
-//		}
-		
-////////////////////////////////////////////////////////////////////////////////////////////////////////////FORMA 2/////////////////////////
-			if(TXTCpf.getText() != null && TXTSenha.getText() != null) {
-			logindao.authenticateUser();
-			System.out.println("sucess");
+			System.out.println("" + resultado);
 //			Alert alert = new Alert(AlertType.INFORMATION);
 //			alert.setTitle("ATENÇÃO!!!");
 //			alert.setHeaderText("LOGIN REALIZADO COM SUCESSO");

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="479.0" prefWidth="671.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="view.menu.ControllerMenu">
+   <children>
+      <MenuBar layoutX="14.0" layoutY="14.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Label fx:id="LBTeste" layoutX="153.0" layoutY="167.0" text="NOME" visible="false" />
+      <TextField fx:id="TXTTeste" layoutX="207.0" layoutY="163.0" visible="false" />
+      <Button fx:id="BTNTeste" layoutX="220.0" layoutY="201.0" mnemonicParsing="false" text="TESTE" visible="false" />
+      <Button fx:id="BTNAparecer" layoutX="34.0" layoutY="75.0" mnemonicParsing="false" onAction="#BTNAparecimento" text="Button" />
+   </children>
+</AnchorPane>

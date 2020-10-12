@@ -17,7 +17,7 @@ public class FuncionarioDao extends ConexaoHSQLDB{
 	final String SQL_SELECT_FUNCIONARIO_ID = "SELECT * FROM FUNCIONARIO WHERE ID = ?";
 	final String SQL_ALTERA_FUNCIONARIO = "UPDATE FUNCIONARIO SET NOME=?, CARGO=? , RG=?, CPF=?, TELEFONE=?, SEXO? DATAADMISSAO=?, SALARIO=? WHERE ID = ?";
 	final String SQL_DELETA_FUNCIONARIO = "DELETE FROM FUNCIONARIO WHERE ID = ?";
-
+	
 public int inserir(Funcionario funcionario) {
 	int quantidade = 0;
 

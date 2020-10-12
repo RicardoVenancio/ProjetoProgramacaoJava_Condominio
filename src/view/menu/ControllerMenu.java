@@ -50,7 +50,7 @@ public class ControllerMenu implements Initializable{
         	BTNTeste.setVisible(false);
     	}
     	
-    	//TESTE BRANCH
+    	//CRIAÇÃO NOVA BRANCH
     	else {
     		LBTeste.setVisible(true);
         	TXTTeste.setVisible(true);

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="view.veiculo.ControllerVeiculo">
+   <children>
+      <AnchorPane layoutX="27.0" layoutY="14.0" prefHeight="444.0" prefWidth="607.0">
+         <children>
+            <TextField fx:id="PrPlaca" layoutX="119.0" layoutY="50.0" />
+            <TextField fx:id="PrModelo" layoutX="119.0" layoutY="87.0" />
+            <TextField fx:id="PrCor" layoutX="119.0" layoutY="121.0" />
+            <Button fx:id="BtSalvar" layoutX="407.0" layoutY="49.0" mnemonicParsing="false" onAction="#SalvarVeiculo" text="INSERIR" />
+            <Button fx:id="BtEditar" layoutX="407.0" layoutY="86.0" mnemonicParsing="false" onAction="#EditarVeiculo" prefHeight="25.0" prefWidth="61.0" text="EDITAR" />
+            <Button fx:id="BtExcluir" layoutX="407.0" layoutY="121.0" mnemonicParsing="false" onAction="#ExcluirVeiculo" text="EXCLUIR" />
+            <Button fx:id="BTBuscarID" layoutX="513.0" layoutY="74.0" mnemonicParsing="false" onAction="#buscarID" text="PESQUISAR" />
+            <TextField fx:id="PrId" layoutX="520.0" layoutY="37.0" prefHeight="25.0" prefWidth="38.0" />
+            <Label layoutX="54.0" layoutY="53.0" text="PLACA" />
+            <Label layoutX="47.0" layoutY="91.0" text="MODELO" />
+            <Label layoutX="54.0" layoutY="125.0" text="COR" />
+            <Label layoutX="53.0" layoutY="157.0" text="ANO" />
+            <TextField fx:id="PrAno" layoutX="119.0" layoutY="153.0" />
+            <TextArea fx:id="textAreaLista" layoutX="4.0" layoutY="222.0" prefHeight="200.0" prefWidth="600.0" />
+            <Label layoutX="230.0" layoutY="2.0" prefHeight="35.0" prefWidth="171.0" text="VEÍCULO">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="LabelLabel" layoutX="365.0" layoutY="29.0" text="id">
+               <font>
+                  <Font size="1.0" />
+               </font>
+            </Label>
+            <Label fx:id="Labelid" layoutX="407.0" layoutY="11.0" text="id">
+               <font>
+                  <Font size="1.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

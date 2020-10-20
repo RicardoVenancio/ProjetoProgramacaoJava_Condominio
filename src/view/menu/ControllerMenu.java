@@ -26,27 +26,9 @@ public class ControllerMenu implements Initializable{
     private Label LabelTESTE;
         
     
-//    public void visibilidadeCadastro(String teste1, String teste2) {
-//    	loginDao logindao = new loginDao();
-//     	
-//    	String resultado = logindao.authenticateUser(teste1, teste2);
-//    	
-//    	if(resultado == "Funcionario") {
-//    		LabelTESTE.setVisible(true);
-//    		LBTeste.setVisible(false);
-//        	TXTTeste.setVisible(false);
-//        	BTNTeste.setVisible(false);
-//    	}
-//    	if(resultado == null) {
-//    		System.out.println("NULL");
-//    		
-//    	}
-// 
-//
-//    }
+
 	public void initialize(URL location, ResourceBundle resources) {
 
-	//	visibilidadeCadastro(TXTTeste.getText(), LBTeste.getText());
 	}	 
 
 }

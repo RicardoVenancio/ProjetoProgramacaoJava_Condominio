@@ -45,8 +45,6 @@ public class loginDao extends ConexaoHSQLDB {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-//		return "ERRO AO EFETUAR O LOGION, VERIFIQUE SEU CPF E SUA SENHA." + alerta();
 		return null;
 	}
 

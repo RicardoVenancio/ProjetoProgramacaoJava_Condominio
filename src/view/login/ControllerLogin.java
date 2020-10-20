@@ -27,6 +27,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import view.funcionario.ControllerFuncionario;
 import view.menu.ControllerMenu;
+import view.menuFuncionario.ControllerMenuFuncionario;
 import view.sindico.ControllerSindico;
 
 public class ControllerLogin extends Application {
@@ -44,35 +45,12 @@ public class ControllerLogin extends Application {
 
 	@FXML
 	private Button BTNSair;
-	
-
 
 	@FXML
 	void BTNEntra(ActionEvent event) {
 
 		validacaoLogin();
-//			loginDao logindao = new loginDao();
-//
-//			if(!TXTCpf.getText().isEmpty() && !TXTSenha.getText().isEmpty()) {
-//			String resultado = logindao.authenticateUser(TXTCpf.getText(),TXTSenha.getText());
-//			
-//			System.out.println("" + resultado);
-//	
-//			try {
-//				FXMLLoader fxmlLoader = new FXMLLoader(ControllerMenu.class.getResource("frontMenu.fxml"));
-//				Parent root1 = fxmlLoader.load();
-//				Stage stage = new Stage();
-//				stage.setScene(new Scene(root1));
-//				stage.show();
-//				fecharTelaLogin();
-//
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		else {
-//			System.out.println("error");
-//		}
+
 	}
 
 	@FXML
@@ -84,13 +62,13 @@ public class ControllerLogin extends Application {
 		dialog.setTitle("CADASTRO");
 		dialog.setHeaderText("Você está prestes a escolher uma opção de cadastro");
 		dialog.setContentText("Escolha uma opção:");
-		
+
 		Optional<String> result = dialog.showAndWait();
-		
-		String lista = result.get(); 
-		
+
+		String lista = result.get();
+
 		switch (lista) {
-		case "Síndico" :
+		case "Síndico":
 			if (result.isPresent()) {
 				try {
 					FXMLLoader fxmlLoader = new FXMLLoader(ControllerSindico.class.getResource("frontSindico.fxml"));
@@ -106,7 +84,7 @@ public class ControllerLogin extends Application {
 			}
 			break;
 
-		case "Funcionário" :
+		case "Funcionário":
 			try {
 				FXMLLoader fxmlLoader = new FXMLLoader(ControllerFuncionario.class.getResource("FuncionarioView.fxml"));
 				Parent root1 = fxmlLoader.load();
@@ -119,27 +97,27 @@ public class ControllerLogin extends Application {
 				e.printStackTrace();
 			}
 			break;
-		}		
+		}
 	}
 
-	
 	@FXML
 	void BTNSairsistema(ActionEvent event) {
-   		 System.exit(0);
+		System.exit(0);
 	}
-	
+
 	public String validacaoLogin() {
 		loginDao logindao = new loginDao();
-		
+
 		if (!TXTCpf.getText().isEmpty() && !TXTSenha.getText().isEmpty()) {
-			
+
 			String resultadoSindico = logindao.authenticateUser(TXTCpf.getText(), TXTSenha.getText());
 			String resultadoFuncionario = logindao.authenticateUserFuncionario(TXTCpf.getText(), TXTSenha.getText());
-			
+
 			if (resultadoSindico == null || resultadoSindico == "") {
 
 				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(ControllerSindico.class.getResource("frontSindico.fxml"));
+					FXMLLoader fxmlLoader = new FXMLLoader(
+							ControllerMenuFuncionario.class.getResource("frontMenuFuncionario.fxml"));
 					Parent root1 = fxmlLoader.load();
 					Stage stage = new Stage();
 					stage.setScene(new Scene(root1));
@@ -169,50 +147,8 @@ public class ControllerLogin extends Application {
 			}
 		}
 		return null;
-//			if(resultadoFuncionario == null || resultadoFuncionario == "") {
-//				try {
-//					FXMLLoader fxmlLoader = new FXMLLoader(ControllerMenu.class.getResource("frontMenu.fxml"));
-//					Parent root1 = fxmlLoader.load();
-//					Stage stage = new Stage();
-//					stage.setScene(new Scene(root1));
-//					stage.show();
-//					fecharTelaLogin();
-//
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			return null;
-//			}
-			
-			
-			///RICARDO//
-//			loginDao logindao = new loginDao();
-//			if (!TXTCpf.getText().isEmpty() && !TXTSenha.getText().isEmpty()) {
-//				String resultadoSindico = logindao.authenticateUser(TXTCpf.getText(), TXTSenha.getText());
-
-			//if(!TXTCpf.getText().equals(resultado) && TXTCpf.getText().isEmpty() && TXTSenha.getText().equals(resultado) && TXTSenha.getText().isEmpty()) {
-//			System.out.println("" + resultadoSindico);
-//
-//			try {
-//				FXMLLoader fxmlLoader = new FXMLLoader(ControllerMenu.class.getResource("frontMenu.fxml"));
-//				Parent root1 = fxmlLoader.load();
-//				Stage stage = new Stage();
-//				stage.setScene(new Scene(root1));
-//				stage.show();
-//				fecharTelaLogin();
-//
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//
-//		} else {
-//			System.out.println("error");
-//		}
-	
 	}
-	
-	
-	
+
 	public void fecharTelaLogin() {
 		Stage stage = (Stage) BTNCadastrar.getScene().getWindow();
 		stage.close();

@@ -33,12 +33,11 @@ public class loginDao extends ConexaoHSQLDB {
 ///////////////////////////////////////////////////////////////SINDICO///////////////////////////////////////////////////////////////
 	
 	public String authenticateUser(String nomesindico, String telefonesindico) {
-
+		
 		try (Connection connection = this.conectar();
 				PreparedStatement pst = connection.prepareStatement(SQL_LOGIN_SINDICO);) {
 			pst.setString(1, nomesindico);
 			pst.setString(2, telefonesindico);
-
 			ResultSet rs = pst.executeQuery();
 			if (rs.next()) {
 				return "LOGADO COM SUCESSO";
@@ -46,14 +45,9 @@ public class loginDao extends ConexaoHSQLDB {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-//		
-//		Alert alert = new Alert(AlertType.INFORMATION);
-//		alert.setTitle("ATENÇÃO!!!");
-//		alert.setHeaderText("INCOMPATIBILIDADE NAS INFORMAÇÕES");
-//		alert.setContentText("USUÁRIO OU SENHA INVÁLIDOS!");
-//		alert.showAndWait();
-
-		return "ERRO AO EFETUAR O LOGION, VERIFIQUE SEU CPF E SUA SENHA." + alerta();
+		
+//		return "ERRO AO EFETUAR O LOGION, VERIFIQUE SEU CPF E SUA SENHA." + alerta();
+		return null;
 	}
 
 
@@ -67,18 +61,14 @@ public class loginDao extends ConexaoHSQLDB {
 		return "";
 	}
 
-	
-	
-	
-	
 ///////////////////////////////////////////////////////////////FUNCIONÁRIO///////////////////////////////////////////////////////////////
 	
 
 	
 	public String authenticateUserFuncionario(String nome, String telefone) {
 
-		try (Connection connection = this.conectar();
-				PreparedStatement pst = connection.prepareStatement(SQL_LOGIN_FUNCIONARIO);) {
+			try (Connection connection = this.conectar();
+					PreparedStatement pst = connection.prepareStatement(SQL_LOGIN_FUNCIONARIO);) {
 			pst.setString(1, nome);
 			pst.setString(2, telefone);
 
@@ -89,13 +79,7 @@ public class loginDao extends ConexaoHSQLDB {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-//		
-//		Alert alert = new Alert(AlertType.INFORMATION);
-//		alert.setTitle("ATENÇÃO!!!");
-//		alert.setHeaderText("INCOMPATIBILIDADE NAS INFORMAÇÕES");
-//		alert.setContentText("USUÁRIO OU SENHA INVÁLIDOS!");
-//		alert.showAndWait();
 
-		return "ERRO AO EFETUAR O LOGION, VERIFIQUE SEU CPF E SUA SENHA." + alerta();
+		return null;
 	}
 }

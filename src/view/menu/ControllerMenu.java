@@ -22,45 +22,31 @@ public class ControllerMenu implements Initializable{
 
     @FXML
     private Button BTNTeste;
-    
-    
-    
-    ///////////////////////////////TESTE/////////////////////////////////////
     @FXML
-    private Button BTNAparecer;
-
-    @FXML
-    void BTNAparecimento(ActionEvent event) {
- 		LBTeste.setVisible(true);
-    	TXTTeste.setVisible(true);
-    	BTNTeste.setVisible(true);
-    }
-    ///////////////////////////////TESTE/////////////////////////////////////
+    private Label LabelTESTE;
+        
     
-    
-    
-    public void visibilidadeCadastro(String teste1, String teste2) {
-    	loginDao logindao = new loginDao();
-     	
-    	String resultado = logindao.authenticateUser(teste1, teste2);
-    	
-    	if(resultado.isEmpty()) {
-    		LBTeste.setVisible(false);
-        	TXTTeste.setVisible(false);
-        	BTNTeste.setVisible(false);
-    	}
-    	
-    	//TESTE BRANCH
-    	else {
-    		LBTeste.setVisible(true);
-        	TXTTeste.setVisible(true);
-        	BTNTeste.setVisible(true);
-    	}
-    	
-    }
+//    public void visibilidadeCadastro(String teste1, String teste2) {
+//    	loginDao logindao = new loginDao();
+//     	
+//    	String resultado = logindao.authenticateUser(teste1, teste2);
+//    	
+//    	if(resultado == "Funcionario") {
+//    		LabelTESTE.setVisible(true);
+//    		LBTeste.setVisible(false);
+//        	TXTTeste.setVisible(false);
+//        	BTNTeste.setVisible(false);
+//    	}
+//    	if(resultado == null) {
+//    		System.out.println("NULL");
+//    		
+//    	}
+// 
+//
+//    }
 	public void initialize(URL location, ResourceBundle resources) {
 
-		visibilidadeCadastro(TXTTeste.getText(), LBTeste.getText());
+	//	visibilidadeCadastro(TXTTeste.getText(), LBTeste.getText());
 	}	 
 
 }

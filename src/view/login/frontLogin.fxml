@@ -4,15 +4,37 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="449.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.login.ControllerLogin">
+<AnchorPane prefHeight="449.0" prefWidth="580.0" style="-fx-background-color: #14242B;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.login.ControllerLogin">
    <children>
-      <Button fx:id="BTNCadastrar" layoutX="136.0" layoutY="202.0" mnemonicParsing="false" onAction="#BTNCadastro" prefHeight="25.0" prefWidth="90.0" text="CADASTRAR" />
-      <Label layoutX="136.0" layoutY="107.0" text="CPF" />
-      <Label layoutX="136.0" layoutY="144.0" text="SENHA" />
-      <TextField fx:id="TXTCpf" layoutX="198.0" layoutY="103.0" prefHeight="25.0" prefWidth="156.0" promptText="Digite o nome do usuário" />
-      <TextField fx:id="TXTSenha" layoutX="198.0" layoutY="140.0" prefHeight="25.0" prefWidth="156.0" promptText="Digite a senha do usuário" />
-      <Button fx:id="BTNEntrar" layoutX="135.0" layoutY="171.0" mnemonicParsing="false" onAction="#BTNEntra" prefHeight="25.0" prefWidth="219.0" text="ENTRAR" />
-      <Button fx:id="BTNSair" layoutX="264.0" layoutY="202.0" mnemonicParsing="false" onAction="#BTNSairsistema" prefHeight="25.0" prefWidth="90.0" text="SAIR" />
+      <Button fx:id="BTNCadastrar" layoutX="182.0" layoutY="260.0" mnemonicParsing="false" onAction="#BTNCadastro" prefHeight="28.0" prefWidth="105.0" text="CADASTRAR">
+         <font>
+            <Font name="Constantia Bold" size="14.0" />
+         </font></Button>
+      <Label layoutX="182.0" layoutY="165.0" text="NOME" textFill="WHITE">
+         <font>
+            <Font name="Constantia Bold" size="14.0" />
+         </font></Label>
+      <Label layoutX="168.0" layoutY="202.0" text="TELEFONE" textFill="WHITE">
+         <font>
+            <Font name="Constantia Bold" size="14.0" />
+         </font></Label>
+      <TextField fx:id="TXTCpf" layoutX="244.0" layoutY="161.0" prefHeight="25.0" prefWidth="156.0" promptText="Digite o nome do usuário" />
+      <TextField fx:id="TXTSenha" layoutX="244.0" layoutY="198.0" prefHeight="25.0" prefWidth="156.0" promptText="Digite a senha do usuário" />
+      <Button fx:id="BTNEntrar" layoutX="181.0" layoutY="229.0" mnemonicParsing="false" onAction="#BTNEntra" prefHeight="25.0" prefWidth="219.0" text="ENTRAR">
+         <font>
+            <Font name="Constantia Bold" size="14.0" />
+         </font></Button>
+      <Button fx:id="BTNSair" layoutX="295.0" layoutY="260.0" mnemonicParsing="false" onAction="#BTNSairsistema" prefHeight="28.0" prefWidth="105.0" text="SAIR">
+         <font>
+            <Font name="Constantia Bold" size="14.0" />
+         </font></Button>
+      <Text fill="WHITE" layoutX="98.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" SISCOND" textAlignment="CENTER" wrappingWidth="393.6015625">
+         <font>
+            <Font name="Constantia Bold" size="64.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

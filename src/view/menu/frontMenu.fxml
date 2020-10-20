@@ -5,34 +5,77 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="479.0" prefWidth="671.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="view.menu.ControllerMenu">
-   <children>
-      <MenuBar layoutX="14.0" layoutY="14.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <Label fx:id="LBTeste" layoutX="153.0" layoutY="167.0" text="NOME" visible="false" />
-      <TextField fx:id="TXTTeste" layoutX="207.0" layoutY="163.0" visible="false" />
-      <Button fx:id="BTNTeste" layoutX="220.0" layoutY="201.0" mnemonicParsing="false" text="TESTE" visible="false" />
-      <Button fx:id="BTNAparecer" layoutX="34.0" layoutY="75.0" mnemonicParsing="false" onAction="#BTNAparecimento" text="Button" />
-   </children>
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <VBox prefHeight="372.0" prefWidth="154.0" style="-fx-background-color: #0D1824;" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="63.0" prefWidth="154.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="HOME" textFill="#fafafa">
+               <font>
+                  <Font name="Constantia" size="18.0" />
+               </font>
+            </Button>
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="157.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="SINDICO" textFill="#fafafa">
+               <font>
+                  <Font name="Constantia" size="18.0" />
+               </font>
+            </Button>
+            <Button layoutX="10.0" layoutY="136.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="157.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="VISITANTE" textFill="#fafafa">
+               <font>
+                  <Font name="Constantia" size="18.0" />
+               </font>
+            </Button>
+            <Button layoutX="10.0" layoutY="73.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="157.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="MORADOR" textFill="#fafafa">
+               <font>
+                  <Font name="Constantia" size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <AnchorPane fx:id="VisualAnchor" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #14242B;" BorderPane.alignment="CENTER">
+         <children>
+            <Text fill="WHITE" layoutX="26.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" SISCOND" textAlignment="CENTER" wrappingWidth="393.6015625">
+               <font>
+                  <Font name="Constantia Bold" size="64.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="135.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SEJA BEM VINDO(A)" textAlignment="CENTER">
+               <font>
+                  <Font name="Constantia Bold" size="18.0" />
+               </font>
+            </Text>
+            <MenuBar layoutX="1.0" layoutY="-2.0" prefHeight="29.0" prefWidth="446.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <Label fx:id="LabelTESTE" layoutX="245.0" layoutY="286.0" text="TESTE" textFill="#eb0a0a" visible="false">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

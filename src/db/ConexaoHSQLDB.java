@@ -8,7 +8,7 @@ public class ConexaoHSQLDB {
 
 	private String usuario = "SA";
 	private String senha = "";
-	private String PathBase = "C:\\Users\\ricar\\Desktop\\Trabalho facul\\4_semestre\\ProjetosPrincipais\\ProgProjeto\\Dados\\condominio";
+	private String PathBase = "C:\\Users\\wcwil\\Desktop\\PPTeste\\ProjetoProgramacaoJava_Condominio\\Dados\\dados";
 	private String URL = "jdbc:hsqldb:file:" + PathBase + ";";
 	
 	public Connection conectar() {

@@ -104,7 +104,16 @@ public class ControllerLogin extends Application {
 	void BTNSairsistema(ActionEvent event) {
 		System.exit(0);
 	}
-
+	public String alerta() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("ATENÇÃO!!!");
+		alert.setHeaderText("INCOMPATIBILIDADE NAS INFORMAÇÕES");
+		alert.setContentText("USUÁRIO OU SENHA INVÁLIDOS!");
+		alert.showAndWait();
+		return "INFORMATION";
+	}
+	
+	
 	public String validacaoLogin() {
 		loginDao logindao = new loginDao();
 
@@ -112,9 +121,15 @@ public class ControllerLogin extends Application {
 
 			String resultadoSindico = logindao.authenticateUser(TXTCpf.getText(), TXTSenha.getText());
 			String resultadoFuncionario = logindao.authenticateUserFuncionario(TXTCpf.getText(), TXTSenha.getText());
+			
+			
+			
+			if (resultadoFuncionario == null && resultadoSindico == null ) {
+				return "" + alerta();
+						
+			}
 
 			if (resultadoSindico == null || resultadoSindico == "") {
-
 				try {
 					FXMLLoader fxmlLoader = new FXMLLoader(
 							ControllerMenuFuncionario.class.getResource("frontMenuFuncionario.fxml"));
@@ -129,9 +144,8 @@ public class ControllerLogin extends Application {
 				}
 				return "Funcionario";
 			}
-
+			
 			if (resultadoFuncionario == null || resultadoFuncionario == "") {
-
 				try {
 					FXMLLoader fxmlLoader = new FXMLLoader(ControllerMenu.class.getResource("frontMenu.fxml"));
 					Parent root1 = fxmlLoader.load();
@@ -146,7 +160,7 @@ public class ControllerLogin extends Application {
 				return "Sindico";
 			}
 		}
-		return null;
+		return alerta();
 	}
 
 	public void fecharTelaLogin() {

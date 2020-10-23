@@ -12,4 +12,13 @@ public class ShowAlert {
 		alert.setContentText("Preencha todos os campos!");
 		alert.showAndWait();
 	}
+	
+	public void SelecionarPessoa() {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Atenção");
+		alert.setHeaderText(null);
+		alert.setContentText("Selecione um cadastro para deletar!");
+		alert.showAndWait();
+	}
+	
 }

@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
+
 import dao.loginDao;
 import dao.sindicoDao;
 import entity.Sindico;
@@ -25,26 +29,47 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import view.funcionario.ControllerFuncionario;
+import view.funcionario.FuncionarioTable;
 import view.menu.ControllerMenu;
 import view.menuFuncionario.ControllerMenuFuncionario;
 import view.sindico.ControllerSindico;
+import view.visitante.ControllerTable;
 
 public class ControllerLogin extends Application {
-	@FXML
-	private Button BTNCadastrar;
-
-	@FXML
-	private TextField TXTCpf;
-
-	@FXML
-	private TextField TXTSenha;
-
-	@FXML
-	private Button BTNEntrar;
+//	@FXML
+//	private Button BTNCadastrar;
+//
+//	@FXML
+//	private TextField TXTCpf;
+//
+//	@FXML
+//	private TextField TXTSenha;
+//
+//	@FXML
+//	private Button BTNEntrar;
 
 	@FXML
 	private Button BTNSair;
+	
+	@FXML
+    private JFXTextField TXTCpf;
+
+    @FXML
+    private JFXPasswordField TXTSenha;
+
+    @FXML
+    private JFXButton BTNEntrar;
+
+    @FXML
+    private JFXButton BTNCadastrar;
+    
+    @FXML
+    void Exit(ActionEvent event) {
+    	System.exit(0);
+    	//fecharTelaLogin();
+    }
 
 	@FXML
 	void BTNEntra(ActionEvent event) {
@@ -131,10 +156,10 @@ public class ControllerLogin extends Application {
 
 			if (resultadoSindico == null || resultadoSindico == "") {
 				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(
-							ControllerMenuFuncionario.class.getResource("frontMenuFuncionario.fxml"));
+					FXMLLoader fxmlLoader = new FXMLLoader(FuncionarioTable.class.getResource("FuncionarioTable.fxml"));
 					Parent root1 = fxmlLoader.load();
 					Stage stage = new Stage();
+		            stage.initStyle(StageStyle.UNDECORATED);
 					stage.setScene(new Scene(root1));
 					stage.show();
 					fecharTelaLogin();
@@ -147,9 +172,10 @@ public class ControllerLogin extends Application {
 			
 			if (resultadoFuncionario == null || resultadoFuncionario == "") {
 				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(ControllerMenu.class.getResource("frontMenu.fxml"));
+					FXMLLoader fxmlLoader = new FXMLLoader(ControllerTable.class.getResource("VisitanteTable.fxml"));
 					Parent root1 = fxmlLoader.load();
 					Stage stage = new Stage();
+		            stage.initStyle(StageStyle.UNDECORATED);
 					stage.setScene(new Scene(root1));
 					stage.show();
 					fecharTelaLogin();
@@ -176,8 +202,9 @@ public class ControllerLogin extends Application {
 	public void start(Stage stage) {
 
 		try {
-			AnchorPane pane = (AnchorPane) FXMLLoader.load(ControllerLogin.class.getResource("frontLogin.fxml"));
+			AnchorPane pane = (AnchorPane) FXMLLoader.load(ControllerLogin.class.getResource("telafront.fxml"));
 			Scene sc = new Scene(pane);
+            stage.initStyle(StageStyle.UNDECORATED);
 			stage.setScene(sc);
 			stage.show();
 		} catch (IOException e) {

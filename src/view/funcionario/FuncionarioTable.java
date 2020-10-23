@@ -1,8 +1,6 @@
-package view.visitante;
+package view.funcionario;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -12,8 +10,8 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 
 import alerts.ShowAlert;
-import dao.visitanteDao;
-import entity.Visitante;
+import dao.FuncionarioDao;
+import entity.Funcionario;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,7 +19,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -37,43 +34,49 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class ControllerTable extends Application implements Initializable {
+public class FuncionarioTable extends Application implements Initializable{
 
 	@FXML
 	private Pane paneCadastro;
 
 	@FXML
+    private JFXTextField PrRg;
+
+    @FXML
+    private JFXTextField PrCargo;
+
+    @FXML
+    private JFXTextField PrTelefone;
+
+    @FXML
+    private JFXTextField PrCpf;
+
+    @FXML
+    private JFXTextField PrSexo;
+
+    @FXML
+    private JFXTextField PrSalario;
+
+    @FXML
+    private Label LabelLabel;
+
+    @FXML
+    private JFXTextField PrNome;
+
+    @FXML
     private JFXButton BTNEditar;
 
     @FXML
     private JFXButton BTNSalvar;
-
-	@FXML
-    private JFXTextField TxtNome;
-
+    
     @FXML
-    private JFXTextField TxtRG;
-
-    @FXML
-    private JFXTextField TxtCPF;
-
-    @FXML
-    private JFXTextField TxtTelefone;
-
-    @FXML
-    private JFXTextField TxtEmail;
-
-    @FXML
-    private JFXDatePicker datePickerVisita;
-
+    private JFXDatePicker datePickerEmissao;
+    
 	@FXML
 	private Pane paneList;
 
 	@FXML
-	private Label numVisitantes;
-
-	@FXML
-	private Label LabelLabel;
+	private Label numFuncionarios;
 
 	@FXML
 	private Label lastVisit;
@@ -88,32 +91,38 @@ public class ControllerTable extends Application implements Initializable {
 	private Button btnApagar;
 
 	@FXML
-	private TableView<Visitante> TableView;
+	private TableView<Funcionario> TableView;
 
 	@FXML
-	private TableColumn<Visitante, String> tcNome;
+	private TableColumn<Funcionario, String> colNome;
 
 	@FXML
-	private TableColumn<Visitante, String> tcCpf;
+	private TableColumn<Funcionario, String> colCargo;
 
 	@FXML
-	private TableColumn<Visitante, String> tcRg;
+	private TableColumn<Funcionario, String> colRg;
 
 	@FXML
-	private TableColumn<Visitante, String> tcTelefone;
+	private TableColumn<Funcionario, String> colCpf;
 
 	@FXML
-	private TableColumn<Visitante, String> tcEmail;
+	private TableColumn<Funcionario, String> colTelefone;
 
 	@FXML
-	private TableColumn<Visitante, String> tcData;
+	private TableColumn<Funcionario, String> colSalario;
+
+	@FXML
+	private TableColumn<Funcionario, String> colSexo;
+
+	@FXML
+	private TableColumn<Funcionario, String> colAdmissao;
 
 	@FXML
 	private TextField txtBuscar;
 
 	@FXML
 	private Label Fechar;
-	
+
 	@FXML
 	private Button btnFuncionario;
 
@@ -143,9 +152,9 @@ public class ControllerTable extends Application implements Initializable {
 	@FXML
 	void Salvar(ActionEvent event) {
 		if (validaCampos()) {
-			Visitante visitante = obtemDados();
+			Funcionario funcionario = obtemDados();
 			limpaCampo();
-			int qtde = new visitanteDao().inserir(visitante);
+			int qtde = new FuncionarioDao().inserir(funcionario);
 			StartTable();
 			paneList.toFront();
 			System.out.println(qtde);
@@ -157,9 +166,9 @@ public class ControllerTable extends Application implements Initializable {
 	@FXML
 	void Editar(ActionEvent event) {
 		if (validaCampos()) {
-			Visitante visitante = obtemDadosID();
+			Funcionario funcionario= obtemDadosID();
 			limpaCampo();
-			int qtde = new visitanteDao().alterar(visitante);
+			int qtde = new FuncionarioDao().alterar(funcionario);
 			StartTable();
 			paneList.toFront();
 		} else {
@@ -177,65 +186,92 @@ public class ControllerTable extends Application implements Initializable {
 
 		if (result.get() == ButtonType.OK) {
 			System.out.println("Cadastro Apagado");
-			Visitante visitante = obtemDadosIDDeletar();
-			int qtde = new visitanteDao().deletar(visitante.getId());
+			Funcionario funcionario= obtemDadosIDDeletar();
+			int qtde = new FuncionarioDao().deletar(funcionario.getId());
 			limpaCampo();
 			StartTable();
 		}
 	}
 	
 	void EditarCadastro() {
-		Visitante v = TableView.getSelectionModel().getSelectedItem();
+		Funcionario v = TableView.getSelectionModel().getSelectedItem();
 		LabelLabel.setText(Integer.toString(v.getId()));
-		TxtNome.setText(v.getNome());
-		TxtRG.setText(v.getRG());
-		TxtCPF.setText(v.getCPF());
-		TxtTelefone.setText(v.getTelefone());
-		TxtEmail.setText(v.getEmail());
-		datePickerVisita.setValue(v.getDataVisita().toLocalDate());
+		PrNome.setText(v.getNome());
+		PrCargo.setText(v.getCargo());
+		PrRg.setText(v.getRg());
+		PrCpf.setText(v.getCpf());
+		PrTelefone.setText(v.getTelefone());
+		PrSexo.setText(v.getSexo());
+		datePickerEmissao.setValue(v.getDataadmissao().toLocalDate());
+		PrSalario.setText(v.getSalario());
 	}
 
 	private void limpaCampo() {
-		TxtNome.clear();
-		TxtRG.clear();
-		TxtCPF.clear();
-		TxtTelefone.clear();
-		TxtEmail.clear();
-		datePickerVisita.setValue(null);
-
+		PrNome.clear();
+		PrRg.clear();
+		PrCpf.clear();
+		PrTelefone.clear();
+		PrCargo.clear();
+		PrSexo.clear();
+		PrSalario.clear();
+		datePickerEmissao.setValue(null);
 	}
 
-	private Visitante obtemDados() {
-		return new Visitante(TxtNome.getText(), TxtRG.getText(), TxtCPF.getText(), TxtTelefone.getText(),
-				TxtEmail.getText(), java.sql.Date.valueOf(datePickerVisita.getValue()));
+	private Funcionario obtemDados() {
+		return new Funcionario(
+				PrNome.getText(),
+				PrCargo.getText(),
+				PrRg.getText(),
+				PrCpf.getText(),
+				PrTelefone.getText(),
+				PrSexo.getText(),java.sql.Date.valueOf(datePickerEmissao.getValue()),
+				PrSalario.getText()
+			);
 	}
 
-	private Visitante obtemDadosID() {
-		return new Visitante(Integer.valueOf(LabelLabel.getText()), TxtNome.getText(), TxtRG.getText(),
-				TxtCPF.getText(), TxtTelefone.getText(), TxtEmail.getText(),
-				java.sql.Date.valueOf(datePickerVisita.getValue()));
+	private Funcionario obtemDadosID() {
+		return new Funcionario(
+				Integer.valueOf(LabelLabel.getText()),
+				PrNome.getText(),
+				PrCargo.getText(),
+				PrRg.getText(),
+				PrCpf.getText(),
+				PrTelefone.getText(),
+				PrSexo.getText(),
+				java.sql.Date.valueOf(datePickerEmissao.getValue()),
+				PrSalario.getText()
+				);
 	
 	}
 	
-	private Visitante obtemDadosIDDeletar() {
-		Visitante v = TableView.getSelectionModel().getSelectedItem();
+	private Funcionario obtemDadosIDDeletar() {
+		Funcionario v = TableView.getSelectionModel().getSelectedItem();
 		LabelLabel.setText(Integer.toString(v.getId()));
-		TxtNome.setText(v.getNome());
-		TxtRG.setText(v.getRG());
-		TxtCPF.setText(v.getCPF());
-		TxtTelefone.setText(v.getTelefone());
-		TxtEmail.setText(v.getEmail());
-		datePickerVisita.setValue(v.getDataVisita().toLocalDate());
+		PrNome.setText(v.getNome());
+		PrCargo.setText(v.getCargo());
+		PrRg.setText(v.getRg());
+		PrCpf.setText(v.getCpf());
+		PrTelefone.setText(v.getTelefone());
+		PrSexo.setText(v.getSexo());
+		datePickerEmissao.setValue(v.getDataadmissao().toLocalDate());
+		PrSalario.setText(v.getSalario());
 		
-		return new Visitante(Integer.valueOf(LabelLabel.getText()), TxtNome.getText(), TxtRG.getText(),
-				TxtCPF.getText(), TxtTelefone.getText(), TxtEmail.getText(),
-				java.sql.Date.valueOf(datePickerVisita.getValue()));
+		return new Funcionario(Integer.valueOf(LabelLabel.getText()),
+				PrNome.getText(),
+				PrCargo.getText(),
+				PrRg.getText(),
+				PrCpf.getText(),
+				PrTelefone.getText(),
+				PrSexo.getText(),
+				java.sql.Date.valueOf(datePickerEmissao.getValue()),
+				PrSalario.getText());
 		
 	}
 
 	public boolean validaCampos() {
-		if (TxtNome.getText().isEmpty() | TxtRG.getText().isEmpty() | TxtCPF.getText().isEmpty()
-				| TxtTelefone.getText().isEmpty() | TxtEmail.getText().isEmpty()) {
+		if (PrNome.getText().isEmpty() | PrRg.getText().isEmpty() | PrCpf.getText().isEmpty()
+				| PrTelefone.getText().isEmpty() | PrSalario.getText().isEmpty() | PrCargo.getText().isEmpty()
+				| PrSexo.getText().isEmpty()) {
 			return false;
 		}
 		return true;
@@ -248,22 +284,25 @@ public class ControllerTable extends Application implements Initializable {
 
 	// Listar cadastros na TableView
 	public void StartTable() {
-		List<Visitante> list = new visitanteDao().listAll();
-		tcNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
-		tcRg.setCellValueFactory(new PropertyValueFactory<>("RG"));
-		tcCpf.setCellValueFactory(new PropertyValueFactory<>("CPF"));
-		tcTelefone.setCellValueFactory(new PropertyValueFactory<>("Telefone"));
-		tcEmail.setCellValueFactory(new PropertyValueFactory<>("Email"));
-		tcData.setCellValueFactory(new PropertyValueFactory<>("DataVisita"));
+		List<Funcionario> list = new FuncionarioDao().listAll();
+		colNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
+		colCargo.setCellValueFactory(new PropertyValueFactory<>("Cargo"));
+		colRg.setCellValueFactory(new PropertyValueFactory<>("Rg"));
+		colCpf.setCellValueFactory(new PropertyValueFactory<>("Cpf"));
+		colTelefone.setCellValueFactory(new PropertyValueFactory<>("Telefone"));
+		colSexo.setCellValueFactory(new PropertyValueFactory<>("Sexo"));
+		colAdmissao.setCellValueFactory(new PropertyValueFactory<>("Dataadmissao"));
+		colSalario.setCellValueFactory(new PropertyValueFactory<>("salario"));
 		TableView.setItems(atualizaTabela());
-		numVisitantes.setText(Integer.toString(list.size()));
+		numFuncionarios.setText(Integer.toString(list.size()));
+		System.out.println(list);
 	}
 
 	// Converter para Collections
-	public ObservableList<Visitante> atualizaTabela() {
-		visitanteDao dao = new visitanteDao();
-		return FXCollections.observableArrayList(dao.listAll());
-	}
+			public ObservableList<Funcionario> atualizaTabela() {
+				FuncionarioDao dao = new FuncionarioDao();
+				return FXCollections.observableArrayList(dao.listAll());
+			}
 
 //-------------------------------------------------------------------------------------------------
 	// Executar Tela
@@ -282,7 +321,7 @@ public class ControllerTable extends Application implements Initializable {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("VisitanteTable.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("FuncionarioTable.fxml"));
 		primaryStage.setScene(new Scene(root));
 		// set stage borderless
 		primaryStage.initStyle(StageStyle.UNDECORATED);
@@ -331,5 +370,6 @@ public class ControllerTable extends Application implements Initializable {
 //            pnlOrders.toFront();
 //		}
 	}
+
 
 }

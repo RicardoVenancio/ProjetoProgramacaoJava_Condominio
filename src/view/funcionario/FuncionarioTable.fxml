@@ -18,68 +18,22 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.visitante.ControllerTable">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.funcionario.FuncionarioTable">
    <children>
       <StackPane layoutX="256.0" prefHeight="576.0" prefWidth="793.0">
          <children>
-            <Pane fx:id="paneCadastro" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="793.0" style="-fx-background-color: #fff; -fx-border-color: black; -fx-border-width: 50;">
-               <children>
-                  <HBox layoutX="135.0" layoutY="139.0" prefHeight="219.0" prefWidth="543.0" spacing="30.0">
-                     <children>
-                        <VBox alignment="CENTER_LEFT" prefHeight="270.0" prefWidth="254.0" spacing="23.0">
-                           <children>
-                              <JFXTextField fx:id="TxtRG" focusColor="#2fb4ad" promptText="RG" />
-                              <JFXTextField fx:id="TxtTelefone" focusColor="#2fb4ad" promptText="Telefone" />
-                              <JFXTextField fx:id="TxtEmail" focusColor="#2fb4ad" promptText="Email" />
-                           </children>
-                        </VBox>
-                        <VBox alignment="CENTER_LEFT" prefHeight="270.0" prefWidth="254.0" spacing="20.0">
-                           <children>
-                              <JFXTextField fx:id="TxtCPF" focusColor="#2fb4ad" promptText="CPF" />
-                              <JFXDatePicker fx:id="datePickerVisita" defaultColor="#2fb4ad" promptText="01/01/2020" />
-                           </children>
-                           <padding>
-                              <Insets bottom="50.0" />
-                           </padding>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <Label layoutX="237.0" layoutY="10.0" text="Cadastro Visitantes" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="Georgia" size="34.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="760.0" layoutY="3.0" onMouseClicked="#Exit" text="X" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="26.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="LabelLabel" layoutX="103.0" layoutY="61.0" />
-                  <JFXTextField fx:id="TxtNome" focusColor="#2fb4ad" layoutX="136.0" layoutY="139.0" prefHeight="25.0" prefWidth="537.0" promptText="Nome" />
-                  <JFXButton fx:id="BTNEditar" layoutX="301.0" layoutY="359.0" onAction="#Editar" prefHeight="42.0" prefWidth="192.0" text="Editar" visible="false">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </JFXButton>
-                  <JFXButton fx:id="BTNSalvar" layoutX="301.0" layoutY="359.0" onAction="#Salvar" prefHeight="42.0" prefWidth="192.0" text="Cadastrar" textFill="#707274">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </JFXButton>
-               </children>
-            </Pane>
             <Pane fx:id="paneList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="793.0" style="-fx-background-color: black;">
                <children>
                   <HBox layoutX="-1.0" layoutY="75.0" prefHeight="100.0" spacing="60.0">
                      <children>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Label fx:id="numVisitantes" text="0" textFill="#2a73ff">
+                              <Label fx:id="numFuncionarios" text="0" textFill="#2a73ff">
                                  <font>
                                     <Font name="System Bold" size="26.0" />
                                  </font>
                               </Label>
-                              <Label text="Visitantes" textFill="WHITE">
+                              <Label text="Nº Funcionários" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -122,12 +76,14 @@
                   </HBox>
                   <TableView fx:id="TableView" layoutY="208.0" prefHeight="368.0" prefWidth="793.0" style="-fx-background-color: black;">
                      <columns>
-                        <TableColumn fx:id="tcNome" prefWidth="147.20001524686813" styleClass="-fx-text-alignment: right" text="Nome" />
-                        <TableColumn fx:id="tcCpf" prefWidth="121.60002136230469" text="CPF" />
-                        <TableColumn fx:id="tcRg" prefWidth="142.4000244140625" text="RG" />
-                        <TableColumn fx:id="tcTelefone" prefWidth="124.800048828125" text="Telefone" />
-                        <TableColumn fx:id="tcEmail" prefWidth="154.39996337890625" text="E-mail" />
-                        <TableColumn fx:id="tcData" prefWidth="107.2000732421875" text="Data" />
+                        <TableColumn fx:id="colNome" prefWidth="129.59994506835938" styleClass="-fx-text-alignment: right" text="Nome" />
+                        <TableColumn fx:id="colCargo" prefWidth="91.20001220703125" text="Cargo" />
+                        <TableColumn fx:id="colRg" prefWidth="118.4000244140625" text="RG" />
+                        <TableColumn fx:id="colCpf" prefWidth="96.79998779296875" text="CPF" />
+                        <TableColumn fx:id="colTelefone" prefWidth="92.7999267578125" text="Telefone" />
+                        <TableColumn fx:id="colSexo" prefWidth="84.800048828125" text="Sexo" />
+                        <TableColumn fx:id="colAdmissao" prefWidth="75.0" text="Admissão" />
+                        <TableColumn fx:id="colSalario" prefWidth="75.0" text="Salario" />
                      </columns>
                   </TableView>
                   <ImageView fitHeight="20.0" fitWidth="18.0" layoutX="746.0" layoutY="49.0" onMouseClicked="#findByName" pickOnBounds="true" preserveRatio="true">
@@ -141,18 +97,63 @@
                         <Font name="System Bold" size="21.0" />
                      </font>
                   </Label>
-                  <Label layoutX="300.0" layoutY="27.0" text="Visitantes" textFill="WHITE">
+                  <Label layoutX="271.0" layoutY="27.0" text="Funcionários" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="42.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
+            <Pane fx:id="paneCadastro" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="793.0" style="-fx-background-color: #fff; -fx-border-color: black; -fx-border-width: 50;">
+               <children>
+                  <HBox layoutX="136.0" layoutY="159.0" prefHeight="174.0" prefWidth="561.0" spacing="30.0">
+                     <children>
+                        <VBox prefHeight="270.0" prefWidth="254.0" spacing="23.0">
+                           <children>
+                              <JFXTextField fx:id="PrRg" focusColor="#2fb4ad" promptText="RG" />
+                              <JFXTextField fx:id="PrCargo" focusColor="#2fb4ad" promptText="Cargo" />
+                              <JFXTextField fx:id="PrTelefone" focusColor="#2fb4ad" promptText="Telefone" />
+                              <JFXDatePicker fx:id="datePickerEmissao" defaultColor="#2fb4ad" promptText="Admissão" />
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="254.0" spacing="23.0">
+                           <children>
+                              <JFXTextField fx:id="PrCpf" focusColor="#2fb4ad" promptText="CPF" />
+                              <JFXTextField fx:id="PrSexo" focusColor="#2fb4ad" promptText="Sexo" />
+                              <JFXTextField fx:id="PrSalario" focusColor="#2fb4ad" promptText="Salário" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <Label layoutX="237.0" layoutY="10.0" text="Cadastro Funcionário" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Georgia" size="34.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="760.0" layoutY="3.0" onMouseClicked="#Exit" text="X" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="LabelLabel" layoutX="103.0" layoutY="61.0" />
+                  <JFXTextField fx:id="PrNome" focusColor="#2fb4ad" layoutX="135.0" layoutY="109.0" prefHeight="25.0" prefWidth="544.0" promptText="Nome" />
+                  <JFXButton fx:id="BTNEditar" layoutX="298.0" layoutY="356.0" onAction="#Editar" prefHeight="38.0" prefWidth="218.0" text="Editar" textFill="#595959" visible="false">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="BTNSalvar" layoutX="308.0" layoutY="356.0" onAction="#Salvar" prefHeight="38.0" prefWidth="218.0" text="Cadastrar" textFill="#717171">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </JFXButton>
+               </children>
+            </Pane>
          </children>
       </StackPane>
       <VBox alignment="TOP_CENTER" prefHeight="576.0" prefWidth="256.0" style="-fx-background-color: #05071F;" stylesheets="@../../services/style.css">
          <children>
-            <ImageView fitHeight="83.0" fitWidth="93.0" pickOnBounds="true" preserveRatio="true" style="-fx-translate-x: 0;">
+            <ImageView fitHeight="73.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../services/out/images/jimmy-fallon.png" />
                </image>

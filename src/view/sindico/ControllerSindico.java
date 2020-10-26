@@ -8,6 +8,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextField;
+
+import alerts.ShowAlert;
+
 import java.sql.Date;
 
 import dao.sindicoDao;
@@ -36,36 +43,65 @@ import view.login.ControllerLogin;
 public class ControllerSindico implements Initializable{
 //utilizar com o método de inicialização//public class ControllerSindico extends Application implements Initializable{
 
+	@FXML
+    private JFXButton BTNSalvar;
 
     @FXML
-    private Button BTNSalvar;
+    private JFXTextField TXNome;
 
+    @FXML
+    private JFXTextField TXSexo;
+
+    @FXML
+    private JFXTextField TXEmail;
+
+    @FXML
+    private JFXTextField TXTelefone;
+
+    @FXML
+    private JFXDatePicker datePickerNascimento;
+
+    @FXML
+    private JFXDatePicker datePickerAdmissao;
+
+//    @FXML
+//    private Button BTNSalvar;
+//
+//    @FXML
+//    private TextField TXNome;
+//    
+//    @FXML
+//    private TextField TXSexo;
+//    
+//    @FXML
+//    private TextField TXEmail;
+//    
+//    @FXML
+//    private TextField TXTelefone;
+//    
+//    @FXML
+//    private DatePicker datePickerNascimento;
+//    
+//    @FXML
+//    private DatePicker datePickerAdmissao;
+//
+    
     @FXML
     private Button BTNEditar;
 
     @FXML
     private Button BTNExcluir;
 
-    @FXML
-    private TextField TXNome;
 
     @FXML
     private TextField TXNascimento;
 
-    @FXML
-    private TextField TXSexo;
-
-    @FXML
-    private TextField TXEmail;
-
-    @FXML
-    private TextField TXTelefone;
 
     @FXML
     private TextField TXAdmissao;
-
-    @FXML
-    private TextArea textAreaLista;
+//
+//    @FXML
+//    private TextArea textAreaLista;
 
     @FXML
     private TextField TXId;
@@ -80,11 +116,10 @@ public class ControllerSindico implements Initializable{
     private Button BTNBuscarID;
 
     @FXML
-    private DatePicker datePickerNascimento;
-    
-    @FXML
-    private DatePicker datePickerAdmissao;
-
+    void Exit(ActionEvent event) {
+//    		fecharTelaLogin();
+    		System.exit(1);
+    }
     
 
     @FXML
@@ -131,13 +166,17 @@ public class ControllerSindico implements Initializable{
 
     @FXML
     void SalvarSindico(ActionEvent event) {
-    	Sindico sindico = obtemDados();
-    	limpaCampo();
-    	int qtde = new sindicoDao().inserir(sindico);
-    	listarSindicos();
-    	System.out.println(qtde);
-    	navegacaoTelaLogin();
-    	fecharTelaSindico();
+    	if(validaCampos()) {
+    		Sindico sindico = obtemDados();
+    		limpaCampo();
+    		int qtde = new sindicoDao().inserir(sindico);
+    		listarSindicos();
+    		System.out.println(qtde);
+    		navegacaoTelaLogin();
+    		fecharTelaSindico();
+    	}else {
+			new ShowAlert().validaAlert();
+    	}
     }
     
     @FXML
@@ -155,12 +194,9 @@ public class ControllerSindico implements Initializable{
     	TXEmail.clear();
     	TXTelefone.clear();
     	datePickerAdmissao.setValue(null);
-    			
-    	TXNome.requestFocus();
     	
     	LabelLabel.setVisible(false);
     	LabelLabel.setText("");
-    	Labelid.setVisible(false);
     }
     
     
@@ -173,17 +209,24 @@ public class ControllerSindico implements Initializable{
     	return new Sindico(Integer.valueOf(LabelLabel.getText()), TXNome.getText(), java.sql.Date.valueOf(datePickerNascimento.getValue()), TXSexo.getText(), TXEmail.getText(), TXTelefone.getText(), java.sql.Date.valueOf(datePickerAdmissao.getValue()));
     }
     
+    public boolean validaCampos() {
+		if (TXNome.getText().isEmpty() | TXSexo.getText().isEmpty() | TXEmail.getText().isEmpty()
+				| TXTelefone.getText().isEmpty() | TXEmail.getText().isEmpty()) {
+			return false;
+		}
+		return true;
+	}
     private void listarSindicos() {
-    	textAreaLista.clear();
-    	List<Sindico> listaSindico = new sindicoDao().listAll();
-    listaSindico.forEach(sindico -> {
-    	textAreaLista.appendText(sindico.toString() +"\n");
-    });
+//    	textAreaLista.clear();
+//    	List<Sindico> listaSindico = new sindicoDao().listAll();
+//    listaSindico.forEach(sindico -> {
+//    	textAreaLista.appendText(sindico.toString() +"\n");
+//    });
     }
     
     public void navegacaoTelaLogin() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(ControllerLogin.class.getResource("frontLogin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(ControllerLogin.class.getResource("telafront.fxml"));
             Parent root1 = fxmlLoader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root1));

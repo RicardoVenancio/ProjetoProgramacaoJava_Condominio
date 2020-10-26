@@ -56,12 +56,12 @@
                   </Label>
                   <Label fx:id="LabelLabel" layoutX="103.0" layoutY="61.0" />
                   <JFXTextField fx:id="TxtNome" focusColor="#2fb4ad" layoutX="136.0" layoutY="139.0" prefHeight="25.0" prefWidth="537.0" promptText="Nome" />
-                  <JFXButton fx:id="BTNEditar" layoutX="301.0" layoutY="359.0" onAction="#Editar" prefHeight="42.0" prefWidth="192.0" text="Editar" visible="false">
+                  <JFXButton fx:id="BTNEditar" layoutX="301.0" layoutY="359.0" onAction="#Editar" prefHeight="42.0" prefWidth="192.0" ripplerFill="WHITE" style="-fx-background-color: #5e5a5a;" text="Editar" textFill="WHITE" visible="false">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="BTNSalvar" layoutX="301.0" layoutY="359.0" onAction="#Salvar" prefHeight="42.0" prefWidth="192.0" text="Cadastrar" textFill="#707274">
+                  <JFXButton fx:id="BTNSalvar" layoutX="301.0" layoutY="359.0" onAction="#Salvar" prefHeight="42.0" prefWidth="192.0" ripplerFill="WHITE" style="-fx-background-color: #5e5a5a;" text="Cadastrar" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -111,7 +111,7 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <JFXButton fx:id="btnApagar1" onAction="#handleClicks" prefHeight="30.0" prefWidth="148.0" ripplerFill="#017f0a" style="-fx-background-color: #6669;" text="Editar" textFill="WHITE">
+                              <JFXButton fx:id="btnEditar" onAction="#handleClicks" prefHeight="30.0" prefWidth="148.0" ripplerFill="#017f0a" style="-fx-background-color: #6669;" text="Editar" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -210,7 +210,7 @@
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="btnMorador" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@../../services/style.css" text="Moradores">
+            <Button fx:id="btnProprietario" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" stylesheets="@../../services/style.css" text="Proprietários">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -258,7 +258,7 @@
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="btnSignout" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#Exit" prefHeight="42.0" prefWidth="259.0" stylesheets="@../../services/style.css" text="Sign Out">
+            <Button fx:id="btnSignout" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" stylesheets="@../../services/style.css" text="Sign Out">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>

@@ -12,7 +12,6 @@ import com.jfoenix.controls.JFXTextField;
 import alerts.ShowAlert;
 import dao.FuncionarioDao;
 import entity.Funcionario;
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,7 +23,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -34,7 +32,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import view.login.ControllerLogin;
-import view.menuFuncionario.ControllerMenuFuncionario;
+import view.proprietario.ControllerPropTable;
 import view.visitante.ControllerTable;
 
 public class FuncionarioTable implements Initializable {
@@ -133,7 +131,7 @@ public class FuncionarioTable implements Initializable {
 	private Button btnVisitante;
 
 	@FXML
-	private Button btnMorador;
+	private Button btnProprietario;
 
 	@FXML
 	private Button btnMenus;
@@ -182,7 +180,6 @@ public class FuncionarioTable implements Initializable {
 	@FXML
 	void Excluir(ActionEvent event) {
 		boolean v = TableView.getSelectionModel().isEmpty();
-		System.out.println(v);
 		if (v == true) {
 			new ShowAlert().SelecionarPessoa();
 		} else {
@@ -268,7 +265,15 @@ public class FuncionarioTable implements Initializable {
 
 	// Sair ou fechar o programa
 	public void Exit() {
-		System.exit(1);
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Alerta!");
+		alert.setHeaderText("Sair");
+		alert.setContentText("Deseja sair do programa?");
+		Optional<ButtonType> result = alert.showAndWait();
+
+		if (result.get() == ButtonType.OK) {
+			System.exit(1);
+		}
 	}
 
 	// Listar cadastros na TableView
@@ -338,12 +343,17 @@ public class FuncionarioTable implements Initializable {
 			paneCadastro.toFront();
 		}
 		if (actionEvent.getSource() == btnEditar) {
-			BTNEditar.toFront();
-			BTNEditar.setVisible(true);
-			BTNSalvar.setVisible(false);
-			paneCadastro.toFront();
-			EditarCadastro();
-
+			boolean v = TableView.getSelectionModel().isEmpty();
+			System.out.println(v);
+			if (v == true) {
+				new ShowAlert().SelecionarPessoaEditar();
+			} else {
+				BTNEditar.toFront();
+				BTNEditar.setVisible(true);
+				BTNSalvar.setVisible(false);
+				paneCadastro.toFront();
+				EditarCadastro();
+			}
 		}
 		if (actionEvent.getSource() == btnVisitante) {
 			try {
@@ -354,6 +364,34 @@ public class FuncionarioTable implements Initializable {
 				stage.setScene(new Scene(root1));
 				stage.show();
 				stage = (Stage) btnVisitante.getScene().getWindow();
+				stage.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+		if (actionEvent.getSource() == btnSignout) {
+			try {
+				FXMLLoader fxmlLoader = new FXMLLoader(ControllerLogin.class.getResource("telafront.fxml"));
+				Parent root1 = fxmlLoader.load();
+				Stage stage = new Stage();
+				stage.initStyle(StageStyle.UNDECORATED);
+				stage.setScene(new Scene(root1));
+				stage.show();
+				stage = (Stage) btnSignout.getScene().getWindow();
+				stage.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+		if (actionEvent.getSource() == btnProprietario) {
+			try {
+				FXMLLoader fxmlLoader = new FXMLLoader(ControllerPropTable.class.getResource("ProprietarioTable.fxml"));
+				Parent root1 = fxmlLoader.load();
+				Stage stage = new Stage();
+				stage.initStyle(StageStyle.UNDECORATED);
+				stage.setScene(new Scene(root1));
+				stage.show();
+				stage = (Stage) btnProprietario.getScene().getWindow();
 				stage.close();
 			} catch (Exception e) {
 				// TODO: handle exception

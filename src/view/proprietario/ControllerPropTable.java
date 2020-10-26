@@ -1,4 +1,4 @@
-package view.visitante;
+package view.proprietario;
 
 import java.net.URL;
 import java.util.List;
@@ -6,12 +6,11 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 
 import alerts.ShowAlert;
-import dao.visitanteDao;
-import entity.Visitante;
+import dao.proprietarioDao;
+import entity.Proprietario;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,78 +32,72 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import view.funcionario.FuncionarioTable;
 import view.login.ControllerLogin;
-import view.proprietario.ControllerPropTable;
+import view.visitante.ControllerTable;
 
-public class ControllerTable implements Initializable {
+public class ControllerPropTable implements Initializable {
 
 	@FXML
 	private Pane paneCadastro;
 
 	@FXML
-	private JFXButton btnCadastrar;
+	private JFXTextField TxtRg;
 
 	@FXML
-	private JFXButton btnEditar;
+	private JFXTextField TxtFone;
 
 	@FXML
-	private JFXButton btnApagar;
-
-	@FXML
-	private JFXButton BTNEditar;
-
-	@FXML
-	private JFXButton BTNSalvar;
-
-	@FXML
-	private JFXTextField TxtNome;
-
-	@FXML
-	private JFXTextField TxtRG;
-
-	@FXML
-	private JFXTextField TxtCPF;
-
-	@FXML
-	private JFXTextField TxtTelefone;
+	private JFXTextField TxtCpf;
 
 	@FXML
 	private JFXTextField TxtEmail;
 
 	@FXML
-	private JFXDatePicker datePickerVisita;
+	private Label LabelLabel;
+
+	@FXML
+	private JFXTextField TxtNome;
+
+	@FXML
+	private JFXButton btnAlterar;
+
+	@FXML
+	private JFXButton btnSalvar;
 
 	@FXML
 	private Pane paneList;
 
 	@FXML
-	private Label numVisitantes;
-
-	@FXML
-	private Label LabelLabel;
+	private Label numProprietarios;
 
 	@FXML
 	private Label lastVisit;
 
 	@FXML
-	private TableView<Visitante> TableView;
+	private JFXButton btnCadastrar;
 
 	@FXML
-	private TableColumn<Visitante, String> tcNome;
+	private JFXButton BTNEditar;
 
 	@FXML
-	private TableColumn<Visitante, String> tcCpf;
+	private JFXButton btnApagar;
 
 	@FXML
-	private TableColumn<Visitante, String> tcRg;
+	private TableView<Proprietario> TableView;
 
 	@FXML
-	private TableColumn<Visitante, String> tcTelefone;
+	private TableColumn<Proprietario, String> tcNome;
 
 	@FXML
-	private TableColumn<Visitante, String> tcEmail;
+	private TableColumn<Proprietario, String> tcCpf;
 
 	@FXML
-	private TableColumn<Visitante, String> tcData;
+	private TableColumn<Proprietario, String> tcRg;
+
+	@FXML
+	private TableColumn<Proprietario, String> tcTelefone;
+
+	@FXML
+	private TableColumn<Proprietario, String> tcEmail;
 
 	@FXML
 	private TextField txtBuscar;
@@ -141,9 +134,9 @@ public class ControllerTable implements Initializable {
 	@FXML
 	void Salvar(ActionEvent event) {
 		if (validaCampos()) {
-			Visitante visitante = obtemDados();
+			Proprietario proprietario = obtemDados();
 			limpaCampo();
-			int qtde = new visitanteDao().inserir(visitante);
+			int qtde = new proprietarioDao().inserir(proprietario);
 			StartTable();
 			paneList.toFront();
 			System.out.println(qtde);
@@ -155,9 +148,9 @@ public class ControllerTable implements Initializable {
 	@FXML
 	void Editar(ActionEvent event) {
 		if (validaCampos()) {
-			Visitante visitante = obtemDadosID();
+			Proprietario proprietario = obtemDadosID();
 			limpaCampo();
-			int qtde = new visitanteDao().alterar(visitante);
+			int qtde = new proprietarioDao().alterar(proprietario);
 			StartTable();
 			paneList.toFront();
 		} else {
@@ -179,8 +172,8 @@ public class ControllerTable implements Initializable {
 
 			if (result.get() == ButtonType.OK) {
 				System.out.println("Cadastro Apagado");
-				Visitante visitante = obtemDadosIDDeletar();
-				int qtde = new visitanteDao().deletar(visitante.getId());
+				Proprietario proprietario = obtemDadosIDDeletar();
+				int qtde = new proprietarioDao().deletar(proprietario.getIdProprietario());
 				limpaCampo();
 				StartTable();
 			}
@@ -188,57 +181,51 @@ public class ControllerTable implements Initializable {
 	}
 
 	void EditarCadastro() {
-		Visitante v = TableView.getSelectionModel().getSelectedItem();
-		LabelLabel.setText(Integer.toString(v.getId()));
-		TxtNome.setText(v.getNome());
-		TxtRG.setText(v.getRG());
-		TxtCPF.setText(v.getCPF());
-		TxtTelefone.setText(v.getTelefone());
-		TxtEmail.setText(v.getEmail());
-		datePickerVisita.setValue(v.getDataVisita().toLocalDate());
+		Proprietario v = TableView.getSelectionModel().getSelectedItem();
+		LabelLabel.setText(Integer.toString(v.getIdProprietario()));
+		TxtNome.setText(v.getNomeProprietario());
+		TxtRg.setText(v.getRgProprietario());
+		TxtCpf.setText(v.getCpfProprietario());
+		TxtFone.setText(v.getNumerotelefoneProprietario());
+		TxtEmail.setText(v.getEmailProprietario());
 	}
 
 	private void limpaCampo() {
 		TxtNome.clear();
-		TxtRG.clear();
-		TxtCPF.clear();
-		TxtTelefone.clear();
+		TxtRg.clear();
+		TxtCpf.clear();
+		TxtFone.clear();
 		TxtEmail.clear();
-		datePickerVisita.setValue(null);
 
 	}
 
-	private Visitante obtemDados() {
-		return new Visitante(TxtNome.getText(), TxtRG.getText(), TxtCPF.getText(), TxtTelefone.getText(),
-				TxtEmail.getText(), java.sql.Date.valueOf(datePickerVisita.getValue()));
+	private Proprietario obtemDados() {
+		return new Proprietario(TxtNome.getText(), TxtCpf.getText(), TxtRg.getText(), TxtFone.getText(),
+				TxtEmail.getText());
 	}
 
-	private Visitante obtemDadosID() {
-		return new Visitante(Integer.valueOf(LabelLabel.getText()), TxtNome.getText(), TxtRG.getText(),
-				TxtCPF.getText(), TxtTelefone.getText(), TxtEmail.getText(),
-				java.sql.Date.valueOf(datePickerVisita.getValue()));
+	private Proprietario obtemDadosID() {
+		return new Proprietario(Integer.valueOf(LabelLabel.getText()), TxtNome.getText(), TxtRg.getText(),
+				TxtCpf.getText(), TxtFone.getText(), TxtEmail.getText());
 
 	}
 
-	private Visitante obtemDadosIDDeletar() {
-		Visitante v = TableView.getSelectionModel().getSelectedItem();
-		LabelLabel.setText(Integer.toString(v.getId()));
-		TxtNome.setText(v.getNome());
-		TxtRG.setText(v.getRG());
-		TxtCPF.setText(v.getCPF());
-		TxtTelefone.setText(v.getTelefone());
-		TxtEmail.setText(v.getEmail());
-		datePickerVisita.setValue(v.getDataVisita().toLocalDate());
+	private Proprietario obtemDadosIDDeletar() {
+		Proprietario v = TableView.getSelectionModel().getSelectedItem();
+		LabelLabel.setText(Integer.toString(v.getIdProprietario()));
+		TxtNome.setText(v.getNomeProprietario());
+		TxtRg.setText(v.getRgProprietario());
+		TxtCpf.setText(v.getCpfProprietario());
+		TxtFone.setText(v.getNumerotelefoneProprietario());
+		TxtEmail.setText(v.getEmailProprietario());
 
-		return new Visitante(Integer.valueOf(LabelLabel.getText()), TxtNome.getText(), TxtRG.getText(),
-				TxtCPF.getText(), TxtTelefone.getText(), TxtEmail.getText(),
-				java.sql.Date.valueOf(datePickerVisita.getValue()));
-
+		return new Proprietario(Integer.valueOf(LabelLabel.getText()), TxtNome.getText(), TxtRg.getText(),
+				TxtCpf.getText(), TxtFone.getText(), TxtEmail.getText());
 	}
 
 	public boolean validaCampos() {
-		if (TxtNome.getText().isEmpty() | TxtRG.getText().isEmpty() | TxtCPF.getText().isEmpty()
-				| TxtTelefone.getText().isEmpty() | TxtEmail.getText().isEmpty()) {
+		if (TxtNome.getText().isEmpty() | TxtRg.getText().isEmpty() | TxtCpf.getText().isEmpty()
+				| TxtFone.getText().isEmpty() | TxtEmail.getText().isEmpty()) {
 			return false;
 		}
 		return true;
@@ -259,21 +246,19 @@ public class ControllerTable implements Initializable {
 
 	// Listar cadastros na TableView
 	public void StartTable() {
-		List<Visitante> list = new visitanteDao().listAll();
-		tcNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
-		tcRg.setCellValueFactory(new PropertyValueFactory<>("RG"));
-		tcCpf.setCellValueFactory(new PropertyValueFactory<>("CPF"));
-		tcTelefone.setCellValueFactory(new PropertyValueFactory<>("Telefone"));
-		tcEmail.setCellValueFactory(new PropertyValueFactory<>("Email"));
-		tcData.setCellValueFactory(new PropertyValueFactory<>("DataVisita"));
+		List<Proprietario> list = new proprietarioDao().listAll();
+		tcNome.setCellValueFactory(new PropertyValueFactory<>("nomeProprietario"));
+		tcCpf.setCellValueFactory(new PropertyValueFactory<>("cpfProprietario"));
+		tcRg.setCellValueFactory(new PropertyValueFactory<>("rgProprietario"));
+		tcTelefone.setCellValueFactory(new PropertyValueFactory<>("numerotelefoneProprietario"));
+		tcEmail.setCellValueFactory(new PropertyValueFactory<>("emailProprietario"));
 		TableView.setItems(atualizaTabela());
-		numVisitantes.setText(Integer.toString(list.size()));
-
+		numProprietarios.setText(Integer.toString(list.size()));
 	}
 
 	// Converter para Collections
-	public ObservableList<Visitante> atualizaTabela() {
-		visitanteDao dao = new visitanteDao();
+	public ObservableList<Proprietario> atualizaTabela() {
+		proprietarioDao dao = new proprietarioDao();
 		return FXCollections.observableArrayList(dao.listAll());
 	}
 
@@ -281,9 +266,7 @@ public class ControllerTable implements Initializable {
 	// Executar Tela
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
 		StartTable();
-
 	}
 
 //	public void execute() {
@@ -294,7 +277,7 @@ public class ControllerTable implements Initializable {
 //
 //	@Override
 //	public void start(Stage primaryStage) throws Exception {
-//		Parent root = FXMLLoader.load(getClass().getResource("VisitanteTable.fxml"));
+//		Parent root = FXMLLoader.load(getClass().getResource("ProprietarioTable.fxml"));
 //		primaryStage.setScene(new Scene(root));
 //		// set stage borderless
 //		primaryStage.initStyle(StageStyle.UNDECORATED);
@@ -329,15 +312,15 @@ public class ControllerTable implements Initializable {
 				// TODO: handle exception
 			}
 		}
-		if (actionEvent.getSource() == btnProprietario) {
+		if (actionEvent.getSource() == btnVisitante) {
 			try {
-				FXMLLoader fxmlLoader = new FXMLLoader(ControllerPropTable.class.getResource("ProprietarioTable.fxml"));
+				FXMLLoader fxmlLoader = new FXMLLoader(ControllerTable.class.getResource("VisitanteTable.fxml"));
 				Parent root1 = fxmlLoader.load();
 				Stage stage = new Stage();
 				stage.initStyle(StageStyle.UNDECORATED);
 				stage.setScene(new Scene(root1));
 				stage.show();
-				stage = (Stage) btnProprietario.getScene().getWindow();
+				stage = (Stage) btnVisitante.getScene().getWindow();
 				stage.close();
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -357,28 +340,33 @@ public class ControllerTable implements Initializable {
 				// TODO: handle exception
 			}
 		}
+		if (actionEvent.getSource() == btnProprietario) {
+			try {
+				paneList.toFront();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
 		if (actionEvent.getSource() == btnCadastrar) {
-			BTNSalvar.toFront();
-			BTNSalvar.setVisible(true);
-			BTNEditar.setVisible(false);
+			btnSalvar.toFront();
+			btnSalvar.setVisible(true);
+			btnAlterar.setVisible(false);
 			paneCadastro.toFront();
 		}
-		if (actionEvent.getSource() == btnEditar) {
+		if (actionEvent.getSource() == BTNEditar) {
 			boolean v = TableView.getSelectionModel().isEmpty();
 			System.out.println(v);
 			if (v == true) {
 				new ShowAlert().SelecionarPessoaEditar();
 			} else {
-				BTNEditar.toFront();
-				BTNEditar.setVisible(true);
-				BTNSalvar.setVisible(false);
+				btnAlterar.toFront();
+				btnAlterar.setVisible(true);
+				btnSalvar.setVisible(false);
 				paneCadastro.toFront();
 				EditarCadastro();
 			}
 		}
-		if (actionEvent.getSource() == btnVisitante) {
-			paneList.toFront();
-		}
+
 	}
 
 }

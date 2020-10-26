@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="613.0" prefWidth="911.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.apartamento.ApartamentoController">
+   <children>
+      <Label layoutX="328.0" layoutY="33.0" text="Cadastrar Apartamento" textFill="#1c79a7">
+         <font>
+            <Font name="Yu Gothic UI Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblNumeroAp" layoutX="53.0" layoutY="120.0" text="Número" textFill="#1c79a7">
+         <font>
+            <Font name="Yu Gothic UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblQtdMorador" layoutX="53.0" layoutY="149.0" text="Quantidade Moradores" textFill="#1c79a7">
+         <font>
+            <Font name="Yu Gothic UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblAnimal" layoutX="53.0" layoutY="179.0" text="Animal de Estimação" textFill="#1c79a7">
+         <font>
+            <Font name="Yu Gothic UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtNumAp" layoutX="235.0" layoutY="117.0" />
+      <TextField fx:id="txtQtdMorador" layoutX="235.0" layoutY="146.0" />
+      <TextField fx:id="txtAnimal" layoutX="235.0" layoutY="176.0" />
+      <TextField fx:id="txtSearchId" layoutX="775.0" layoutY="264.0" prefHeight="25.0" prefWidth="28.0" promptText="ID" />
+      <Button fx:id="btnCreate" layoutX="762.0" layoutY="118.0" mnemonicParsing="false" onAction="#cadastrarApartamento" prefHeight="25.0" prefWidth="103.0" text="Cadastrar" />
+      <Button fx:id="btnDelete" layoutX="763.0" layoutY="178.0" mnemonicParsing="false" onAction="#excluirApartamento" prefHeight="25.0" prefWidth="102.0" text="Excluir" />
+      <Button fx:id="btnSearch" layoutX="807.0" layoutY="264.0" mnemonicParsing="false" onAction="#pesquisarApartamento" prefHeight="25.0" prefWidth="71.0" text="Pesquisar" />
+      <Label fx:id="lblTitleId" layoutX="53.0" layoutY="89.0" text="ID" textFill="#1c79a7" visible="false">
+         <font>
+            <Font name="Yu Gothic UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblNumId" layoutX="286.0" layoutY="89.0" text="IDNUM" textFill="#1c79a7" visible="false">
+         <font>
+            <Font name="Yu Gothic UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnUpdate" layoutX="763.0" layoutY="148.0" mnemonicParsing="false" onAction="#editarApartamento" prefHeight="25.0" prefWidth="102.0" text="Editar" />
+      <Label fx:id="lblQtdAnimal" layoutX="53.0" layoutY="209.0" text="Quantidade de Animais" textFill="#1c79a7">
+         <font>
+            <Font name="Yu Gothic UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtQtdAnimal" layoutX="235.0" layoutY="207.0" />
+      <TextField fx:id="txtAndar" layoutX="234.0" layoutY="239.0" />
+      <TextField fx:id="txtBloco" layoutX="567.0" layoutY="119.0" />
+      <Label fx:id="lblAndar" layoutX="53.0" layoutY="242.0" text="Andar" textFill="#1c79a7">
+         <font>
+            <Font name="Yu Gothic UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblBloco" layoutX="422.0" layoutY="121.0" text="Bloco" textFill="#1c79a7">
+         <font>
+            <Font name="Yu Gothic UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblData" layoutX="422.0" layoutY="150.0" text="Data de Entrada" textFill="#1c79a7">
+         <font>
+            <Font name="Yu Gothic UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblStatus" layoutX="422.0" layoutY="180.0" text="Status" textFill="#1c79a7">
+         <font>
+            <Font name="Yu Gothic UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblVaga" layoutX="422.0" layoutY="210.0" text="Vaga de Veículo" textFill="#1c79a7">
+         <font>
+            <Font name="Yu Gothic UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtStatus" layoutX="567.0" layoutY="177.0" />
+      <TextField fx:id="txtVaga" layoutX="567.0" layoutY="208.0" />
+      <ScrollPane layoutX="28.0" layoutY="300.0">
+         <content>
+            <TextArea fx:id="txtAreaApartamento" prefHeight="288.0" prefWidth="856.0" />
+         </content>
+      </ScrollPane>
+      <DatePicker fx:id="datePicker" layoutX="568.0" layoutY="147.0" prefHeight="25.0" prefWidth="148.0" />
+   </children>
+</AnchorPane>

@@ -52,24 +52,24 @@ public class ControllerLogin extends Application {
 
 	@FXML
 	private Button BTNSair;
-	
+
 	@FXML
-    private JFXTextField TXTCpf;
+	private JFXTextField TXTCpf;
 
-    @FXML
-    private JFXPasswordField TXTSenha;
+	@FXML
+	private JFXPasswordField TXTSenha;
 
-    @FXML
-    private JFXButton BTNEntrar;
+	@FXML
+	private JFXButton BTNEntrar;
 
-    @FXML
-    private JFXButton BTNCadastrar;
-    
-    @FXML
-    void Exit(ActionEvent event) {
-    	System.exit(0);
-    	//fecharTelaLogin();
-    }
+	@FXML
+	private JFXButton BTNCadastrar;
+
+	@FXML
+	void Exit(ActionEvent event) {
+//    		fecharTelaLogin();
+		System.exit(5);
+	}
 
 	@FXML
 	void BTNEntra(ActionEvent event) {
@@ -89,17 +89,21 @@ public class ControllerLogin extends Application {
 		dialog.setContentText("Escolha uma opção:");
 
 		Optional<String> result = dialog.showAndWait();
-
-		String lista = result.get();
+		String lista = "";
+		if (result.get().isEmpty()) {
+		} else {
+			lista = result.get();
+		}
 
 		switch (lista) {
 		case "Síndico":
 			if (result.isPresent()) {
 				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(ControllerSindico.class.getResource("frontSindico.fxml"));
+					FXMLLoader fxmlLoader = new FXMLLoader(ControllerSindico.class.getResource("SindicoFront.fxml"));
 					Parent root1 = fxmlLoader.load();
 					Stage stage = new Stage();
 					stage.setScene(new Scene(root1));
+					stage.initStyle(StageStyle.UNDECORATED);
 					stage.show();
 					fecharTelaLogin();
 
@@ -129,6 +133,7 @@ public class ControllerLogin extends Application {
 	void BTNSairsistema(ActionEvent event) {
 		System.exit(0);
 	}
+
 	public String alerta() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("ATENÇÃO!!!");
@@ -137,8 +142,7 @@ public class ControllerLogin extends Application {
 		alert.showAndWait();
 		return "INFORMATION";
 	}
-	
-	
+
 	public String validacaoLogin() {
 		loginDao logindao = new loginDao();
 
@@ -146,20 +150,19 @@ public class ControllerLogin extends Application {
 
 			String resultadoSindico = logindao.authenticateUser(TXTCpf.getText(), TXTSenha.getText());
 			String resultadoFuncionario = logindao.authenticateUserFuncionario(TXTCpf.getText(), TXTSenha.getText());
-			
-			
-			
-			if (resultadoFuncionario == null && resultadoSindico == null ) {
+
+			if (resultadoFuncionario == null && resultadoSindico == null) {
 				return "" + alerta();
-						
+
 			}
 
 			if (resultadoSindico == null || resultadoSindico == "") {
 				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(FuncionarioTable.class.getResource("FuncionarioTable.fxml"));
+					FXMLLoader fxmlLoader = new FXMLLoader(
+							ControllerMenuFuncionario.class.getResource("frontMenuFuncionario.fxml"));
 					Parent root1 = fxmlLoader.load();
 					Stage stage = new Stage();
-		            stage.initStyle(StageStyle.UNDECORATED);
+					stage.initStyle(StageStyle.UNDECORATED);
 					stage.setScene(new Scene(root1));
 					stage.show();
 					fecharTelaLogin();
@@ -169,13 +172,13 @@ public class ControllerLogin extends Application {
 				}
 				return "Funcionario";
 			}
-			
+
 			if (resultadoFuncionario == null || resultadoFuncionario == "") {
 				try {
 					FXMLLoader fxmlLoader = new FXMLLoader(ControllerTable.class.getResource("VisitanteTable.fxml"));
 					Parent root1 = fxmlLoader.load();
 					Stage stage = new Stage();
-		            stage.initStyle(StageStyle.UNDECORATED);
+					stage.initStyle(StageStyle.UNDECORATED);
 					stage.setScene(new Scene(root1));
 					stage.show();
 					fecharTelaLogin();
@@ -204,7 +207,7 @@ public class ControllerLogin extends Application {
 		try {
 			AnchorPane pane = (AnchorPane) FXMLLoader.load(ControllerLogin.class.getResource("telafront.fxml"));
 			Scene sc = new Scene(pane);
-            stage.initStyle(StageStyle.UNDECORATED);
+			stage.initStyle(StageStyle.UNDECORATED);
 			stage.setScene(sc);
 			stage.show();
 		} catch (IOException e) {

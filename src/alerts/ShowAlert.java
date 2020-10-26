@@ -21,4 +21,12 @@ public class ShowAlert {
 		alert.showAndWait();
 	}
 	
+	public void SelecionarPessoaEditar() {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Atenção");
+		alert.setHeaderText(null);
+		alert.setContentText("Selecione um cadastro para editar!");
+		alert.showAndWait();
+	}
+	
 }

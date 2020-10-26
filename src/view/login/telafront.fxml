@@ -52,10 +52,10 @@
             <Font name="System Bold" size="48.0" />
          </font>
       </Label>
-      <Label layoutX="750.0" onMouseClicked="#Exit" prefHeight="35.0" prefWidth="34.0" text="  X" textFill="WHITE">
+      <JFXButton layoutX="757.0" onAction="#Exit" prefHeight="38.0" prefWidth="43.0" ripplerFill="#fa0606" text="X" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="Comic Sans MS Bold" size="18.0" />
          </font>
-      </Label>
+      </JFXButton>
    </children>
 </AnchorPane>

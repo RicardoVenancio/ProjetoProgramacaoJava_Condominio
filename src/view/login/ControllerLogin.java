@@ -137,7 +137,7 @@ public class ControllerLogin extends Application {
 					Stage stage = new Stage();
 					stage.setScene(new Scene(root1));
 					stage.show();
-					fecharTelaLogin();
+					fecharTelaLogin();	
 
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -1,5 +1,6 @@
 package view.proprietario;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +33,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import view.funcionario.FuncionarioTable;
 import view.login.ControllerLogin;
+import view.menu.ControllerMenuTable;
+import view.recado.ControllerRecadoTable;
 import view.visitante.ControllerTable;
 
 public class ControllerPropTable implements Initializable {
@@ -110,6 +113,9 @@ public class ControllerPropTable implements Initializable {
 
 	@FXML
 	private Button btnVisitante;
+	
+	@FXML
+	private Button btnRecado;
 
 	@FXML
 	private Button btnProprietario;
@@ -297,55 +303,21 @@ public class ControllerPropTable implements Initializable {
 //	}
 
 //-------------------------------------------------------------------------------------------------
-	public void handleClicks(ActionEvent actionEvent) {
-		if (actionEvent.getSource() == btnFuncionario) {
-			try {
-				FXMLLoader fxmlLoader = new FXMLLoader(FuncionarioTable.class.getResource("FuncionarioTable.fxml"));
-				Parent root1 = fxmlLoader.load();
-				Stage stage = new Stage();
-				stage.initStyle(StageStyle.UNDECORATED);
-				stage.setScene(new Scene(root1));
-				stage.show();
-				stage = (Stage) btnFuncionario.getScene().getWindow();
-				stage.close();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-		}
-		if (actionEvent.getSource() == btnVisitante) {
-			try {
-				FXMLLoader fxmlLoader = new FXMLLoader(ControllerTable.class.getResource("VisitanteTable.fxml"));
-				Parent root1 = fxmlLoader.load();
-				Stage stage = new Stage();
-				stage.initStyle(StageStyle.UNDECORATED);
-				stage.setScene(new Scene(root1));
-				stage.show();
-				stage = (Stage) btnVisitante.getScene().getWindow();
-				stage.close();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
+	public void handleClicks(ActionEvent actionEvent) throws IOException {
+		if (actionEvent.getSource() == btnMenus) {
+			FXMLLoader fxmlLoader = new FXMLLoader(ControllerMenuTable.class.getResource("MenuTable.fxml"));
+			abrirNovaTela(fxmlLoader);
+			Stage stage = (Stage) btnMenus.getScene().getWindow();
+			stage.close();
 		}
 		if (actionEvent.getSource() == btnSignout) {
-			try {
 				FXMLLoader fxmlLoader = new FXMLLoader(ControllerLogin.class.getResource("telafront.fxml"));
-				Parent root1 = fxmlLoader.load();
-				Stage stage = new Stage();
-				stage.initStyle(StageStyle.UNDECORATED);
-				stage.setScene(new Scene(root1));
-				stage.show();
-				stage = (Stage) btnSignout.getScene().getWindow();
+				abrirNovaTela(fxmlLoader);
+				Stage stage = (Stage) btnSignout.getScene().getWindow();
 				stage.close();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
 		}
 		if (actionEvent.getSource() == btnProprietario) {
-			try {
-				paneList.toFront();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
+			paneList.toFront();
 		}
 		if (actionEvent.getSource() == btnCadastrar) {
 			btnSalvar.toFront();
@@ -367,6 +339,15 @@ public class ControllerPropTable implements Initializable {
 			}
 		}
 
+	}
+
+	void abrirNovaTela(FXMLLoader y) throws IOException {
+		FXMLLoader fxmlLoader = y;
+		Parent root1 = fxmlLoader.load();
+		Stage stage = new Stage();
+		stage.initStyle(StageStyle.UNDECORATED);
+		stage.setScene(new Scene(root1));
+		stage.show();
 	}
 
 }

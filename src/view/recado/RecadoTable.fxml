@@ -18,33 +18,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.visitante.ControllerTable">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.recado.ControllerRecadoTable">
    <children>
       <StackPane layoutX="256.0" prefHeight="576.0" prefWidth="793.0">
          <children>
             <Pane fx:id="paneCadastro" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="793.0" style="-fx-background-color: #fff; -fx-border-color: black; -fx-border-width: 50;">
                <children>
-                  <HBox layoutX="135.0" layoutY="139.0" prefHeight="219.0" prefWidth="543.0" spacing="30.0">
+                  <HBox layoutX="219.0" layoutY="96.0" prefHeight="219.0" prefWidth="357.0" spacing="30.0">
                      <children>
-                        <VBox alignment="CENTER_LEFT" prefHeight="270.0" prefWidth="254.0" spacing="23.0">
+                        <VBox alignment="CENTER" prefHeight="219.0" prefWidth="335.0" spacing="23.0">
                            <children>
-                              <JFXTextField fx:id="TxtRG" focusColor="#2fb4ad" promptText="RG" />
-                              <JFXTextField fx:id="TxtTelefone" focusColor="#2fb4ad" promptText="Telefone" />
-                              <JFXTextField fx:id="TxtEmail" focusColor="#2fb4ad" promptText="Email" />
+                              <JFXTextField fx:id="PrNome" focusColor="#2fb4ad" prefHeight="25.0" prefWidth="537.0" promptText="Nome" />
+                              <JFXDatePicker fx:id="datePickerRecado" />
+                              <JFXTextField fx:id="PrRecado" focusColor="#2fb4ad" promptText="Recado" />
                            </children>
-                        </VBox>
-                        <VBox alignment="CENTER_LEFT" prefHeight="270.0" prefWidth="254.0" spacing="20.0">
-                           <children>
-                              <JFXTextField fx:id="TxtCPF" focusColor="#2fb4ad" promptText="CPF" />
-                              <JFXDatePicker fx:id="datePickerVisita" defaultColor="#2fb4ad" promptText="01/01/2020" />
-                           </children>
-                           <padding>
-                              <Insets bottom="50.0" />
-                           </padding>
                         </VBox>
                      </children>
                   </HBox>
-                  <Label layoutX="237.0" layoutY="10.0" text="Cadastro Visitantes" textAlignment="CENTER" textFill="WHITE">
+                  <Label layoutX="269.0" layoutY="14.0" text="Registrar Recado" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="Georgia" size="34.0" />
                      </font>
@@ -55,7 +46,6 @@
                      </font>
                   </Label>
                   <Label fx:id="LabelLabel" layoutX="103.0" layoutY="61.0" />
-                  <JFXTextField fx:id="TxtNome" focusColor="#2fb4ad" layoutX="136.0" layoutY="139.0" prefHeight="25.0" prefWidth="537.0" promptText="Nome" />
                   <JFXButton fx:id="BTNEditar" layoutX="301.0" layoutY="359.0" onAction="#Editar" prefHeight="42.0" prefWidth="192.0" ripplerFill="WHITE" style="-fx-background-color: #5e5a5a;" text="Editar" textFill="WHITE" visible="false">
                      <font>
                         <Font name="System Bold" size="18.0" />
@@ -74,12 +64,12 @@
                      <children>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Label fx:id="numVisitantes" text="0" textFill="#2a73ff">
+                              <Label fx:id="numRecados" text="0" textFill="#2a73ff">
                                  <font>
                                     <Font name="System Bold" size="26.0" />
                                  </font>
                               </Label>
-                              <Label text="Visitantes" textFill="WHITE">
+                              <Label text="Recados" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -93,7 +83,7 @@
                                     <Font size="26.0" />
                                  </font>
                               </Label>
-                              <Label text="Ultima Visita" textFill="WHITE">
+                              <Label text="Ultima Recado" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -134,12 +124,9 @@
                   </HBox>
                   <TableView fx:id="TableView" layoutY="208.0" prefHeight="368.0" prefWidth="793.0" style="-fx-background-color: black;">
                      <columns>
-                        <TableColumn fx:id="tcNome" prefWidth="147.20001524686813" styleClass="-fx-text-alignment: right" text="Nome" />
-                        <TableColumn fx:id="tcCpf" prefWidth="121.60002136230469" text="CPF" />
-                        <TableColumn fx:id="tcRg" prefWidth="142.4000244140625" text="RG" />
-                        <TableColumn fx:id="tcTelefone" prefWidth="124.800048828125" text="Telefone" />
-                        <TableColumn fx:id="tcEmail" prefWidth="154.39996337890625" text="E-mail" />
-                        <TableColumn fx:id="tcData" prefWidth="107.2000732421875" text="Data" />
+                        <TableColumn fx:id="colNome" prefWidth="207.99996948242188" styleClass="-fx-text-alignment: right" text="Nome" />
+                        <TableColumn fx:id="colData" prefWidth="113.5999755859375" text="Data" />
+                        <TableColumn fx:id="colRecado" prefWidth="471.99993896484375" text="Recado" />
                      </columns>
                   </TableView>
                   <ImageView fitHeight="20.0" fitWidth="18.0" layoutX="746.0" layoutY="49.0" onMouseClicked="#findByName" pickOnBounds="true" preserveRatio="true">
@@ -153,7 +140,7 @@
                         <Font name="System Bold" size="21.0" />
                      </font>
                   </Label>
-                  <Label layoutX="300.0" layoutY="27.0" text="Visitantes" textFill="WHITE">
+                  <Label layoutX="300.0" layoutY="27.0" text="Recados" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="42.0" />
                      </font>
@@ -192,7 +179,7 @@
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="btnSettings" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" stylesheets="@../../services/style.css" text="Settings">
+            <Button fx:id="btnSettings" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@../../services/style.css" text="Settings">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>

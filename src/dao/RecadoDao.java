@@ -6,9 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import db.ConexaoHSQLDB;
 
-import entity.Funcionario;
+import db.ConexaoHSQLDB;
 import entity.Recado;
  
 public class RecadoDao extends ConexaoHSQLDB{

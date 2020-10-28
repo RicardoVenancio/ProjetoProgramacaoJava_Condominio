@@ -33,6 +33,7 @@ import javafx.stage.StageStyle;
 import view.funcionario.ControllerFuncionario;
 import view.funcionario.FuncionarioTable;
 import view.menu.ControllerMenu;
+import view.menu.ControllerMenuTable;
 import view.menuFuncionario.ControllerMenuFuncionario;
 import view.sindico.ControllerSindico;
 import view.visitante.ControllerTable;
@@ -72,10 +73,8 @@ public class ControllerLogin extends Application {
 	}
 
 	@FXML
-	void BTNEntra(ActionEvent event) {
-
+	void BTNEntra(ActionEvent event) throws IOException {
 		validacaoLogin();
-
 	}
 
 	@FXML
@@ -143,7 +142,7 @@ public class ControllerLogin extends Application {
 		return "INFORMATION";
 	}
 
-	public String validacaoLogin() {
+	public String validacaoLogin() throws IOException {
 		loginDao logindao = new loginDao();
 
 		if (!TXTCpf.getText().isEmpty() && !TXTSenha.getText().isEmpty()) {
@@ -153,39 +152,26 @@ public class ControllerLogin extends Application {
 
 			if (resultadoFuncionario == null && resultadoSindico == null) {
 				return "" + alerta();
-
 			}
-
 			if (resultadoSindico == null || resultadoSindico == "") {
-				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(
-							ControllerMenuFuncionario.class.getResource("frontMenuFuncionario.fxml"));
-					Parent root1 = fxmlLoader.load();
-					Stage stage = new Stage();
-					stage.initStyle(StageStyle.UNDECORATED);
-					stage.setScene(new Scene(root1));
-					stage.show();
-					fecharTelaLogin();
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				FXMLLoader fxmlLoader = new FXMLLoader(
+						ControllerMenuFuncionario.class.getResource("frontMenuFuncionario.fxml"));
+				Parent root1 = fxmlLoader.load();
+				Stage stage = new Stage();
+				stage.initStyle(StageStyle.UNDECORATED);
+				stage.setScene(new Scene(root1));
+				stage.show();
+				fecharTelaLogin();
 				return "Funcionario";
 			}
-
 			if (resultadoFuncionario == null || resultadoFuncionario == "") {
-				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(ControllerTable.class.getResource("VisitanteTable.fxml"));
-					Parent root1 = fxmlLoader.load();
-					Stage stage = new Stage();
-					stage.initStyle(StageStyle.UNDECORATED);
-					stage.setScene(new Scene(root1));
-					stage.show();
-					fecharTelaLogin();
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				FXMLLoader fxmlLoader = new FXMLLoader(ControllerMenuTable.class.getResource("MenuTable.fxml"));
+				Parent root1 = fxmlLoader.load();
+				Stage stage = new Stage();
+				stage.initStyle(StageStyle.UNDECORATED);
+				stage.setScene(new Scene(root1));
+				stage.show();
+				fecharTelaLogin();
 				return "Sindico";
 			}
 		}

@@ -1,4 +1,4 @@
-package view.funcionario;
+package view.recado;
 
 import java.io.IOException;
 import java.net.URL;
@@ -11,8 +11,9 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 
 import alerts.ShowAlert;
-import dao.FuncionarioDao;
-import entity.Funcionario;
+import dao.RecadoDao;
+import entity.Recado;
+import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -32,94 +33,43 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import view.funcionario.FuncionarioTable;
 import view.login.ControllerLogin;
 import view.menu.ControllerMenuTable;
 import view.proprietario.ControllerPropTable;
-import view.recado.ControllerRecadoTable;
 import view.visitante.ControllerTable;
 
-public class FuncionarioTable implements Initializable {
-
-	@FXML
-	private Pane paneCadastro;
-
-	@FXML
-	private JFXTextField PrRg;
-
-	@FXML
-	private JFXTextField PrCargo;
-
-	@FXML
-	private JFXTextField PrTelefone;
-
-	@FXML
-	private JFXTextField PrCpf;
-
-	@FXML
-	private JFXTextField PrSexo;
-
-	@FXML
-	private JFXTextField PrSalario;
-
-	@FXML
-	private Label LabelLabel;
-
-	@FXML
-	private JFXTextField PrNome;
-
-	@FXML
-	private JFXButton BTNEditar;
-
-	@FXML
-	private JFXButton BTNSalvar;
-
-	@FXML
-	private JFXDatePicker datePickerEmissao;
+public class ControllerRecadoTable implements Initializable {
 
 	@FXML
 	private Pane paneList;
 
 	@FXML
-	private Label numFuncionarios;
+	private Label numRecados;
 
 	@FXML
 	private Label lastVisit;
 
 	@FXML
-	private Button btnCadastrar;
+	private JFXButton btnCadastrar;
 
 	@FXML
-	private Button btnEditar;
+	private JFXButton btnEditar;
 
 	@FXML
-	private Button btnApagar;
+	private JFXButton btnApagar;
 
 	@FXML
-	private TableView<Funcionario> TableView;
+	private TableView<Recado> TableView;
 
 	@FXML
-	private TableColumn<Funcionario, String> colNome;
+	private TableColumn<Recado, String> colNome;
 
 	@FXML
-	private TableColumn<Funcionario, String> colCargo;
+	private TableColumn<Recado, String> colData;
 
 	@FXML
-	private TableColumn<Funcionario, String> colRg;
-
-	@FXML
-	private TableColumn<Funcionario, String> colCpf;
-
-	@FXML
-	private TableColumn<Funcionario, String> colTelefone;
-
-	@FXML
-	private TableColumn<Funcionario, String> colSalario;
-
-	@FXML
-	private TableColumn<Funcionario, String> colSexo;
-
-	@FXML
-	private TableColumn<Funcionario, String> colAdmissao;
+	private TableColumn<Recado, String> colRecado;
 
 	@FXML
 	private TextField txtBuscar;
@@ -128,10 +78,28 @@ public class FuncionarioTable implements Initializable {
 	private Label Fechar;
 
 	@FXML
-	private Button btnFuncionario;
+	private Pane paneCadastro;
 
 	@FXML
-	private Button btnRecado;
+	private JFXTextField PrNome;
+
+	@FXML
+	private JFXDatePicker datePickerRecado;
+
+	@FXML
+	private JFXTextField PrRecado;
+
+	@FXML
+	private Label LabelLabel;
+
+	@FXML
+	private JFXButton BTNEditar;
+
+	@FXML
+	private JFXButton BTNSalvar;
+
+	@FXML
+	private Button btnFuncionario;
 
 	@FXML
 	private Button btnVisitante;
@@ -143,7 +111,7 @@ public class FuncionarioTable implements Initializable {
 	private Button btnMenus;
 
 	@FXML
-	private Button btnPackages;
+	private Button btnRecados;
 
 	@FXML
 	private Button btnSettings;
@@ -159,9 +127,9 @@ public class FuncionarioTable implements Initializable {
 	@FXML
 	void Salvar(ActionEvent event) {
 		if (validaCampos()) {
-			Funcionario funcionario = obtemDados();
+			Recado recado = obtemDados();
 			limpaCampo();
-			int qtde = new FuncionarioDao().inserir(funcionario);
+			int qtde = new RecadoDao().inserir(recado);
 			StartTable();
 			paneList.toFront();
 			System.out.println(qtde);
@@ -173,9 +141,9 @@ public class FuncionarioTable implements Initializable {
 	@FXML
 	void Editar(ActionEvent event) {
 		if (validaCampos()) {
-			Funcionario funcionario = obtemDadosID();
+			Recado recado = obtemDadosID();
 			limpaCampo();
-			int qtde = new FuncionarioDao().alterar(funcionario);
+			int qtde = new RecadoDao().alterar(recado);
 			StartTable();
 			paneList.toFront();
 		} else {
@@ -197,8 +165,8 @@ public class FuncionarioTable implements Initializable {
 
 			if (result.get() == ButtonType.OK) {
 				System.out.println("Cadastro Apagado");
-				Funcionario funcionario = obtemDadosIDDeletar();
-				int qtde = new FuncionarioDao().deletar(funcionario.getId());
+				Recado recado = obtemDadosIDDeletar();
+				int qtde = new RecadoDao().deletar(recado.getId());
 				limpaCampo();
 				StartTable();
 			}
@@ -206,64 +174,42 @@ public class FuncionarioTable implements Initializable {
 	}
 
 	void EditarCadastro() {
-		Funcionario v = TableView.getSelectionModel().getSelectedItem();
+		Recado v = TableView.getSelectionModel().getSelectedItem();
 		LabelLabel.setText(Integer.toString(v.getId()));
 		PrNome.setText(v.getNome());
-		PrCargo.setText(v.getCargo());
-		PrRg.setText(v.getRg());
-		PrCpf.setText(v.getCpf());
-		PrTelefone.setText(v.getTelefone());
-		PrSexo.setText(v.getSexo());
-		datePickerEmissao.setValue(v.getDataadmissao().toLocalDate());
-		PrSalario.setText(v.getSalario());
+		PrRecado.setText(v.getTexto());
+		datePickerRecado.setValue(v.getDatarecado().toLocalDate());
 	}
 
 	private void limpaCampo() {
 		PrNome.clear();
-		PrRg.clear();
-		PrCpf.clear();
-		PrTelefone.clear();
-		PrCargo.clear();
-		PrSexo.clear();
-		PrSalario.clear();
-		datePickerEmissao.setValue(null);
-	}
-
-	private Funcionario obtemDados() {
-		return new Funcionario(PrNome.getText(), PrCargo.getText(), PrRg.getText(), PrCpf.getText(),
-				PrTelefone.getText(), PrSexo.getText(), java.sql.Date.valueOf(datePickerEmissao.getValue()),
-				PrSalario.getText());
-	}
-
-	private Funcionario obtemDadosID() {
-		return new Funcionario(Integer.valueOf(LabelLabel.getText()), PrNome.getText(), PrCargo.getText(),
-				PrRg.getText(), PrCpf.getText(), PrTelefone.getText(), PrSexo.getText(),
-				java.sql.Date.valueOf(datePickerEmissao.getValue()), PrSalario.getText());
+		PrRecado.clear();
+		datePickerRecado.setValue(null);
 
 	}
 
-	private Funcionario obtemDadosIDDeletar() {
-		Funcionario v = TableView.getSelectionModel().getSelectedItem();
+	private Recado obtemDados() {
+		return new Recado(PrNome.getText(), PrRecado.getText(), java.sql.Date.valueOf(datePickerRecado.getValue()));
+	}
+
+	private Recado obtemDadosID() {
+		return new Recado(Integer.valueOf(LabelLabel.getText()), PrNome.getText(), PrRecado.getText(),
+				java.sql.Date.valueOf(datePickerRecado.getValue()));
+	}
+
+	private Recado obtemDadosIDDeletar() {
+		Recado v = TableView.getSelectionModel().getSelectedItem();
 		LabelLabel.setText(Integer.toString(v.getId()));
 		PrNome.setText(v.getNome());
-		PrCargo.setText(v.getCargo());
-		PrRg.setText(v.getRg());
-		PrCpf.setText(v.getCpf());
-		PrTelefone.setText(v.getTelefone());
-		PrSexo.setText(v.getSexo());
-		datePickerEmissao.setValue(v.getDataadmissao().toLocalDate());
-		PrSalario.setText(v.getSalario());
+		PrRecado.setText(v.getTexto());
+		datePickerRecado.setValue(v.getDatarecado().toLocalDate());
 
-		return new Funcionario(Integer.valueOf(LabelLabel.getText()), PrNome.getText(), PrCargo.getText(),
-				PrRg.getText(), PrCpf.getText(), PrTelefone.getText(), PrSexo.getText(),
-				java.sql.Date.valueOf(datePickerEmissao.getValue()), PrSalario.getText());
-
+		return new Recado(Integer.valueOf(LabelLabel.getText()), PrNome.getText(), PrRecado.getText(),
+				java.sql.Date.valueOf(datePickerRecado.getValue()));
 	}
 
 	public boolean validaCampos() {
-		if (PrNome.getText().isEmpty() | PrRg.getText().isEmpty() | PrCpf.getText().isEmpty()
-				| PrTelefone.getText().isEmpty() | PrSalario.getText().isEmpty() | PrCargo.getText().isEmpty()
-				| PrSexo.getText().isEmpty()) {
+		if (PrNome.getText().isEmpty() | PrRecado.getText().isEmpty()) {
 			return false;
 		}
 		return true;
@@ -284,22 +230,18 @@ public class FuncionarioTable implements Initializable {
 
 	// Listar cadastros na TableView
 	public void StartTable() {
-		List<Funcionario> list = new FuncionarioDao().listAll();
+		List<Recado> list = new RecadoDao().listAll();
 		colNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
-		colCargo.setCellValueFactory(new PropertyValueFactory<>("Cargo"));
-		colRg.setCellValueFactory(new PropertyValueFactory<>("Rg"));
-		colCpf.setCellValueFactory(new PropertyValueFactory<>("Cpf"));
-		colTelefone.setCellValueFactory(new PropertyValueFactory<>("Telefone"));
-		colSexo.setCellValueFactory(new PropertyValueFactory<>("Sexo"));
-		colAdmissao.setCellValueFactory(new PropertyValueFactory<>("Dataadmissao"));
-		colSalario.setCellValueFactory(new PropertyValueFactory<>("salario"));
+		colData.setCellValueFactory(new PropertyValueFactory<>("Datarecado"));
+		colRecado.setCellValueFactory(new PropertyValueFactory<>("Texto"));
 		TableView.setItems(atualizaTabela());
-		numFuncionarios.setText(Integer.toString(list.size()));
+		numRecados.setText(Integer.toString(list.size()));
+
 	}
 
 	// Converter para Collections
-	public ObservableList<Funcionario> atualizaTabela() {
-		FuncionarioDao dao = new FuncionarioDao();
+	public ObservableList<Recado> atualizaTabela() {
+		RecadoDao dao = new RecadoDao();
 		return FXCollections.observableArrayList(dao.listAll());
 	}
 
@@ -307,11 +249,9 @@ public class FuncionarioTable implements Initializable {
 	// Executar Tela
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
 		StartTable();
-
 	}
-//
+
 //	public void execute() {
 //		launch();
 //	}
@@ -320,7 +260,7 @@ public class FuncionarioTable implements Initializable {
 //
 //	@Override
 //	public void start(Stage primaryStage) throws Exception {
-//		Parent root = FXMLLoader.load(getClass().getResource("FuncionarioTable.fxml"));
+//		Parent root = FXMLLoader.load(getClass().getResource("RecadoTable.fxml"));
 //		primaryStage.setScene(new Scene(root));
 //		// set stage borderless
 //		primaryStage.initStyle(StageStyle.UNDECORATED);
@@ -340,13 +280,42 @@ public class FuncionarioTable implements Initializable {
 //	}
 
 //-------------------------------------------------------------------------------------------------
-
-	public void handleClicks(ActionEvent actionEvent) throws IOException {
+	public void handleClicks(ActionEvent actionEvent) throws IOException, InterruptedException  {
+		if (actionEvent.getSource() == btnRecados) {
+			paneList.toFront();
+		}
 		if (actionEvent.getSource() == btnMenus) {
-			FXMLLoader fxmlLoader = new FXMLLoader(ControllerMenuTable.class.getResource("MenuTable.fxml"));
+				FXMLLoader fxmlLoader = new FXMLLoader(ControllerMenuTable.class.getResource("MenuTable.fxml"));
+				abrirNovaTela(fxmlLoader);
+				Stage stage = (Stage) btnMenus.getScene().getWindow();
+				stage.close();
+		}
+		if (actionEvent.getSource() == btnVisitante) {
+			FXMLLoader fxmlLoader = new FXMLLoader(ControllerTable.class.getResource("VisitanteTable.fxml"));
 			abrirNovaTela(fxmlLoader);
-			Stage stage = (Stage) btnMenus.getScene().getWindow();
+			Stage stage = (Stage) btnVisitante.getScene().getWindow();
 			stage.close();
+		}
+		if (actionEvent.getSource() == btnFuncionario) {
+
+				FXMLLoader fxmlLoader = new FXMLLoader(FuncionarioTable.class.getResource("FuncionarioTable.fxml"));
+				abrirNovaTela(fxmlLoader);
+				Stage stage = (Stage) btnFuncionario.getScene().getWindow();
+				stage.close();
+		}
+		if (actionEvent.getSource() == btnProprietario) {
+
+				FXMLLoader fxmlLoader = new FXMLLoader(ControllerPropTable.class.getResource("ProprietarioTable.fxml"));
+				abrirNovaTela(fxmlLoader);
+				Stage stage = (Stage) btnProprietario.getScene().getWindow();
+				stage.close();
+		}
+		if (actionEvent.getSource() == btnSignout) {
+			Thread.sleep(1500);
+				FXMLLoader fxmlLoader = new FXMLLoader(ControllerLogin.class.getResource("telafront.fxml"));
+				abrirNovaTela(fxmlLoader);
+				Stage stage = (Stage) btnSignout.getScene().getWindow();
+				stage.close();
 		}
 		if (actionEvent.getSource() == btnCadastrar) {
 			BTNSalvar.toFront();
@@ -367,15 +336,6 @@ public class FuncionarioTable implements Initializable {
 				EditarCadastro();
 			}
 		}
-		if (actionEvent.getSource() == btnSignout) {
-			FXMLLoader fxmlLoader = new FXMLLoader(ControllerLogin.class.getResource("telafront.fxml"));
-			abrirNovaTela(fxmlLoader);
-			Stage stage = (Stage) btnSignout.getScene().getWindow();
-			stage.close();
-		}
-		if (actionEvent.getSource() == btnFuncionario) {
-			paneList.toFront();
-		}
 	}
 
 	void abrirNovaTela(FXMLLoader y) throws IOException {
@@ -386,4 +346,5 @@ public class FuncionarioTable implements Initializable {
 		stage.setScene(new Scene(root1));
 		stage.show();
 	}
+
 }

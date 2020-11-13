@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.menu.ControllerMenuSindico">
+   <left>
+      <VBox alignment="TOP_CENTER" prefHeight="465.0" prefWidth="256.0" spacing="2.0" style="-fx-background-color: #05071F; -fx-border-color: #fff; -fx-border-width: 3;" BorderPane.alignment="TOP_CENTER">
+         <children>
+            <ImageView fitHeight="83.0" fitWidth="93.0" pickOnBounds="true" preserveRatio="true">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="50.0" />
+               </VBox.margin>
+               <image>
+                  <Image url="@../../services/out/images/icons8_manager_240px_1.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="labelNome1" text="Bem Vindo!" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelNome" text="Sindico" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font></Label>
+            <Button fx:id="btnMenus" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-border-color: white;" stylesheets="@../../services/style.css" text="Menu" />
+            <Button fx:id="btnSettings" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-border-color: white;" stylesheets="@../../services/style.css" text="Settings" />
+            <Button fx:id="btnSignout" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-border-color: white;" stylesheets="@../../services/style.css" text="Logout" />
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <Pane fx:id="paneMenu" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #666;" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="130.0" prefWidth="794.0" style="-fx-background-color: #05071F; -fx-border-color: white; -fx-border-width: 3;">
+               <children>
+                  <Label layoutX="274.0" layoutY="34.0" text="Siscond v1.0" textFill="#f5f5f5">
+                     <font>
+                        <Font name="System Bold" size="42.0" />
+                     </font>
+                  </Label>
+                  <JFXButton layoutX="756.0" onAction="#Exit" ripplerFill="WHITE" text="X" textFill="WHITE">
+                     <font>
+                        <Font name="Comic Sans MS Bold" size="18.0" />
+                     </font>
+                  </JFXButton>
+               </children>
+            </Pane>
+            <VBox layoutX="5.0" layoutY="198.0" prefHeight="261.0" prefWidth="784.0" spacing="10.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="753.0" spacing="30.0">
+                     <children>
+                        <Pane prefHeight="118.0" prefWidth="183.0" style="-fx-background-color: #dadada;">
+                           <children>
+                              <Label layoutX="35.0" layoutY="69.0" text="Funcionários" textFill="#8f8f8f">
+                                 <font>
+                                    <Font name="System Bold" size="19.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="62.0" fitWidth="66.0" layoutX="61.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../services/out/images/icons8_staff_96px.png" />
+                                 </image>
+                              </ImageView>
+                              <JFXButton fx:id="btnFuncionario" layoutY="-9.0" onAction="#trataMenu" prefHeight="118.0" prefWidth="183.0" ripplerFill="BLACK" text=" ">
+                                 <effect>
+                                    <DropShadow color="#1a02f7" />
+                                 </effect>
+                              </JFXButton>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="118.0" prefWidth="183.0" style="-fx-background-color: #dadada;">
+                           <children>
+                              <Label layoutX="48.0" layoutY="72.0" text="Visitantes" textFill="#8f8f8f">
+                                 <font>
+                                    <Font name="System Bold" size="19.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="62.0" fitWidth="66.0" layoutX="60.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../services/out/images/icons8_member_96px.png" />
+                                 </image>
+                              </ImageView>
+                              <JFXButton fx:id="btnVisitante" layoutY="-9.0" onAction="#trataMenu" prefHeight="118.0" prefWidth="183.0" ripplerFill="BLACK" text=" " />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="118.0" prefWidth="183.0" style="-fx-background-color: #dadada;">
+                           <children>
+                              <Label layoutX="35.0" layoutY="69.0" text="Proprietários" textFill="#8f8f8f">
+                                 <font>
+                                    <Font name="System Bold" size="19.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="62.0" fitWidth="66.0" layoutX="62.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../services/out/images/icons8_manager_96px_1.png" />
+                                 </image>
+                              </ImageView>
+                              <JFXButton fx:id="btnProprietario" layoutY="-9.0" onAction="#trataMenu" prefHeight="118.0" prefWidth="183.0" ripplerFill="BLACK" text=" " />
+                           </children>
+                        </Pane>
+                     </children>
+                     <padding>
+                        <Insets left="70.0" />
+                     </padding>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="753.0" spacing="30.0">
+                     <children>
+                        <Pane prefHeight="118.0" prefWidth="183.0" style="-fx-background-color: #dadada;">
+                           <children>
+                              <Label layoutX="55.0" layoutY="72.0" text="Recados" textFill="#8f8f8f">
+                                 <font>
+                                    <Font name="System Bold" size="19.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="62.0" fitWidth="66.0" layoutX="62.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../services/out/images/icons8_letterbox_96px.png" />
+                                 </image>
+                              </ImageView>
+                              <JFXButton fx:id="btnRecado" layoutX="1.0" layoutY="-9.0" onAction="#trataMenu" prefHeight="118.0" prefWidth="183.0" ripplerFill="BLACK" text=" " />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="118.0" prefWidth="183.0" style="-fx-background-color: #dadada;">
+                           <children>
+                              <Label layoutX="43.0" layoutY="72.0" text="Moradores" textFill="#8f8f8f">
+                                 <font>
+                                    <Font name="System Bold" size="19.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="62.0" fitWidth="66.0" layoutX="67.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../services/out/images/icons8_user_male_96px.png" />
+                                 </image>
+                              </ImageView>
+                              <JFXButton fx:id="btnMorador" layoutY="-5.0" onAction="#trataMenu" prefHeight="118.0" prefWidth="183.0" ripplerFill="BLACK" text=" " />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="118.0" prefWidth="183.0" style="-fx-background-color: #dadada;">
+                           <children>
+                              <Label layoutX="85.0" layoutY="72.0" text="Y" textFill="#8f8f8f">
+                                 <font>
+                                    <Font name="System Bold" size="19.0" />
+                                 </font>
+                              </Label>
+                              <JFXButton fx:id="btnY" layoutX="1.0" layoutY="-8.0" onAction="#trataMenu" prefHeight="118.0" prefWidth="183.0" ripplerFill="BLACK" text=" " />
+                           </children>
+                        </Pane>
+                     </children>
+                     <padding>
+                        <Insets left="70.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
+         </children></Pane>
+   </center>
+</BorderPane>

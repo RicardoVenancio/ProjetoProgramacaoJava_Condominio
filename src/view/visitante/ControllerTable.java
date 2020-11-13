@@ -119,6 +119,9 @@ public class ControllerTable implements Initializable {
 	private Button btnFuncionario;
 	
 	@FXML
+	private Button btnVoltar;
+	
+	@FXML
 	private Button btnRecado;
 
 	@FXML
@@ -287,57 +290,28 @@ public class ControllerTable implements Initializable {
 	// Executar Tela
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
+		
+		ControllerLogin x = new ControllerLogin();
+		if(x.usuario == "funcionario") {
+			btnApagar.setVisible(false);
+		}else {
+			btnApagar.setVisible(true);
+		}
 		StartTable();
 
 	}
 
-//	public void execute() {
-//		launch();
-//	}
-//
-//	private double x, y;
-//
-//	@Override
-//	public void start(Stage primaryStage) throws Exception {
-//		Parent root = FXMLLoader.load(getClass().getResource("VisitanteTable.fxml"));
-//		primaryStage.setScene(new Scene(root));
-//		// set stage borderless
-//		primaryStage.initStyle(StageStyle.UNDECORATED);
-//
-//		// drag it here
-//		root.setOnMousePressed(event -> {
-//			x = event.getSceneX();
-//			y = event.getSceneY();
-//		});
-//		root.setOnMouseDragged(event -> {
-//
-//			primaryStage.setX(event.getScreenX() - x);
-//			primaryStage.setY(event.getScreenY() - y);
-//
-//		});
-//		primaryStage.show();
-//	}
-
 //-------------------------------------------------------------------------------------------------
 	public void handleClicks(ActionEvent actionEvent) throws IOException {
-		if (actionEvent.getSource() == btnMenus) {
-			FXMLLoader fxmlLoader = new FXMLLoader(ControllerMenuTable.class.getResource("MenuTable.fxml"));
-			abrirNovaTela(fxmlLoader);
-			Stage stage = (Stage) btnMenus.getScene().getWindow();
-			stage.close();
-		}
-		if (actionEvent.getSource() == btnSignout) {
-				FXMLLoader fxmlLoader = new FXMLLoader(ControllerLogin.class.getResource("telafront.fxml"));
-				abrirNovaTela(fxmlLoader);
-				Stage stage = (Stage) btnSignout.getScene().getWindow();
-				stage.close();
-		}
 		if (actionEvent.getSource() == btnCadastrar) {
 			BTNSalvar.toFront();
 			BTNSalvar.setVisible(true);
 			BTNEditar.setVisible(false);
 			paneCadastro.toFront();
+		}
+		if (actionEvent.getSource() == btnVoltar) {
+			paneList.toFront();
+			limpaCampo();
 		}
 		if (actionEvent.getSource() == btnEditar) {
 			boolean v = TableView.getSelectionModel().isEmpty();

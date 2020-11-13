@@ -8,6 +8,7 @@ public class Morador {
 	private String nomeMorador;
 	private String telefoneMorador;
 	private String emailMorador;
+	
 	public Morador(int idMorador, String nomeMorador, String telefoneMorador, String emailMorador) {
 		super();
 		this.idMorador = idMorador;

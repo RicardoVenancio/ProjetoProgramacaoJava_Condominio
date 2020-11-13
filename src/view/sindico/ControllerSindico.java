@@ -38,6 +38,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import view.login.ControllerLogin;
 
 public class ControllerSindico implements Initializable{
@@ -165,7 +166,7 @@ public class ControllerSindico implements Initializable{
     }
 
     @FXML
-    void SalvarSindico(ActionEvent event) {
+    void SalvarSindico(ActionEvent event) throws IOException {
     	if(validaCampos()) {
     		Sindico sindico = obtemDados();
     		limpaCampo();
@@ -173,7 +174,6 @@ public class ControllerSindico implements Initializable{
     		listarSindicos();
     		System.out.println(qtde);
     		navegacaoTelaLogin();
-    		fecharTelaSindico();
     	}else {
 			new ShowAlert().validaAlert();
     	}
@@ -224,16 +224,15 @@ public class ControllerSindico implements Initializable{
 //    });
     }
     
-    public void navegacaoTelaLogin() {
-        try {
+    public void navegacaoTelaLogin() throws IOException {
             FXMLLoader fxmlLoader = new FXMLLoader(ControllerLogin.class.getResource("telafront.fxml"));
             Parent root1 = fxmlLoader.load();
             Stage stage = new Stage();
+    		stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root1));
             stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    		fecharTelaSindico();
+
     }
     
     public void fecharTelaSindico() {
@@ -264,6 +263,5 @@ public class ControllerSindico implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		listarSindicos();
-		
 	}	 
 }

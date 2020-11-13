@@ -93,7 +93,7 @@ public Sindico findByID(int idSindico) {
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
-	
+	System.out.println(sindicoo);
 	return sindicoo;
 	}
 

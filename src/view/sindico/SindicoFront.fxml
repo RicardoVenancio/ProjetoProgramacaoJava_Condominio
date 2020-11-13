@@ -42,5 +42,10 @@
          </font>
       </JFXButton>
       <Label fx:id="LabelLabel" layoutX="108.0" layoutY="47.0" text="Label" />
+      <JFXButton fx:id="btnVoltar" layoutX="712.0" layoutY="450.0" onAction="#navegacaoTelaLogin" prefHeight="38.0" prefWidth="76.0" ripplerFill="#1c73a1" style="-fx-background-color: #fff9;" text="Voltar" textFill="#6f6f6f">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

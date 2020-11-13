@@ -1,220 +1,392 @@
 package view.funcionario;
 
-
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextField;
+
+import alerts.ShowAlert;
 import dao.FuncionarioDao;
-
-import java.sql.Date;
-
 import entity.Funcionario;
-import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Modality;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import view.login.ControllerLogin;
+import view.menu.ControllerMenuTable;
+import view.proprietario.ControllerPropTable;
+import view.recado.ControllerRecadoTable;
+import view.visitante.ControllerTable;
 
+public class ControllerFuncionario implements Initializable {
 
-public class ControllerFuncionario extends Application implements Initializable{
+	@FXML
+	private Pane paneCadastro;
 
+	@FXML
+	private JFXTextField PrRg;
 
-	 @FXML
-	    private Button BTSalvar;
+	@FXML
+	private JFXTextField PrCargo;
 
-	    @FXML
-	    private Button BTEditar;
+	@FXML
+	private JFXTextField PrTelefone;
 
-	    @FXML
-	    private Button BTExcluir;
+	@FXML
+	private JFXTextField PrCpf;
 
-	    @FXML
-	    private TextField PrNome;
+	@FXML
+	private JFXTextField PrSexo;
 
-	    @FXML
-	    private TextField PrCargo;
+	@FXML
+	private JFXTextField PrSalario;
 
-	    @FXML
-	    private TextField PrRg;
+	@FXML
+	private Label LabelLabel;
 
-	    @FXML
-	    private TextArea textAreaLista;
+	@FXML
+	private JFXTextField PrNome;
 
-	    @FXML
-	    private TextField PrId;
+	@FXML
+	private JFXButton BTNEditar;
 
-	    @FXML
-	    private Label Labelid;
+	@FXML
+	private JFXButton BTNSalvar;
+	@FXML
+	private JFXButton BTNVoltar;
 
-	    @FXML
-	    private Label LabelLabel;
+	@FXML
+	private JFXDatePicker datePickerEmissao;
 
-	    @FXML
-	    private Button BTBuscarID;
+	@FXML
+	private Pane paneList;
 
+	@FXML
+	private Label numFuncionarios;
 
-	    @FXML
-	    private TextField PrCpf;
+	@FXML
+	private Label lastVisit;
 
-	    @FXML
-	    private TextField PrSexo;
+	@FXML
+	private Button btnCadastrar;
 
-	    @FXML
-	    private DatePicker datePickerEmissao;
-	    @FXML
-	    private TextField PrSalario;
+	@FXML
+	private Button btnEditar;
 
-	    @FXML
-	    private TextField PrTelefone;
+	@FXML
+	private Button btnApagar;
 
+	@FXML
+	private TableView<Funcionario> TableView;
 
+	@FXML
+	private TableColumn<Funcionario, String> colNome;
 
-    @FXML
-    void buscarID(ActionEvent event) {
-    	String idString = PrId.getText();
-    	Funcionario funcionario = null;
-    	if(!idString.equals("")) {
-    		try {
-    			int id = Integer.valueOf(idString);
-    			funcionario = new FuncionarioDao().findByID(id);
-    		} catch (Exception e) {
-    	
-    		} 
-    		if(funcionario != null) {
-    			Labelid.setVisible(true);
-    			LabelLabel.setVisible(true);
-    			LabelLabel.setText(funcionario.getId()+  "");
-    			PrNome.setText(funcionario.getNome());
-    			PrCargo.setText(funcionario.getCargo());
-    			PrRg.setText(funcionario.getRg());
-    			PrCpf.setText(funcionario.getCpf());
-    			PrTelefone.setText(funcionario.getTelefone());
-    			PrSexo.setText(funcionario.getSexo());
-    			datePickerEmissao.setValue(funcionario.getDataadmissao().toLocalDate());
-    			PrSalario.setText(String.valueOf(funcionario.getSalario()));
-    		}
-    	}
-    	PrId.clear();
-    }
-     
-    @FXML
-    void ExcluirFuncionario(ActionEvent event) {
-    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-  	 alert.setTitle("ATENÇÃO");
-	 alert.setHeaderText("EXCLUIR DADOS");
-	 alert.setContentText("VOCÊ TEM CERTEZA QUE DESEJA EXCLUIR O FUNCIONARIO?");
-       Optional<ButtonType> result = alert.showAndWait();
-       
-        if (result.get() == ButtonType.OK){
-        	System.out.println("olá");
-            Funcionario funcionario= obtemDadosID();
-            int qtde = new FuncionarioDao().deletar(funcionario.getId());
-            limpaCampo();
-            listarFuncionario();
-            
-        }
-    }
+	@FXML
+	private TableColumn<Funcionario, String> colCargo;
 
-    @FXML
-    void SalvarFuncionario(ActionEvent event) {
-    	Funcionario funcionario = obtemDados();
-    	limpaCampo();
-    	int qtde = new FuncionarioDao().inserir(funcionario);
-    	listarFuncionario();
-    	System.out.println(qtde);
-    }
-    
-    @FXML
-    void EditarFuncionario(ActionEvent event) {
-    	Funcionario funcionario = obtemDadosID();
-    	limpaCampo();
-    	int qtde = new FuncionarioDao().alterar(funcionario);
-    	listarFuncionario();
-    }
-    
-    private void limpaCampo() {
-    	PrNome.clear();
-    	PrCargo.clear();
-    	PrRg.clear();
-    	PrCpf.clear();
-    	PrTelefone.clear();
-    	PrSexo.clear();
-    	datePickerEmissao.setValue(null); 
-    	PrSalario.clear();
-    			
-    	PrNome.requestFocus();
-    	
-    	LabelLabel.setVisible(false);
-    	LabelLabel.setText("");
-    	Labelid.setVisible(false);
-    }
-    
-    
-    private Funcionario obtemDados() {
-    	return new Funcionario(PrNome.getText(), PrCargo.getText(), PrRg.getText(), PrCpf.getText(), PrTelefone.getText(), PrSexo.getText(), java.sql.Date.valueOf(datePickerEmissao.getValue()),PrSalario.getText());
-    }
+	@FXML
+	private TableColumn<Funcionario, String> colRg;
 
-    private Funcionario obtemDadosID() {
-    	
-    	return new Funcionario(Integer.valueOf(LabelLabel.getText()), PrNome.getText(), PrCargo.getText(), PrRg.getText(), PrCpf.getText(), PrTelefone.getText(), PrSexo.getText(),java.sql.Date.valueOf(datePickerEmissao.getValue()), PrSalario.getText());
-    }
-    
-    
-    private void listarFuncionario() {
-    	textAreaLista.clear();
-    	List<Funcionario> listaFuncionario = new FuncionarioDao().listAll();
-    listaFuncionario.forEach(funcionario -> {
-    	textAreaLista.appendText(funcionario.toString() +"\n");
-    });
-    textAreaLista.appendText("Listando total de funcionarios:"+ listaFuncionario.size());
-    }
-    
-    public void execute() {
-        launch();
-    }
+	@FXML
+	private TableColumn<Funcionario, String> colCpf;
 
-    @Override
-    public void start(Stage stage) {
+	@FXML
+	private TableColumn<Funcionario, String> colTelefone;
 
-        try {
-            AnchorPane pane = (AnchorPane) FXMLLoader.load(getClass().getResource("FuncionarioView.fxml"));
-            Scene sc = new Scene(pane);
-            stage.setScene(sc);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }   
-    }   	
+	@FXML
+	private TableColumn<Funcionario, String> colSalario;
 
-    
-    
+	@FXML
+	private TableColumn<Funcionario, String> colSexo;
+
+	@FXML
+	private TableColumn<Funcionario, String> colAdmissao;
+
+	@FXML
+	private TextField txtBuscar;
+
+	@FXML
+	private Label Fechar;
+
+	@FXML
+	private Button btnFuncionario;
+
+	@FXML
+	private Button btnRecado;
+
+	@FXML
+	private Button btnVisitante;
+
+	@FXML
+	private Button btnProprietario;
+
+	@FXML
+	private Button btnMenus;
+
+	@FXML
+	private Button btnPackages;
+
+	@FXML
+	private Button btnSettings;
+
+	@FXML
+	private Button btnSignout;
+
+	@FXML
+	void findByName(ActionEvent event) {
+
+	}
+
+	@FXML
+	void Salvar(ActionEvent event) {
+		if (validaCampos()) {
+			Funcionario funcionario = obtemDados();
+			limpaCampo();
+			int qtde = new FuncionarioDao().inserir(funcionario);
+			StartTable();
+			paneList.toFront();
+			System.out.println(qtde);
+		} else {
+			new ShowAlert().validaAlert();
+		}
+	}
+
+	@FXML
+	void Salvarfuncionario(ActionEvent event) throws IOException {
+		if (validaCampos()) {
+			Funcionario funcionario = obtemDados();
+			limpaCampo();
+			int qtde = new FuncionarioDao().inserir(funcionario);
+			navegacaoTelaLogin();
+			System.out.println(qtde);
+		} else {
+			new ShowAlert().validaAlert();
+		}
+	}
+
+	@FXML
+	void Editar(ActionEvent event) {
+		if (validaCampos()) {
+			Funcionario funcionario = obtemDadosID();
+			limpaCampo();
+			int qtde = new FuncionarioDao().alterar(funcionario);
+			StartTable();
+			paneList.toFront();
+		} else {
+			new ShowAlert().validaAlert();
+		}
+	}
+
+	@FXML
+	void Excluir(ActionEvent event) {
+		boolean v = TableView.getSelectionModel().isEmpty();
+		if (v == true) {
+			new ShowAlert().SelecionarPessoa();
+		} else {
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+			alert.setTitle("Alerta!");
+			alert.setHeaderText("Dados à serem apagados.");
+			alert.setContentText("Pressione OK para apagar este usuario.");
+			Optional<ButtonType> result = alert.showAndWait();
+
+			if (result.get() == ButtonType.OK) {
+				System.out.println("Cadastro Apagado");
+				Funcionario funcionario = obtemDadosIDDeletar();
+				int qtde = new FuncionarioDao().deletar(funcionario.getId());
+				limpaCampo();
+				StartTable();
+			}
+		}
+	}
+
+	void EditarCadastro() {
+		Funcionario v = TableView.getSelectionModel().getSelectedItem();
+		LabelLabel.setText(Integer.toString(v.getId()));
+		PrNome.setText(v.getNome());
+		PrCargo.setText(v.getCargo());
+		PrRg.setText(v.getRg());
+		PrCpf.setText(v.getCpf());
+		PrTelefone.setText(v.getTelefone());
+		PrSexo.setText(v.getSexo());
+		datePickerEmissao.setValue(v.getDataadmissao().toLocalDate());
+		PrSalario.setText(v.getSalario());
+	}
+
+	private void limpaCampo() {
+		PrNome.clear();
+		PrRg.clear();
+		PrCpf.clear();
+		PrTelefone.clear();
+		PrCargo.clear();
+		PrSexo.clear();
+		PrSalario.clear();
+		datePickerEmissao.setValue(null);
+	}
+
+	private Funcionario obtemDados() {
+		return new Funcionario(PrNome.getText(), PrCargo.getText(), PrRg.getText(), PrCpf.getText(),
+				PrTelefone.getText(), PrSexo.getText(), java.sql.Date.valueOf(datePickerEmissao.getValue()),
+				PrSalario.getText());
+	}
+
+	private Funcionario obtemDadosID() {
+		return new Funcionario(Integer.valueOf(LabelLabel.getText()), PrNome.getText(), PrCargo.getText(),
+				PrRg.getText(), PrCpf.getText(), PrTelefone.getText(), PrSexo.getText(),
+				java.sql.Date.valueOf(datePickerEmissao.getValue()), PrSalario.getText());
+
+	}
+
+	private Funcionario obtemDadosIDDeletar() {
+		Funcionario v = TableView.getSelectionModel().getSelectedItem();
+		LabelLabel.setText(Integer.toString(v.getId()));
+		PrNome.setText(v.getNome());
+		PrCargo.setText(v.getCargo());
+		PrRg.setText(v.getRg());
+		PrCpf.setText(v.getCpf());
+		PrTelefone.setText(v.getTelefone());
+		PrSexo.setText(v.getSexo());
+		datePickerEmissao.setValue(v.getDataadmissao().toLocalDate());
+		PrSalario.setText(v.getSalario());
+
+		return new Funcionario(Integer.valueOf(LabelLabel.getText()), PrNome.getText(), PrCargo.getText(),
+				PrRg.getText(), PrCpf.getText(), PrTelefone.getText(), PrSexo.getText(),
+				java.sql.Date.valueOf(datePickerEmissao.getValue()), PrSalario.getText());
+
+	}
+
+	public boolean validaCampos() {
+		if (PrNome.getText().isEmpty() | PrRg.getText().isEmpty() | PrCpf.getText().isEmpty()
+				| PrTelefone.getText().isEmpty() | PrSalario.getText().isEmpty() | PrCargo.getText().isEmpty()
+				| PrSexo.getText().isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+
+	// Sair ou fechar o programa
+	public void Exit() {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Alerta!");
+		alert.setHeaderText("Sair");
+		alert.setContentText("Deseja sair do programa?");
+		Optional<ButtonType> result = alert.showAndWait();
+
+		if (result.get() == ButtonType.OK) {
+			System.exit(1);
+		}
+	}
+
+	// Listar cadastros na TableView
+	public void StartTable() {
+		List<Funcionario> list = new FuncionarioDao().listAll();
+		colNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
+		colCargo.setCellValueFactory(new PropertyValueFactory<>("Cargo"));
+		colRg.setCellValueFactory(new PropertyValueFactory<>("Rg"));
+		colCpf.setCellValueFactory(new PropertyValueFactory<>("Cpf"));
+		colTelefone.setCellValueFactory(new PropertyValueFactory<>("Telefone"));
+		colSexo.setCellValueFactory(new PropertyValueFactory<>("Sexo"));
+		colAdmissao.setCellValueFactory(new PropertyValueFactory<>("Dataadmissao"));
+		colSalario.setCellValueFactory(new PropertyValueFactory<>("salario"));
+		TableView.setItems(atualizaTabela());
+		numFuncionarios.setText(Integer.toString(list.size()));
+	}
+
+	// Converter para Collections
+	public ObservableList<Funcionario> atualizaTabela() {
+		FuncionarioDao dao = new FuncionarioDao();
+		return FXCollections.observableArrayList(dao.listAll());
+	}
+
+	public void navegacaoTelaLogin() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(ControllerLogin.class.getResource("telafront.fxml"));
+		Parent root1 = fxmlLoader.load();
+		Stage stage = new Stage();
+		stage.initStyle(StageStyle.UNDECORATED);
+		stage.setScene(new Scene(root1));
+		stage.show();
+		fecharTela();
+
+	}
+
+	public void fecharTela() {
+		Stage stage = (Stage) BTNSalvar.getScene().getWindow();
+		stage.close();
+	}
+
+//-------------------------------------------------------------------------------------------------
+	ControllerLogin x = new ControllerLogin();
+
+	// Executar Tela
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		listarFuncionario();
-		
-	}	 
+	public void initialize(URL arg0, ResourceBundle arg1) {
+	}
+
+//-------------------------------------------------------------------------------------------------
+
+	public void handleClicks(ActionEvent actionEvent) throws IOException {
+		if (actionEvent.getSource() == btnMenus) {
+			FXMLLoader fxmlLoader = new FXMLLoader(ControllerMenuTable.class.getResource("MenuTable.fxml"));
+			abrirNovaTela(fxmlLoader);
+			Stage stage = (Stage) btnMenus.getScene().getWindow();
+			stage.close();
+		}
+		if (actionEvent.getSource() == btnCadastrar) {
+			BTNSalvar.toFront();
+			BTNSalvar.setVisible(true);
+			BTNEditar.setVisible(false);
+			paneCadastro.toFront();
+		}
+		if (actionEvent.getSource() == btnEditar) {
+			boolean v = TableView.getSelectionModel().isEmpty();
+			System.out.println(v);
+			if (v == true) {
+				new ShowAlert().SelecionarPessoaEditar();
+			} else {
+				BTNEditar.toFront();
+				BTNEditar.setVisible(true);
+				BTNSalvar.setVisible(false);
+				paneCadastro.toFront();
+				EditarCadastro();
+			}
+		}
+		if (actionEvent.getSource() == btnSignout) {
+			FXMLLoader fxmlLoader = new FXMLLoader(ControllerLogin.class.getResource("telafront.fxml"));
+			abrirNovaTela(fxmlLoader);
+			Stage stage = (Stage) btnSignout.getScene().getWindow();
+			stage.close();
+		}
+		if (actionEvent.getSource() == btnFuncionario) {
+			paneList.toFront();
+		}
+	}
+
+	void abrirNovaTela(FXMLLoader y) throws IOException {
+		FXMLLoader fxmlLoader = y;
+		Parent root1 = fxmlLoader.load();
+		Stage stage = new Stage();
+		stage.initStyle(StageStyle.UNDECORATED);
+		stage.setScene(new Scene(root1));
+		stage.show();
+	}
 }
-
-
-
-
-
-
-

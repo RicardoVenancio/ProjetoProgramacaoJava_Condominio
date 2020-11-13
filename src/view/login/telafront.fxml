@@ -27,7 +27,7 @@
                </font></JFXButton>
             <ImageView fitHeight="26.0" fitWidth="27.0" layoutX="30.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../services/out/images/icons8_login_96px.png" />
+                  <Image url="@../../services/out/images/icons8_login_32px.png" />
                </image>
                <effect>
                   <ColorAdjust brightness="-1.0" contrast="-1.0" hue="-1.0" />
@@ -35,7 +35,7 @@
             </ImageView>
             <ImageView fitHeight="26.0" fitWidth="27.0" layoutX="30.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../services/out/images/icons8_password_96px.png" />
+                  <Image url="@../../services/out/images/icons8_password_32px.png" />
                </image>
                <effect>
                   <ColorAdjust brightness="-1.0" contrast="-1.0" hue="-1.0" />

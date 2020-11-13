@@ -1,18 +1,15 @@
 package principal;
 
-import javafx.scene.control.Button;
-import javafx.stage.Stage;
-import view.funcionario.FuncionarioTable;
 import view.login.ControllerLogin;
-import view.proprietario.ControllerPropTable;
-import view.recado.ControllerRecadoTable;
-import view.sindico.ControllerSindico;
-import view.visitante.ControllerTable;
+import view.menu.ControllerMenuFuncionario;
+import view.menu.ControllerMenuSindico;
 
 public class Principal {
 
 	public static void main(String[] args) {
 
+//		new ControllerMenuSindico().execute();
+//		new ControllerMenuFuncionario().execute();
 		new ControllerLogin().execute();
 	}
 

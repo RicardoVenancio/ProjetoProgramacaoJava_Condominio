@@ -169,6 +169,19 @@ public class FuncionarioTable implements Initializable {
 			new ShowAlert().validaAlert();
 		}
 	}
+	
+	@FXML
+	void Salvarfuncionario(ActionEvent event) throws IOException {
+		if (validaCampos()) {
+			Funcionario funcionario = obtemDados();
+			limpaCampo();
+			int qtde = new FuncionarioDao().inserir(funcionario);
+			navegacaoTelaLogin();
+			System.out.println(qtde);
+		} else {
+			new ShowAlert().validaAlert();
+		}
+	}
 
 	@FXML
 	void Editar(ActionEvent event) {
@@ -303,41 +316,28 @@ public class FuncionarioTable implements Initializable {
 		return FXCollections.observableArrayList(dao.listAll());
 	}
 
+	 public void navegacaoTelaLogin() throws IOException {
+         FXMLLoader fxmlLoader = new FXMLLoader(ControllerLogin.class.getResource("telafront.fxml"));
+         Parent root1 = fxmlLoader.load();
+         Stage stage = new Stage();
+ 		stage.initStyle(StageStyle.UNDECORATED);
+         stage.setScene(new Scene(root1));
+         stage.show();
+ 		fecharTela();
+
+ }
+ 
+ public void fecharTela() {
+ 	Stage stage = (Stage) BTNSalvar.getScene().getWindow();
+ 	stage.close();
+ }
 //-------------------------------------------------------------------------------------------------
+	ControllerLogin x = new ControllerLogin();
 	// Executar Tela
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
 		StartTable();
-
 	}
-//
-//	public void execute() {
-//		launch();
-//	}
-//
-//	private double x, y;
-//
-//	@Override
-//	public void start(Stage primaryStage) throws Exception {
-//		Parent root = FXMLLoader.load(getClass().getResource("FuncionarioTable.fxml"));
-//		primaryStage.setScene(new Scene(root));
-//		// set stage borderless
-//		primaryStage.initStyle(StageStyle.UNDECORATED);
-//
-//		// drag it here
-//		root.setOnMousePressed(event -> {
-//			x = event.getSceneX();
-//			y = event.getSceneY();
-//		});
-//		root.setOnMouseDragged(event -> {
-//
-//			primaryStage.setX(event.getScreenX() - x);
-//			primaryStage.setY(event.getScreenY() - y);
-//
-//		});
-//		primaryStage.show();
-//	}
 
 //-------------------------------------------------------------------------------------------------
 

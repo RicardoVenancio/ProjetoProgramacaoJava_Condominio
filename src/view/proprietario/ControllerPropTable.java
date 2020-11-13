@@ -77,6 +77,9 @@ public class ControllerPropTable implements Initializable {
 
 	@FXML
 	private JFXButton btnCadastrar;
+	
+	@FXML
+	private JFXButton btnVoltar;
 
 	@FXML
 	private JFXButton BTNEditar;
@@ -304,20 +307,15 @@ public class ControllerPropTable implements Initializable {
 
 //-------------------------------------------------------------------------------------------------
 	public void handleClicks(ActionEvent actionEvent) throws IOException {
-		if (actionEvent.getSource() == btnMenus) {
-			FXMLLoader fxmlLoader = new FXMLLoader(ControllerMenuTable.class.getResource("MenuTable.fxml"));
-			abrirNovaTela(fxmlLoader);
-			Stage stage = (Stage) btnMenus.getScene().getWindow();
-			stage.close();
-		}
 		if (actionEvent.getSource() == btnSignout) {
 				FXMLLoader fxmlLoader = new FXMLLoader(ControllerLogin.class.getResource("telafront.fxml"));
 				abrirNovaTela(fxmlLoader);
 				Stage stage = (Stage) btnSignout.getScene().getWindow();
 				stage.close();
 		}
-		if (actionEvent.getSource() == btnProprietario) {
+		if (actionEvent.getSource() == btnVoltar) {
 			paneList.toFront();
+			limpaCampo();
 		}
 		if (actionEvent.getSource() == btnCadastrar) {
 			btnSalvar.toFront();

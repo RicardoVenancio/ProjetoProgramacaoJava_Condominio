@@ -13,7 +13,6 @@ import com.jfoenix.controls.JFXTextField;
 import alerts.ShowAlert;
 import dao.RecadoDao;
 import entity.Recado;
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -52,6 +51,9 @@ public class ControllerRecadoTable implements Initializable {
 
 	@FXML
 	private JFXButton btnCadastrar;
+	
+	@FXML
+	private JFXButton btnVoltar;
 
 	@FXML
 	private JFXButton btnEditar;
@@ -281,41 +283,16 @@ public class ControllerRecadoTable implements Initializable {
 
 //-------------------------------------------------------------------------------------------------
 	public void handleClicks(ActionEvent actionEvent) throws IOException, InterruptedException  {
-		if (actionEvent.getSource() == btnRecados) {
-			paneList.toFront();
-		}
-		if (actionEvent.getSource() == btnMenus) {
-				FXMLLoader fxmlLoader = new FXMLLoader(ControllerMenuTable.class.getResource("MenuTable.fxml"));
-				abrirNovaTela(fxmlLoader);
-				Stage stage = (Stage) btnMenus.getScene().getWindow();
-				stage.close();
-		}
-		if (actionEvent.getSource() == btnVisitante) {
-			FXMLLoader fxmlLoader = new FXMLLoader(ControllerTable.class.getResource("VisitanteTable.fxml"));
-			abrirNovaTela(fxmlLoader);
-			Stage stage = (Stage) btnVisitante.getScene().getWindow();
-			stage.close();
-		}
-		if (actionEvent.getSource() == btnFuncionario) {
-
-				FXMLLoader fxmlLoader = new FXMLLoader(FuncionarioTable.class.getResource("FuncionarioTable.fxml"));
-				abrirNovaTela(fxmlLoader);
-				Stage stage = (Stage) btnFuncionario.getScene().getWindow();
-				stage.close();
-		}
-		if (actionEvent.getSource() == btnProprietario) {
-
-				FXMLLoader fxmlLoader = new FXMLLoader(ControllerPropTable.class.getResource("ProprietarioTable.fxml"));
-				abrirNovaTela(fxmlLoader);
-				Stage stage = (Stage) btnProprietario.getScene().getWindow();
-				stage.close();
-		}
 		if (actionEvent.getSource() == btnSignout) {
 			Thread.sleep(1500);
 				FXMLLoader fxmlLoader = new FXMLLoader(ControllerLogin.class.getResource("telafront.fxml"));
 				abrirNovaTela(fxmlLoader);
 				Stage stage = (Stage) btnSignout.getScene().getWindow();
 				stage.close();
+		}
+		if (actionEvent.getSource() == btnVoltar) {
+			paneList.toFront();
+			limpaCampo();
 		}
 		if (actionEvent.getSource() == btnCadastrar) {
 			BTNSalvar.toFront();

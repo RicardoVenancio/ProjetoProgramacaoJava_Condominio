@@ -6,172 +6,276 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
+
+import alerts.ShowAlert;
 import dao.moradorDao;
 import entity.Morador;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import view.login.ControllerLogin;
+import view.menu.ControllerMenuTable;
 import view.morador.MoradorController;
 
-public class MoradorController extends Application implements Initializable {
+public class MoradorController implements Initializable {
 
-	@FXML
-	private Label lblTitleId;
 
-	@FXML
-	private Label lblNumId;
+    @FXML
+    private Pane paneCadastro;
 
-	@FXML
-	private Label lblNome;
+    @FXML
+    private JFXTextField txtTelefone;
 
-	@FXML
-	private Label lblTelefone;
+    @FXML
+    private JFXTextField txtEmail;
 
-	@FXML
-	private Label lblEmail;
+    @FXML
+    private Label lblNumId;
 
-	@FXML
-	private TextField txtNome;
+    @FXML
+    private JFXTextField txtNome;
 
-	@FXML
-	private TextField txtTelefone;
+    @FXML
+    private JFXButton btnUpdate;
 
-	@FXML
-	private TextField txtEmail;
+    @FXML
+    private JFXButton btnCreate;
 
-	@FXML
-	private TextField txtSearchId;
+    @FXML
+    private JFXButton btnVoltar;
 
-	@FXML
-	private TextArea txtAreaMorador;
+    @FXML
+    private Pane paneList;
 
-	@FXML
-	private Button btnCreate;
+    @FXML
+    private Label numVisitantes;
 
-	@FXML
-	private Button btnUpdate;
+    @FXML
+    private Label lastVisit;
 
-	@FXML
-	private Button btnDelete;
+    @FXML
+    private JFXButton btnCadastrar;
 
-	@FXML
-	private Button btnSearch;
+    @FXML
+    private JFXButton btnEditar;
 
-	@FXML
-	void cadastrarMorador(ActionEvent event) {
-		Morador morador = getData();
-		clearFields();
-		int qtde = new moradorDao().create(morador);
-		listarMorador();
+    @FXML
+    private JFXButton btnApagar;
+
+    @FXML
+    private TableView<Morador> TableView;
+
+    @FXML
+    private TableColumn<Morador, String> tcNome;
+
+    @FXML
+    private TableColumn<Morador, String> tcTelefone;
+
+    @FXML
+    private TableColumn<Morador, String> tcEmail;
+
+    @FXML
+    private TextField txtBuscar;
+
+    @FXML
+    private Label Fechar;
+
+    @FXML
+	void findByName(ActionEvent event) {
+
 	}
 
 	@FXML
-	void editarMorador(ActionEvent event) {
-		Morador morador = getDataById();
-		clearFields();
-		int qtde = new moradorDao().edit(morador);
-		listarMorador();
-	}
-
-	@FXML
-	void excluirMorador(ActionEvent event) {
-		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Atençao");
-		alert.setHeaderText("");
-		alert.setContentText("Deseja realmente excluir o cadastro ID " + lblNumId.getText() + "?");
-		Optional<ButtonType> result = alert.showAndWait();
-
-		if (result.get() == ButtonType.OK) {
-			Morador morador = getDataById();
-			int qtde = new moradorDao().delete(morador.getIdMorador());
-			clearFields();
-			listarMorador();
+	void Salvar(ActionEvent event) {
+		if (validaCampos()) {
+			Morador morador = obtemDados();
+			limpaCampo();
+			int qtde = new  moradorDao().create(morador);
+			StartTable();
+			paneList.toFront();
+		} else {
+			new ShowAlert().validaAlert();
 		}
 	}
 
 	@FXML
-	void pesquisarMorador(ActionEvent event) {
-		String idString = txtSearchId.getText();
-		Morador morador = null;
-		if (!idString.equals("IDNUM")) {
-			try {
-				int id = Integer.valueOf(idString);
-				morador = new moradorDao().findByID(id);
-			} catch (Exception e) {
-
-			}
-			if (morador != null) {
-				lblNumId.setVisible(true);
-				lblTitleId.setVisible(true);
-				lblNumId.setText(morador.getIdMorador() + "");
-				txtNome.setText(morador.getNomeMorador());
-				txtTelefone.setText(morador.getTelefoneMorador());
-				txtEmail.setText(morador.getEmailMorador());
-			}
+	void Editar(ActionEvent event) {
+		if (validaCampos()) {
+			Morador morador = obtemDadosID();
+			limpaCampo();
+			int qtde = new moradorDao().edit(morador);
+			StartTable();
+			paneList.toFront();
+		} else {
+			new ShowAlert().validaAlert();
 		}
-		txtSearchId.clear();
 	}
 
-	private void clearFields() {
+	@FXML
+	void Excluir(ActionEvent event) {
+		boolean v = TableView.getSelectionModel().isEmpty();
+		if (v == true) {
+			new ShowAlert().SelecionarPessoa();
+		} else {
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+			alert.setTitle("Alerta!");
+			alert.setHeaderText("Dados à serem apagados.");
+			alert.setContentText("Pressione OK para apagar este usuario.");
+			Optional<ButtonType> result = alert.showAndWait();
+
+			if (result.get() == ButtonType.OK) {
+				System.out.println("Cadastro Apagado");
+				Morador morador = obtemDadosIDDeletar();
+				int qtde = new moradorDao().delete(morador.getIdMorador());
+				limpaCampo();
+				StartTable();
+			}
+		}
+	}
+
+	void EditarCadastro() {
+		Morador v = TableView.getSelectionModel().getSelectedItem();
+		lblNumId.setText(Integer.toString(v.getIdMorador()));
+		txtNome.setText(v.getNomeMorador());
+		txtTelefone.setText(v.getTelefoneMorador());
+		txtEmail.setText(v.getEmailMorador());
+	}
+
+	private void limpaCampo() {
 		txtNome.clear();
 		txtTelefone.clear();
 		txtEmail.clear();
-		txtNome.requestFocus();
-
-		lblTitleId.setVisible(false);
-		lblNumId.setText("");
-		lblNumId.setVisible(false);
 	}
 
-	private Morador getData() {
-		return new Morador(txtNome.getText(), txtTelefone.getText(), txtEmail.getText());
+	private Morador obtemDados() {
+		return new Morador(txtNome.getText(), txtTelefone.getText(),	txtEmail.getText());
 	}
 
-	private Morador getDataById() {
-
-		return new Morador(Integer.valueOf(lblNumId.getText()), txtNome.getText(), txtTelefone.getText(),
-				txtEmail.getText());
+	private Morador obtemDadosID() {
+		return new Morador(Integer.valueOf(lblNumId.getText()), txtNome.getText(), txtTelefone.getText(), txtEmail.getText());
 	}
 
-	private void listarMorador() {
-		txtAreaMorador.clear();
-		List<Morador> listaMorador = new moradorDao().listAll();
-		listaMorador.forEach(morador -> {
-			txtAreaMorador.appendText(morador.toString() + "\n");
-		});
+	private Morador obtemDadosIDDeletar() {
+		Morador v = TableView.getSelectionModel().getSelectedItem();
+		lblNumId.setText(Integer.toString(v.getIdMorador()));
+		txtNome.setText(v.getNomeMorador());
+		txtTelefone.setText(v.getTelefoneMorador());
+		txtEmail.setText(v.getEmailMorador());
+		return new Morador(Integer.valueOf(lblNumId.getText()), txtNome.getText(), txtTelefone.getText(), txtEmail.getText());
 	}
 
-	public void execute() {
-		launch();
+	public boolean validaCampos() {
+		if (txtNome.getText().isEmpty() | txtTelefone.getText().isEmpty() | txtEmail.getText().isEmpty()) {
+			return false;
+		}
+		return true;
 	}
 
-	@Override
-	public void start(Stage stage) {
+	// Sair ou fechar o programa
+	public void Exit() {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Alerta!");
+		alert.setHeaderText("Sair");
+		alert.setContentText("Deseja sair do programa?");
+		Optional<ButtonType> result = alert.showAndWait();
 
-		try {
-			AnchorPane pane = (AnchorPane) FXMLLoader.load(getClass().getResource("MoradorView.fxml"));
-			Scene sc = new Scene(pane);
-			stage.setScene(sc);
-			stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (result.get() == ButtonType.OK) {
+			System.exit(1);
 		}
 	}
 
+	// Listar cadastros na TableView
+	public void StartTable() {
+		List<Morador> list = new moradorDao().listAll();
+		tcNome.setCellValueFactory(new PropertyValueFactory<>("nomeMorador"));
+		tcTelefone.setCellValueFactory(new PropertyValueFactory<>("telefoneMorador"));
+		tcEmail.setCellValueFactory(new PropertyValueFactory<>("emailMorador"));
+		TableView.setItems(atualizaTabela());
+		numVisitantes.setText(Integer.toString(list.size()));
+
+	}
+
+	// Converter para Collections
+	public ObservableList<Morador> atualizaTabela() {
+		moradorDao dao = new moradorDao();
+		return FXCollections.observableArrayList(dao.listAll());
+	}
+
+//-------------------------------------------------------------------------------------------------
+	// Executar Tela
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		listarMorador();
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		ControllerLogin x = new ControllerLogin();
+		if(x.usuario == "funcionario") {
+			btnApagar.setVisible(false);
+			btnCadastrar.setVisible(false);
+			btnEditar.setVisible(false);
+		}else {
+			btnApagar.setVisible(true);
+			btnCadastrar.setVisible(true);
+			btnEditar.setVisible(true);
+		}
+		StartTable();
+
+	}
+
+//-------------------------------------------------------------------------------------------------
+	public void handleClicks(ActionEvent actionEvent) throws IOException {
+		
+		if (actionEvent.getSource() == btnCadastrar) {
+			btnCreate.toFront();
+			btnCreate.setVisible(true);
+			btnUpdate.setVisible(false);
+			paneCadastro.toFront();
+		}
+		if (actionEvent.getSource() == btnVoltar) {
+			paneList.toFront();
+			limpaCampo();
+		}
+		if (actionEvent.getSource() == btnEditar) {
+			boolean v = TableView.getSelectionModel().isEmpty();
+			System.out.println(v);
+			if (v == true) {
+				new ShowAlert().SelecionarPessoaEditar();
+			} else {
+				btnUpdate.toFront();
+				btnUpdate.setVisible(true);
+				btnCreate.setVisible(false);
+				paneCadastro.toFront();
+				EditarCadastro();
+			}
+		}
+	}
+
+	void abrirNovaTela(FXMLLoader y) throws IOException {
+		FXMLLoader fxmlLoader = y;
+		Parent root1 = fxmlLoader.load();
+		Stage stage = new Stage();
+		stage.initStyle(StageStyle.UNDECORATED);
+		stage.setScene(new Scene(root1));
+		stage.show();
 	}
 
 }

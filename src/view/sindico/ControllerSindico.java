@@ -138,11 +138,11 @@ public class ControllerSindico implements Initializable{
     			Labelid.setVisible(true);
     			LabelLabel.setVisible(true);
     			LabelLabel.setText(sindico.getIdSINDICO()+  "");
-    			TXNome.setText(sindico.getNomeSindico());
+    			TXNome.setText(sindico.getNome());
     			datePickerNascimento.setValue(sindico.getDataNascimento().toLocalDate());
     			TXSexo.setText(sindico.getSexoSindico());
     			TXEmail.setText(sindico.getEmailSindico());
-    			TXTelefone.setText(sindico.getNumerotelefoneSindico());
+    			TXTelefone.setText(sindico.getTelefone());
     			datePickerAdmissao.setValue(sindico.getDataAdmissao().toLocalDate());
     		}
     	}
@@ -206,7 +206,7 @@ public class ControllerSindico implements Initializable{
 
     private Sindico obtemDadosID() {
     	
-    	return new Sindico(Integer.valueOf(LabelLabel.getText()), TXNome.getText(), java.sql.Date.valueOf(datePickerNascimento.getValue()), TXSexo.getText(), TXEmail.getText(), TXTelefone.getText(), java.sql.Date.valueOf(datePickerAdmissao.getValue()));
+    	return new Sindico(TXNome.getText(), Integer.valueOf(LabelLabel.getText()), java.sql.Date.valueOf(datePickerNascimento.getValue()), TXSexo.getText(), TXEmail.getText(), TXTelefone.getText(), java.sql.Date.valueOf(datePickerAdmissao.getValue()));
     }
     
     public boolean validaCampos() {

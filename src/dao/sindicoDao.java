@@ -25,15 +25,16 @@ public int inserir(Sindico sindicoo) {
 	//INSERIR
 	try (Connection connection = this.conectar();
 			PreparedStatement pst = connection.prepareStatement(SQL_INSERT_SINDICOO);) {
-		pst.setString(1, sindicoo.getNomeSindico());
+		//pst.setString(1, sindicoo.getNomeSindico());
+		pst.setString(1,sindicoo.getNome()); //COM HERANÇA DA CLASSE PESSOA
 		pst.setDate(2, java.sql.Date.valueOf(sindicoo.getDataNascimento().toString()));
 		pst.setString(3, sindicoo.getSexoSindico());
 		pst.setString(4, sindicoo.getEmailSindico());
-		pst.setString(5, sindicoo.getNumerotelefoneSindico());
+		//pst.setString(5, sindicoo.getNumerotelefoneSindico());
+		pst.setString(5, sindicoo.getTelefone()); //COM HERANÇA DA CLASSE PESSOA
 		pst.setDate(6, java.sql.Date.valueOf(sindicoo.getDataAdmissao().toString()));
 		quantidade = pst.executeUpdate();
 		
-
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
@@ -54,11 +55,11 @@ public List<Sindico> listAll(){
 			Sindico sindico = new Sindico();
 			
 			sindico.setIdSINDICO(rs.getInt("IDSINDICO"));
-			sindico.setNomeSindico(rs.getString("NOMESINDICO"));
+			sindico.setNome(rs.getString("NOMESINDICO"));
 			sindico.setDataNascimento(java.sql.Date.valueOf((rs.getString("DATANASCIMENTO"))));
 			sindico.setSexoSindico(rs.getString("SEXOSINDICO"));
 			sindico.setEmailSindico(rs.getString("EMAILSINDICO"));
-			sindico.setNumerotelefoneSindico(rs.getString("NUMEROTELEFONESINDICO"));
+			sindico.setTelefone(rs.getString("NUMEROTELEFONESINDICO"));
 			sindico.setDataAdmissao(java.sql.Date.valueOf((rs.getString("DATAADMISSAO"))));
 			
 			listaSindico.add(sindico);
@@ -83,17 +84,17 @@ public Sindico findByID(int idSindico) {
 			sindicoo = new Sindico();
 			
 			sindicoo.setIdSINDICO(rs.getInt("IDSINDICO"));
-			sindicoo.setNomeSindico(rs.getString("NOMESINDICO"));
+			sindicoo.setNome(rs.getString("NOMESINDICO"));
 			sindicoo.setDataNascimento(rs.getDate("DATANASCIMENTO"));
 			sindicoo.setSexoSindico(rs.getString("SEXOSINDICO"));
 			sindicoo.setEmailSindico(rs.getString("EMAILSINDICO"));
-			sindicoo.setNumerotelefoneSindico(rs.getString("NUMEROTELEFONESINDICO"));
+			sindicoo.setTelefone(rs.getString("NUMEROTELEFONESINDICO"));
 			sindicoo.setDataAdmissao(rs.getDate("DATAADMISSAO"));
 		}
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
-	System.out.println(sindicoo);
+	
 	return sindicoo;
 	}
 
@@ -103,13 +104,13 @@ public int alterar(Sindico sindico) {
 
 	try (Connection connection = this.conectar();
 			PreparedStatement pst = connection.prepareStatement(SQL_ALTERA_SINDICO);) {
-		pst.setString(1, sindico.getNomeSindico());
+		pst.setString(1, sindico.getNome());
 		//pst.setString(2, sindico.getDataNascimento());
 		//Cliente.setNascimento(rs.getDate("NASCIMENTO"));
 		pst.setDate(2, java.sql.Date.valueOf(sindico.getDataNascimento().toString()));
 		pst.setString(3,  sindico.getSexoSindico());
 		pst.setString(4, sindico.getEmailSindico());
-		pst.setString(5, sindico.getNumerotelefoneSindico());
+		pst.setString(5, sindico.getTelefone());
 		pst.setDate(6, java.sql.Date.valueOf(sindico.getDataAdmissao().toString()));
 		pst.setInt(7, sindico.getIdSINDICO());
 

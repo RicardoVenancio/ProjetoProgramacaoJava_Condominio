@@ -2,34 +2,26 @@ package entity;
 
 import java.sql.Date;
 
-public class Visitante {
+public class Visitante extends Pessoa {
 	private int id;
-	private String Nome;
 	private String RG;
 	private String CPF;
-	private String Telefone;
 	private String Email;
 	private Date DataVisita;
-	
-	public Visitante(int id, String nome, String RG, String CPF, String Telefone,
-			String Email, Date DataVisita) {
-		super();
+
+	public Visitante(int id, String nome, String RG, String CPF, String telefone, String Email, Date DataVisita) {
+		super(nome, telefone);
 		this.id = id;
-		this.Nome = nome;
 		this.RG = RG;
 		this.CPF = CPF;
-		this.Telefone = Telefone;
 		this.Email = Email;
 		this.DataVisita = DataVisita;
 	}
-	
-	public Visitante(String nome, String RG, String CPF, String Telefone,
-			String Email, Date DataVisita) {
-		super();
-		this.Nome = nome;
+
+	public Visitante(String nome, String RG, String CPF, String telefone, String Email, Date DataVisita) {
+		super(nome, telefone);
 		this.RG = RG;
 		this.CPF = CPF;
-		this.Telefone = Telefone;
 		this.Email = Email;
 		this.DataVisita = DataVisita;
 	}
@@ -37,68 +29,67 @@ public class Visitante {
 	public Visitante() {
 		super();
 	}
-	
 
-	
+	public Visitante(String nome, String telefone) {
+		super(nome, telefone);
+	}
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getNome() {
-		return Nome;
-	}
-	public void setNome(String nome) {
-		Nome = nome;
-	}
+
 	public String getRG() {
 		return RG;
 	}
+
 	public void setRG(String rG) {
 		RG = rG;
 	}
+
 	public String getCPF() {
 		return CPF;
 	}
+
 	public void setCPF(String cPF) {
 		CPF = cPF;
 	}
-	public String getTelefone() {
-		return Telefone;
-	}
-	public void setTelefone(String telefone) {
-		Telefone = telefone;
-	}
+
 	public String getEmail() {
 		return Email;
 	}
+
 	public void setEmail(String email) {
 		Email = email;
 	}
+
 	public Date getDataVisita() {
 		return DataVisita;
 	}
+
 	public void setDataVisita(Date dataVisita) {
 		DataVisita = dataVisita;
 	}
-	
+
+	// TO STRING
 	@Override
 	public String toString() {
-		return "id:" + id + ", Nome:" + Nome + ", RG:" + RG + ", CPF:" + CPF + ", Telefone:" + Telefone
-				+ ", Email:" + Email + ", DataVisita:" + DataVisita ;
+		return "Visitante [id=" + id + ", getNome()=" + getNome() + ", RG=" + RG + ", CPF=" + CPF + ", getTelefone()="
+				+ getTelefone() + ", Email=" + Email + ", DataVisita=" + DataVisita + "]";
 	}
 
+	// HASH CODE
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		result = prime * result + ((CPF == null) ? 0 : CPF.hashCode());
 		result = prime * result + ((DataVisita == null) ? 0 : DataVisita.hashCode());
 		result = prime * result + ((Email == null) ? 0 : Email.hashCode());
-		result = prime * result + ((Nome == null) ? 0 : Nome.hashCode());
 		result = prime * result + ((RG == null) ? 0 : RG.hashCode());
-		result = prime * result + ((Telefone == null) ? 0 : Telefone.hashCode());
 		result = prime * result + id;
 		return result;
 	}
@@ -107,7 +98,7 @@ public class Visitante {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
@@ -127,25 +118,14 @@ public class Visitante {
 				return false;
 		} else if (!Email.equals(other.Email))
 			return false;
-		if (Nome == null) {
-			if (other.Nome != null)
-				return false;
-		} else if (!Nome.equals(other.Nome))
-			return false;
 		if (RG == null) {
 			if (other.RG != null)
 				return false;
 		} else if (!RG.equals(other.RG))
 			return false;
-		if (Telefone == null) {
-			if (other.Telefone != null)
-				return false;
-		} else if (!Telefone.equals(other.Telefone))
-			return false;
 		if (id != other.id)
 			return false;
 		return true;
 	}
-
 
 }

@@ -1,36 +1,11 @@
 package entity;
 
-public class Proprietario {
+public class Proprietario extends Pessoa {
 
 	private int idProprietario;
-	private String nomeProprietario;
 	private String cpfProprietario;
 	private String rgProprietario;
-	private String numerotelefoneProprietario;
 	private String emailProprietario;
-	
-	public Proprietario() {
-		
-	}
-	
-	public Proprietario(int id, String nome, String cpf, String rg, String telefone, String email) {
-		super();
-		this.idProprietario = id;
-		this.nomeProprietario = nome;
-		this.cpfProprietario = cpf;
-		this.rgProprietario = rg;
-		this.numerotelefoneProprietario = telefone;
-		this.emailProprietario = email;
-	}
-	
-	public Proprietario(String nome, String cpf, String rg, String telefone, String email) {
-		super();
-		this.nomeProprietario = nome;
-		this.cpfProprietario = cpf;
-		this.rgProprietario = rg;
-		this.numerotelefoneProprietario = telefone;
-		this.emailProprietario = email;
-	}
 
 	public int getIdProprietario() {
 		return idProprietario;
@@ -38,14 +13,6 @@ public class Proprietario {
 
 	public void setIdProprietario(int idProprietario) {
 		this.idProprietario = idProprietario;
-	}
-
-	public String getNomeProprietario() {
-		return nomeProprietario;
-	}
-
-	public void setNomeProprietario(String nomeProprietario) {
-		this.nomeProprietario = nomeProprietario;
 	}
 
 	public String getCpfProprietario() {
@@ -64,14 +31,6 @@ public class Proprietario {
 		this.rgProprietario = rgProprietario;
 	}
 
-	public String getNumerotelefoneProprietario() {
-		return numerotelefoneProprietario;
-	}
-
-	public void setNumerotelefoneProprietario(String numerotelefoneProprietario) {
-		this.numerotelefoneProprietario = numerotelefoneProprietario;
-	}
-
 	public String getEmailProprietario() {
 		return emailProprietario;
 	}
@@ -80,23 +39,15 @@ public class Proprietario {
 		this.emailProprietario = emailProprietario;
 	}
 
-	@Override
-	public String toString() {
-		return "Proprietario [idProprietario=" + idProprietario + ", nomeProprietario=" + nomeProprietario
-				+ ", cpfProprietario=" + cpfProprietario + ", rgProprietario=" + rgProprietario
-				+ ", numerotelefoneProprietario=" + numerotelefoneProprietario + ", emailProprietario="
-				+ emailProprietario + "]";
-	}
+	// HASH CODE
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		result = prime * result + ((cpfProprietario == null) ? 0 : cpfProprietario.hashCode());
 		result = prime * result + ((emailProprietario == null) ? 0 : emailProprietario.hashCode());
 		result = prime * result + idProprietario;
-		result = prime * result + ((nomeProprietario == null) ? 0 : nomeProprietario.hashCode());
-		result = prime * result + ((numerotelefoneProprietario == null) ? 0 : numerotelefoneProprietario.hashCode());
 		result = prime * result + ((rgProprietario == null) ? 0 : rgProprietario.hashCode());
 		return result;
 	}
@@ -105,7 +56,7 @@ public class Proprietario {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
@@ -122,16 +73,6 @@ public class Proprietario {
 			return false;
 		if (idProprietario != other.idProprietario)
 			return false;
-		if (nomeProprietario == null) {
-			if (other.nomeProprietario != null)
-				return false;
-		} else if (!nomeProprietario.equals(other.nomeProprietario))
-			return false;
-		if (numerotelefoneProprietario == null) {
-			if (other.numerotelefoneProprietario != null)
-				return false;
-		} else if (!numerotelefoneProprietario.equals(other.numerotelefoneProprietario))
-			return false;
 		if (rgProprietario == null) {
 			if (other.rgProprietario != null)
 				return false;
@@ -139,6 +80,42 @@ public class Proprietario {
 			return false;
 		return true;
 	}
-	
-	
+
+	// TO STRING
+	@Override
+	public String toString() {
+		return "Proprietario [idProprietario=" + idProprietario + ", getNome()=" + getNome() + ", cpfProprietario="
+				+ cpfProprietario + ", rgProprietario=" + rgProprietario + ", getTelefone()=" + getTelefone()
+				+ ", emailProprietario=" + emailProprietario + "]";
+	}
+
+	// CONSTRUCTOR COM VÁZIO
+	public Proprietario() {
+		super();
+	}
+
+	// CONSTRUCTOR COM SUPER DE PESSOA VÁZIO
+	public Proprietario(String nome, String telefone) {
+		super(nome, telefone);
+	}
+
+	// CONSTRUCTOR COM SUPER DE PESSOA COM ID
+	public Proprietario(int idProprietario, String nome, String cpfProprietario, String rgProprietario, String telefone,
+			String emailProprietario) {
+		super(nome, telefone);
+		this.idProprietario = idProprietario;
+		this.cpfProprietario = cpfProprietario;
+		this.rgProprietario = rgProprietario;
+		this.emailProprietario = emailProprietario;
+	}
+
+	// CONSTRUCTOR COM SUPER DE PESSOA SEM ID
+	public Proprietario(String nome, String cpfProprietario, String rgProprietario, String telefone,
+			String emailProprietario) {
+		super(nome, telefone);
+		this.cpfProprietario = cpfProprietario;
+		this.rgProprietario = rgProprietario;
+		this.emailProprietario = emailProprietario;
+	}
+
 }

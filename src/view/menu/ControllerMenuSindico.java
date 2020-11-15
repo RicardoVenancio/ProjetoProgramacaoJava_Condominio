@@ -8,15 +8,19 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
+import entity.Mouse;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -33,16 +37,16 @@ public class ControllerMenuSindico extends Application implements Initializable 
 
 	@FXML
 	private Button btnSettings;
-	
+
 	@FXML
-    private Label labelNome;
+	private Label labelNome;
 
 	@FXML
 	private JFXButton btnFuncionario;
 
 	@FXML
 	private JFXButton btnVisitante;
-	
+
 	@FXML
 	private JFXButton btnMorador;
 
@@ -87,6 +91,7 @@ public class ControllerMenuSindico extends Application implements Initializable 
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+
 		labelNome.setText(x.nome);
 		mapPanels.put(btnVisitante, "/view/visitante/VisitanteTable.fxml");
 		mapPanels.put(btnProprietario, "/view/proprietario/ProprietarioTable.fxml");
@@ -94,15 +99,37 @@ public class ControllerMenuSindico extends Application implements Initializable 
 		mapPanels.put(btnFuncionario, "/view/funcionario/FuncionarioTable.fxml");
 		mapPanels.put(btnRecado, "/view/recado/RecadoTable.fxml");
 		mapPanels.put(btnMorador, "/view/morador/MoradorTable.fxml");
-		
-	}
+
+		// -----Inicio metodo de mover a tela-----
+		Mouse mouse = new Mouse();
+		borderpane.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent t) {
+				mouse.setX(t.getX());
+				mouse.setY(t.getY());
+			}
+		});
+		borderpane.setOnMouseDragged(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent t) {
+				if (t.getY() <= 40) {
+					borderpane.getScene().getWindow().setX(t.getScreenX() - mouse.getX() - 1);
+					borderpane.getScene().getWindow().setY(t.getScreenY() - mouse.getY() - 1);
+				}
+			}
+		});// -----Fim metodo mover a tela------
+	}// ---Fim metodo initialize
 
 	ControllerLogin x = new ControllerLogin();
-	public void handleClicks(ActionEvent actionEvent) throws IOException {
+
+	public void handleClicks(ActionEvent actionEvent) throws IOException, InterruptedException {
 		if (actionEvent.getSource() == btnMenus) {
 			borderpane.setCenter(paneMenu);
 		}
 		if (actionEvent.getSource() == btnSignout) {
+			Thread.sleep(1500);
 			FXMLLoader fxmlLoader = new FXMLLoader(ControllerLogin.class.getResource("telafront.fxml"));
 			abrirNovaTela(fxmlLoader);
 			Stage stage = (Stage) btnSignout.getScene().getWindow();
@@ -126,7 +153,6 @@ public class ControllerMenuSindico extends Application implements Initializable 
 
 	@Override
 	public void start(Stage stage) {
-
 		try {
 			Pane pane = FXMLLoader.load(getClass().getResource("TelaMenuSindico.fxml"));
 			Scene sc = new Scene(pane);

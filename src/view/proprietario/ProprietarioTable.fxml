@@ -49,7 +49,7 @@
                      </font>
                   </Label>
                   <Label fx:id="LabelLabel" layoutX="103.0" layoutY="61.0" />
-                  <JFXTextField fx:id="TxtNome" focusColor="#2fb4ad" layoutX="136.0" layoutY="139.0" prefHeight="25.0" prefWidth="537.0" promptText="Nome" />
+                  <JFXTextField fx:id="TxtNome" focusColor="#2fb4ad" layoutX="134.0" layoutY="163.0" prefHeight="25.0" prefWidth="537.0" promptText="Nome" />
                   <JFXButton fx:id="btnAlterar" layoutX="301.0" layoutY="359.0" onAction="#Editar" prefHeight="42.0" prefWidth="192.0" ripplerFill="WHITE" style="-fx-background-color: #5e5a5a;" text="Editar" textFill="WHITE" visible="false">
                      <font>
                         <Font name="System Bold" size="18.0" />
@@ -69,25 +69,25 @@
             </Pane>
             <Pane fx:id="paneList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="793.0" style="-fx-background-color: black;">
                <children>
-                  <HBox layoutX="-1.0" layoutY="75.0" prefHeight="100.0" prefWidth="793.0" spacing="50.0">
+                  <HBox layoutX="-1.0" layoutY="75.0" prefHeight="100.0" prefWidth="793.0" spacing="40.0">
                      <children>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                        <VBox alignment="CENTER" prefHeight="80.0" prefWidth="97.0">
                            <children>
                               <Label fx:id="numProprietarios" text="0" textFill="#2a73ff">
                                  <font>
                                     <Font name="System Bold" size="26.0" />
                                  </font>
                               </Label>
-                              <Label text="Proprietarios" textFill="WHITE">
+                              <Label text="Nº Proprietarios" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
                            </children>
                         </VBox>
-                        <VBox alignment="CENTER" prefHeight="80.0" prefWidth="138.0">
+                        <VBox alignment="CENTER" prefHeight="80.0" prefWidth="182.0">
                            <children>
-                              <Label fx:id="lastVisit" prefHeight="38.0" prefWidth="170.0" text="19/10/2020" textFill="#26bfbc">
+                              <Label fx:id="lastVisit" prefHeight="38.0" text="Last Name" textFill="#26bfbc">
                                  <font>
                                     <Font size="26.0" />
                                  </font>
@@ -156,6 +156,7 @@
                         <Font name="System Bold" size="42.0" />
                      </font>
                   </Label>
+                  <JFXButton layoutX="741.0" layoutY="45.0" onAction="#findByName" prefHeight="25.0" prefWidth="28.0" text=" " />
                </children>
             </Pane>
          </children>

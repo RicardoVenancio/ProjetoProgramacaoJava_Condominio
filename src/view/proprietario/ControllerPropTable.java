@@ -11,7 +11,9 @@ import com.jfoenix.controls.JFXTextField;
 
 import alerts.ShowAlert;
 import dao.proprietarioDao;
+import dao.visitanteDao;
 import entity.Proprietario;
+import entity.Visitante;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -77,7 +79,7 @@ public class ControllerPropTable implements Initializable {
 
 	@FXML
 	private JFXButton btnCadastrar;
-	
+
 	@FXML
 	private JFXButton btnVoltar;
 
@@ -116,7 +118,7 @@ public class ControllerPropTable implements Initializable {
 
 	@FXML
 	private Button btnVisitante;
-	
+
 	@FXML
 	private Button btnRecado;
 
@@ -137,7 +139,12 @@ public class ControllerPropTable implements Initializable {
 
 	@FXML
 	void findByName(ActionEvent event) {
-
+		if (txtBuscar.getText().equals("")) {
+			StartTable();
+		} else {
+			StartTable2();
+			txtBuscar.setText("");
+		}
 	}
 
 	@FXML
@@ -256,6 +263,7 @@ public class ControllerPropTable implements Initializable {
 	// Listar cadastros na TableView
 	public void StartTable() {
 		List<Proprietario> list = new proprietarioDao().listAll();
+		Proprietario x = new proprietarioDao().ultimoCadastro();
 		tcNome.setCellValueFactory(new PropertyValueFactory<>("nomeProprietario"));
 		tcCpf.setCellValueFactory(new PropertyValueFactory<>("cpfProprietario"));
 		tcRg.setCellValueFactory(new PropertyValueFactory<>("rgProprietario"));
@@ -263,12 +271,30 @@ public class ControllerPropTable implements Initializable {
 		tcEmail.setCellValueFactory(new PropertyValueFactory<>("emailProprietario"));
 		TableView.setItems(atualizaTabela());
 		numProprietarios.setText(Integer.toString(list.size()));
+		lastVisit.setText(x.getNomeProprietario());
 	}
 
 	// Converter para Collections
 	public ObservableList<Proprietario> atualizaTabela() {
 		proprietarioDao dao = new proprietarioDao();
 		return FXCollections.observableArrayList(dao.listAll());
+	}
+
+	public void StartTable2() {
+		List<Proprietario> list = new proprietarioDao().listAllName(txtBuscar.getText());
+		tcNome.setCellValueFactory(new PropertyValueFactory<>("nomeProprietario"));
+		tcCpf.setCellValueFactory(new PropertyValueFactory<>("cpfProprietario"));
+		tcRg.setCellValueFactory(new PropertyValueFactory<>("rgProprietario"));
+		tcTelefone.setCellValueFactory(new PropertyValueFactory<>("numerotelefoneProprietario"));
+		tcEmail.setCellValueFactory(new PropertyValueFactory<>("emailProprietario"));
+		TableView.setItems(atualizaTabela2());
+		numProprietarios.setText(Integer.toString(list.size()));
+	}
+
+	// Converter para Collections
+	public ObservableList<Proprietario> atualizaTabela2() {
+		proprietarioDao dao = new proprietarioDao();
+		return FXCollections.observableArrayList(dao.listAllName(txtBuscar.getText()));
 	}
 
 //-------------------------------------------------------------------------------------------------
@@ -307,12 +333,6 @@ public class ControllerPropTable implements Initializable {
 
 //-------------------------------------------------------------------------------------------------
 	public void handleClicks(ActionEvent actionEvent) throws IOException {
-		if (actionEvent.getSource() == btnSignout) {
-				FXMLLoader fxmlLoader = new FXMLLoader(ControllerLogin.class.getResource("telafront.fxml"));
-				abrirNovaTela(fxmlLoader);
-				Stage stage = (Stage) btnSignout.getScene().getWindow();
-				stage.close();
-		}
 		if (actionEvent.getSource() == btnVoltar) {
 			paneList.toFront();
 			limpaCampo();

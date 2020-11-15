@@ -11,7 +11,9 @@ import com.jfoenix.controls.JFXTextField;
 
 import alerts.ShowAlert;
 import dao.moradorDao;
+import dao.visitanteDao;
 import entity.Morador;
+import entity.Visitante;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -103,7 +105,12 @@ public class MoradorController implements Initializable {
 
     @FXML
 	void findByName(ActionEvent event) {
-
+    	if(txtBuscar.getText().equals("")) {
+			StartTable();
+		}else {
+			StartTable2();
+			txtBuscar.setText("");
+		}
 	}
 
 	@FXML
@@ -208,18 +215,35 @@ public class MoradorController implements Initializable {
 	// Listar cadastros na TableView
 	public void StartTable() {
 		List<Morador> list = new moradorDao().listAll();
+		Morador x = new moradorDao().ultimoCadastro();
 		tcNome.setCellValueFactory(new PropertyValueFactory<>("nomeMorador"));
 		tcTelefone.setCellValueFactory(new PropertyValueFactory<>("telefoneMorador"));
 		tcEmail.setCellValueFactory(new PropertyValueFactory<>("emailMorador"));
 		TableView.setItems(atualizaTabela());
 		numVisitantes.setText(Integer.toString(list.size()));
+		lastVisit.setText(x.getNomeMorador());
 
 	}
 
 	// Converter para Collections
 	public ObservableList<Morador> atualizaTabela() {
 		moradorDao dao = new moradorDao();
-		return FXCollections.observableArrayList(dao.listAll());
+		return FXCollections.observableArrayList(dao.listAllName(txtBuscar.getText()));
+	}
+	public void StartTable2() {
+		List<Morador> list = new moradorDao().listAllName(txtBuscar.getText());
+		tcNome.setCellValueFactory(new PropertyValueFactory<>("nomeMorador"));
+		tcTelefone.setCellValueFactory(new PropertyValueFactory<>("telefoneMorador"));
+		tcEmail.setCellValueFactory(new PropertyValueFactory<>("emailMorador"));
+		TableView.setItems(atualizaTabela2());
+		numVisitantes.setText(Integer.toString(list.size()));
+		
+	}
+	
+	// Converter para Collections
+	public ObservableList<Morador> atualizaTabela2() {
+		moradorDao dao = new moradorDao();
+		return FXCollections.observableArrayList(dao.listAllName(txtBuscar.getText()));
 	}
 
 //-------------------------------------------------------------------------------------------------

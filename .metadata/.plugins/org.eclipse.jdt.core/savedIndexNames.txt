@@ -1,0 +1,1 @@
+INDEX VERSION 1.131+C:\Users\ricar\Desktop\Trabalho facul\4_semestre\ProjetosPrincipais\ProgProjeto\.metadata\.plugins\org.eclipse.jdt.core

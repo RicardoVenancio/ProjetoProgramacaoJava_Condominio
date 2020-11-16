@@ -199,10 +199,10 @@ public class ControllerPropTable implements Initializable {
 	void EditarCadastro() {
 		Proprietario v = TableView.getSelectionModel().getSelectedItem();
 		LabelLabel.setText(Integer.toString(v.getIdProprietario()));
-		TxtNome.setText(v.getNomeProprietario());
+		TxtNome.setText(v.getNome());
 		TxtRg.setText(v.getRgProprietario());
 		TxtCpf.setText(v.getCpfProprietario());
-		TxtFone.setText(v.getNumerotelefoneProprietario());
+		TxtFone.setText(v.getTelefone());
 		TxtEmail.setText(v.getEmailProprietario());
 	}
 
@@ -229,10 +229,10 @@ public class ControllerPropTable implements Initializable {
 	private Proprietario obtemDadosIDDeletar() {
 		Proprietario v = TableView.getSelectionModel().getSelectedItem();
 		LabelLabel.setText(Integer.toString(v.getIdProprietario()));
-		TxtNome.setText(v.getNomeProprietario());
+		TxtNome.setText(v.getNome());
 		TxtRg.setText(v.getRgProprietario());
 		TxtCpf.setText(v.getCpfProprietario());
-		TxtFone.setText(v.getNumerotelefoneProprietario());
+		TxtFone.setText(v.getTelefone());
 		TxtEmail.setText(v.getEmailProprietario());
 
 		return new Proprietario(Integer.valueOf(LabelLabel.getText()), TxtNome.getText(), TxtRg.getText(),

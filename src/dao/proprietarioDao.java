@@ -44,10 +44,10 @@ public class proprietarioDao extends ConexaoHSQLDB{
 		int quantidade = 0;
 		try(Connection connection = this.conectar();
 				PreparedStatement pst = connection.prepareStatement(SQL_INSERT_PROPRIETARIO);) {
-			pst.setString(1, proprietario.getNomeProprietario());
+			pst.setString(1, proprietario.getNome());
 			pst.setString(2, proprietario.getCpfProprietario());
 			pst.setString(3, proprietario.getRgProprietario());
-			pst.setString(4, proprietario.getNumerotelefoneProprietario());
+			pst.setString(4, proprietario.getTelefone());
 			pst.setString(5, proprietario.getEmailProprietario());
 			quantidade = pst.executeUpdate();
 			
@@ -70,10 +70,10 @@ public class proprietarioDao extends ConexaoHSQLDB{
 				Proprietario proprietario = new Proprietario();
 				
 				proprietario.setIdProprietario(rs.getInt("IDPROPRIETARIO"));
-				proprietario.setNomeProprietario(rs.getString("NOMEPROPRIETARIO"));
+				proprietario.setNome(rs.getString("NOMEPROPRIETARIO"));
 				proprietario.setCpfProprietario(rs.getString("CPFPROPRIETARIO"));
 				proprietario.setRgProprietario(rs.getString("RGPROPRIETARIO"));
-				proprietario.setNumerotelefoneProprietario(rs.getString("NUMEROTELEFONEPROPRIETARIO"));
+				proprietario.setTelefone(rs.getString("NUMEROTELEFONEPROPRIETARIO"));
 				proprietario.setEmailProprietario(rs.getString("EMAILPROPRIETARIO"));
 				
 				listaProprietario.add(proprietario);
@@ -126,10 +126,10 @@ public class proprietarioDao extends ConexaoHSQLDB{
 				proprietario = new Proprietario();
 				
 				proprietario.setIdProprietario(rs.getInt("IDPROPRIETARIO"));
-				proprietario.setNomeProprietario(rs.getString("NOMEPROPRIETARIO"));
+				proprietario.setNome(rs.getString("NOMEPROPRIETARIO"));
 				proprietario.setCpfProprietario(rs.getString("CPFPROPRIETARIO"));
 				proprietario.setRgProprietario(rs.getString("RGPROPRIETARIO"));
-				proprietario.setNumerotelefoneProprietario(rs.getString("NUMEROTELEFONEPROPRIETARIO"));
+				proprietario.setTelefone(rs.getString("NUMEROTELEFONEPROPRIETARIO"));
 				proprietario.setEmailProprietario(rs.getString("EMAILPROPRIETARIO"));
 				
 			}
@@ -145,10 +145,10 @@ public class proprietarioDao extends ConexaoHSQLDB{
 		
 		try(Connection connection = this.conectar();
 		PreparedStatement pst = connection.prepareStatement(SQL_ALTERA_PROPRIETARIO);){
-			pst.setString(1, proprietario.getNomeProprietario());
+			pst.setString(1, proprietario.getNome());
 			pst.setString(2, proprietario.getCpfProprietario());
 			pst.setString(3, proprietario.getRgProprietario());
-			pst.setString(4, proprietario.getNumerotelefoneProprietario());
+			pst.setString(4, proprietario.getTelefone());
 			pst.setString(5, proprietario.getEmailProprietario());
 			pst.setInt(6, proprietario.getIdProprietario());
 			

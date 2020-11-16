@@ -30,11 +30,11 @@ public class sindicoDao extends ConexaoHSQLDB{
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 				sindico.setIdSINDICO(rs.getInt("IDSINDICO"));
-				sindico.setNomeSindico(rs.getString("NOMESINDICO"));
+				sindico.setNome(rs.getString("NOMESINDICO"));
 				sindico.setDataNascimento(java.sql.Date.valueOf((rs.getString("DATANASCIMENTO"))));
 				sindico.setSexoSindico(rs.getString("SEXOSINDICO"));
 				sindico.setEmailSindico(rs.getString("EMAILSINDICO"));
-				sindico.setNumerotelefoneSindico(rs.getString("NUMEROTELEFONESINDICO"));
+				sindico.setTelefone(rs.getString("NUMEROTELEFONESINDICO"));
 				sindico.setDataAdmissao(java.sql.Date.valueOf((rs.getString("DATAADMISSAO"))));
 			}
 		} catch (SQLException e) {

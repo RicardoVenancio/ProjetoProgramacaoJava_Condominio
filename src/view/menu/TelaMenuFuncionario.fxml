@@ -29,10 +29,11 @@
                   <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <Label fx:id="labelNome" text="Funcionário" textFill="WHITE">
+            <JFXButton fx:id="btnNome" onAction="#trataMenu" text="Funcionário" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="22.0" />
-               </font></Label>
+               </font>
+            </JFXButton>
             <Button fx:id="btnMenus" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-border-color: white;" stylesheets="@../../services/style.css" text="Menu" />
             <Button fx:id="btnSettings" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-border-color: white;" stylesheets="@../../services/style.css" text="Settings" />
             <Button fx:id="btnSignout" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-border-color: white;" stylesheets="@../../services/style.css" text="Logout" />

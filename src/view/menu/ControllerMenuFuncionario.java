@@ -38,8 +38,8 @@ public class ControllerMenuFuncionario extends Application implements Initializa
 	private Button btnSettings;
 
 	@FXML
-	private Label labelNome;
-
+	private JFXButton btnNome;
+	
 	@FXML
 	private JFXButton btnVisitante;
 
@@ -85,10 +85,11 @@ public class ControllerMenuFuncionario extends Application implements Initializa
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		labelNome.setText(x.nome);
+		btnNome.setText(x.nome);
 		mapPanels.put(btnVisitante, "/view/visitante/VisitanteTable.fxml");
 		mapPanels.put(btnRecado, "/view/recado/RecadoTable.fxml");
 		mapPanels.put(btnMorador, "/view/morador/MoradorTable.fxml");
+		mapPanels.put(btnNome, "/view/detalhes/Details.fxml");
 
 		// -----Inicio metodo de mover a tela-----
 		Mouse mouse = new Mouse();

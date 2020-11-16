@@ -39,8 +39,8 @@ public class ControllerMenuSindico extends Application implements Initializable 
 	private Button btnSettings;
 
 	@FXML
-	private Label labelNome;
-
+	private JFXButton btnNome;
+	
 	@FXML
 	private JFXButton btnFuncionario;
 
@@ -92,13 +92,14 @@ public class ControllerMenuSindico extends Application implements Initializable 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
-		labelNome.setText(x.nome);
+		btnNome.setText(x.nome);
 		mapPanels.put(btnVisitante, "/view/visitante/VisitanteTable.fxml");
 		mapPanels.put(btnProprietario, "/view/proprietario/ProprietarioTable.fxml");
 		mapPanels.put(btnSettings, "/view/visitante/VisitTela.fxml");
 		mapPanels.put(btnFuncionario, "/view/funcionario/FuncionarioTable.fxml");
 		mapPanels.put(btnRecado, "/view/recado/RecadoTable.fxml");
 		mapPanels.put(btnMorador, "/view/morador/MoradorTable.fxml");
+		mapPanels.put(btnNome, "/view/detalhes/Details.fxml");
 
 		// -----Inicio metodo de mover a tela-----
 		Mouse mouse = new Mouse();
@@ -125,6 +126,7 @@ public class ControllerMenuSindico extends Application implements Initializable 
 	ControllerLogin x = new ControllerLogin();
 
 	public void handleClicks(ActionEvent actionEvent) throws IOException, InterruptedException {
+		
 		if (actionEvent.getSource() == btnMenus) {
 			borderpane.setCenter(paneMenu);
 		}

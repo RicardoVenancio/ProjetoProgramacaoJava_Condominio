@@ -83,11 +83,11 @@ public class ControllerDetail implements Initializable {
 			hboxFuncionario.setVisible(false);
 			Sindico x = new sindicoDao().BuscarDados(login.nome);
 			Id.setText(x.getIdSINDICO() + "");
-			Nome.setText(x.getNomeSindico());
+			Nome.setText(x.getNome());
 			Nascimento.setText(x.getDataNascimento().toString());
 			Sexo.setText(x.getSexoSindico());
 			Email.setText(x.getEmailSindico());
-			Telefone.setText(x.getNumerotelefoneSindico());
+			Telefone.setText(x.getTelefone());
 			Admissao.setText(x.getDataAdmissao().toString());
 		} else if (login.usuario == "funcionario") {
 			hboxSindico.setVisible(false);

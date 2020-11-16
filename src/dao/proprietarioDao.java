@@ -28,10 +28,10 @@ public class proprietarioDao extends ConexaoHSQLDB{
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 				proprietario.setIdProprietario(rs.getInt("IDPROPRIETARIO"));
-				proprietario.setNomeProprietario(rs.getString("NOMEPROPRIETARIO"));
+				proprietario.setNome(rs.getString("NOMEPROPRIETARIO"));
 				proprietario.setCpfProprietario(rs.getString("CPFPROPRIETARIO"));
 				proprietario.setRgProprietario(rs.getString("RGPROPRIETARIO"));
-				proprietario.setNumerotelefoneProprietario(rs.getString("NUMEROTELEFONEPROPRIETARIO"));
+				proprietario.setTelefone(rs.getString("NUMEROTELEFONEPROPRIETARIO"));
 				proprietario.setEmailProprietario(rs.getString("EMAILPROPRIETARIO"));
 			}
 		} catch (SQLException e) {
@@ -98,10 +98,10 @@ public class proprietarioDao extends ConexaoHSQLDB{
 				Proprietario proprietario = new Proprietario();
 				
 				proprietario.setIdProprietario(rs.getInt("IDPROPRIETARIO"));
-				proprietario.setNomeProprietario(rs.getString("NOMEPROPRIETARIO"));
+				proprietario.setNome(rs.getString("NOMEPROPRIETARIO"));
 				proprietario.setCpfProprietario(rs.getString("CPFPROPRIETARIO"));
 				proprietario.setRgProprietario(rs.getString("RGPROPRIETARIO"));
-				proprietario.setNumerotelefoneProprietario(rs.getString("NUMEROTELEFONEPROPRIETARIO"));
+				proprietario.setTelefone(rs.getString("NUMEROTELEFONEPROPRIETARIO"));
 				proprietario.setEmailProprietario(rs.getString("EMAILPROPRIETARIO"));
 				
 				listaProprietario.add(proprietario);

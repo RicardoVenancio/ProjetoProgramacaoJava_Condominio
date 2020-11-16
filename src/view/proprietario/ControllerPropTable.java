@@ -264,14 +264,14 @@ public class ControllerPropTable implements Initializable {
 	public void StartTable() {
 		List<Proprietario> list = new proprietarioDao().listAll();
 		Proprietario x = new proprietarioDao().ultimoCadastro();
-		tcNome.setCellValueFactory(new PropertyValueFactory<>("nomeProprietario"));
+		tcNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
 		tcCpf.setCellValueFactory(new PropertyValueFactory<>("cpfProprietario"));
 		tcRg.setCellValueFactory(new PropertyValueFactory<>("rgProprietario"));
-		tcTelefone.setCellValueFactory(new PropertyValueFactory<>("numerotelefoneProprietario"));
+		tcTelefone.setCellValueFactory(new PropertyValueFactory<>("Telefone"));
 		tcEmail.setCellValueFactory(new PropertyValueFactory<>("emailProprietario"));
 		TableView.setItems(atualizaTabela());
 		numProprietarios.setText(Integer.toString(list.size()));
-		lastVisit.setText(x.getNomeProprietario());
+		lastVisit.setText(x.getNome());
 	}
 
 	// Converter para Collections
@@ -282,10 +282,10 @@ public class ControllerPropTable implements Initializable {
 
 	public void StartTable2() {
 		List<Proprietario> list = new proprietarioDao().listAllName(txtBuscar.getText());
-		tcNome.setCellValueFactory(new PropertyValueFactory<>("nomeProprietario"));
+		tcNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
 		tcCpf.setCellValueFactory(new PropertyValueFactory<>("cpfProprietario"));
 		tcRg.setCellValueFactory(new PropertyValueFactory<>("rgProprietario"));
-		tcTelefone.setCellValueFactory(new PropertyValueFactory<>("numerotelefoneProprietario"));
+		tcTelefone.setCellValueFactory(new PropertyValueFactory<>("Telefone"));
 		tcEmail.setCellValueFactory(new PropertyValueFactory<>("emailProprietario"));
 		TableView.setItems(atualizaTabela2());
 		numProprietarios.setText(Integer.toString(list.size()));

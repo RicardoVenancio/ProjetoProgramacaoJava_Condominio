@@ -114,13 +114,16 @@ public class ControllerTable implements Initializable {
 
 	@FXML
 	private Label Fechar;
+	
+	@FXML
+	private Label dataVisit;
 
 	@FXML
 	private Button btnFuncionario;
-	
+
 	@FXML
 	private Button btnVoltar;
-	
+
 	@FXML
 	private Button btnRecado;
 
@@ -143,8 +146,13 @@ public class ControllerTable implements Initializable {
 	private Button btnSignout;
 
 	@FXML
-	void findByName(ActionEvent event) {
-
+	void find(ActionEvent event) {
+		if (txtBuscar.getText().equals("")) {
+			StartTable();
+		} else {
+			StartTable2();
+			txtBuscar.setText("");
+		}
 	}
 
 	@FXML
@@ -269,6 +277,7 @@ public class ControllerTable implements Initializable {
 	// Listar cadastros na TableView
 	public void StartTable() {
 		List<Visitante> list = new visitanteDao().listAll();
+		Visitante visitante = new visitanteDao().ultimoCadastro();
 		tcNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
 		tcRg.setCellValueFactory(new PropertyValueFactory<>("RG"));
 		tcCpf.setCellValueFactory(new PropertyValueFactory<>("CPF"));
@@ -277,6 +286,8 @@ public class ControllerTable implements Initializable {
 		tcData.setCellValueFactory(new PropertyValueFactory<>("DataVisita"));
 		TableView.setItems(atualizaTabela());
 		numVisitantes.setText(Integer.toString(list.size()));
+		lastVisit.setText(visitante.getNome());
+		dataVisit.setText(visitante.getDataVisita().toString());
 
 	}
 
@@ -286,15 +297,34 @@ public class ControllerTable implements Initializable {
 		return FXCollections.observableArrayList(dao.listAll());
 	}
 
+	public void StartTable2() {
+		List<Visitante> list = new visitanteDao().listAllName(txtBuscar.getText());
+		tcNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
+		tcRg.setCellValueFactory(new PropertyValueFactory<>("RG"));
+		tcCpf.setCellValueFactory(new PropertyValueFactory<>("CPF"));
+		tcTelefone.setCellValueFactory(new PropertyValueFactory<>("Telefone"));
+		tcEmail.setCellValueFactory(new PropertyValueFactory<>("Email"));
+		tcData.setCellValueFactory(new PropertyValueFactory<>("DataVisita"));
+		TableView.setItems(atualizaTabela2());
+		numVisitantes.setText(Integer.toString(list.size()));
+
+	}
+
+	// Converter para Collections
+	public ObservableList<Visitante> atualizaTabela2() {
+		visitanteDao dao = new visitanteDao();
+		return FXCollections.observableArrayList(dao.listAllName(txtBuscar.getText()));
+	}
+
 //-------------------------------------------------------------------------------------------------
 	// Executar Tela
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+
 		ControllerLogin x = new ControllerLogin();
-		if(x.usuario == "funcionario") {
+		if (x.usuario == "funcionario") {
 			btnApagar.setVisible(false);
-		}else {
+		} else {
 			btnApagar.setVisible(true);
 		}
 		StartTable();

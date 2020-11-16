@@ -73,9 +73,8 @@
             </Pane>
             <Pane fx:id="paneList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="793.0" style="-fx-background-color: black;">
                <children>
-                  <HBox layoutX="-1.0" layoutY="75.0" prefHeight="100.0" prefWidth="793.0" spacing="50.0">
+                  <HBox layoutX="-1.0" layoutY="75.0" prefHeight="100.0" prefWidth="793.0" spacing="35.0">
                      <children>
-                        <VBox alignment="CENTER" prefHeight="80.0" prefWidth="138.0" />
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <Label fx:id="numVisitantes" text="0" textFill="#2a73ff">
@@ -83,7 +82,21 @@
                                     <Font name="System Bold" size="26.0" />
                                  </font>
                               </Label>
-                              <Label text="Moradores" textFill="WHITE">
+                              <Label text="Nº Moradores" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="80.0" prefWidth="230.0">
+                           <children>
+                              <Label fx:id="lastVisit" text="Last Name" textFill="#26bfbc">
+                                 <font>
+                                    <Font name="System Bold" size="26.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Ultimo Cadastro" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -119,7 +132,7 @@
                         </VBox>
                      </children>
                      <padding>
-                        <Insets left="30.0" top="20.0" />
+                        <Insets left="10.0" top="20.0" />
                      </padding>
                   </HBox>
                   <TableView fx:id="TableView" layoutY="208.0" prefHeight="368.0" prefWidth="793.0" style="-fx-background-color: black;">
@@ -145,6 +158,7 @@
                         <Font name="System Bold" size="42.0" />
                      </font>
                   </Label>
+                  <JFXButton layoutX="742.0" layoutY="46.0" onAction="#findByName" prefHeight="25.0" prefWidth="27.0" text=" " />
                </children>
             </Pane>
          </children>

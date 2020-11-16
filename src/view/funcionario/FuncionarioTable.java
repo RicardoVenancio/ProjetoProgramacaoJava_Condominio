@@ -12,7 +12,9 @@ import com.jfoenix.controls.JFXTextField;
 
 import alerts.ShowAlert;
 import dao.FuncionarioDao;
+import dao.visitanteDao;
 import entity.Funcionario;
+import entity.Visitante;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -84,6 +86,9 @@ public class FuncionarioTable implements Initializable {
 
 	@FXML
 	private Label lastVisit;
+	
+	@FXML
+	private Label cargoFunc;
 
 	@FXML
 	private Button btnCadastrar;
@@ -153,7 +158,12 @@ public class FuncionarioTable implements Initializable {
 
 	@FXML
 	void findByName(ActionEvent event) {
-
+		if (txtBuscar.getText().equals("")) {
+			StartTable();
+		} else {
+			StartTable2();
+			txtBuscar.setText("");
+		}
 	}
 
 	@FXML
@@ -169,7 +179,7 @@ public class FuncionarioTable implements Initializable {
 			new ShowAlert().validaAlert();
 		}
 	}
-	
+
 	@FXML
 	void Salvarfuncionario(ActionEvent event) throws IOException {
 		if (validaCampos()) {
@@ -298,6 +308,7 @@ public class FuncionarioTable implements Initializable {
 	// Listar cadastros na TableView
 	public void StartTable() {
 		List<Funcionario> list = new FuncionarioDao().listAll();
+		Funcionario x = new FuncionarioDao().ultimoCadastro();
 		colNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
 		colCargo.setCellValueFactory(new PropertyValueFactory<>("Cargo"));
 		colRg.setCellValueFactory(new PropertyValueFactory<>("Rg"));
@@ -308,6 +319,8 @@ public class FuncionarioTable implements Initializable {
 		colSalario.setCellValueFactory(new PropertyValueFactory<>("salario"));
 		TableView.setItems(atualizaTabela());
 		numFuncionarios.setText(Integer.toString(list.size()));
+		lastVisit.setText(x.getNome());
+		cargoFunc.setText(x.getCargo());
 	}
 
 	// Converter para Collections
@@ -316,23 +329,45 @@ public class FuncionarioTable implements Initializable {
 		return FXCollections.observableArrayList(dao.listAll());
 	}
 
-	 public void navegacaoTelaLogin() throws IOException {
-         FXMLLoader fxmlLoader = new FXMLLoader(ControllerLogin.class.getResource("telafront.fxml"));
-         Parent root1 = fxmlLoader.load();
-         Stage stage = new Stage();
- 		stage.initStyle(StageStyle.UNDECORATED);
-         stage.setScene(new Scene(root1));
-         stage.show();
- 		fecharTela();
+	public void StartTable2() {
+		List<Funcionario> list = new FuncionarioDao().listAllName(txtBuscar.getText());
+		colNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
+		colCargo.setCellValueFactory(new PropertyValueFactory<>("Cargo"));
+		colRg.setCellValueFactory(new PropertyValueFactory<>("Rg"));
+		colCpf.setCellValueFactory(new PropertyValueFactory<>("Cpf"));
+		colTelefone.setCellValueFactory(new PropertyValueFactory<>("Telefone"));
+		colSexo.setCellValueFactory(new PropertyValueFactory<>("Sexo"));
+		colAdmissao.setCellValueFactory(new PropertyValueFactory<>("Dataadmissao"));
+		colSalario.setCellValueFactory(new PropertyValueFactory<>("salario"));
+		TableView.setItems(atualizaTabela2());
+		numFuncionarios.setText(Integer.toString(list.size()));
+	}
 
- }
- 
- public void fecharTela() {
- 	Stage stage = (Stage) BTNSalvar.getScene().getWindow();
- 	stage.close();
- }
+	// Converter para Collections
+	public ObservableList<Funcionario> atualizaTabela2() {
+		FuncionarioDao dao = new FuncionarioDao();
+		return FXCollections.observableArrayList(dao.listAllName(txtBuscar.getText()));
+	}
+
+	public void navegacaoTelaLogin() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(ControllerLogin.class.getResource("telafront.fxml"));
+		Parent root1 = fxmlLoader.load();
+		Stage stage = new Stage();
+		stage.initStyle(StageStyle.UNDECORATED);
+		stage.setScene(new Scene(root1));
+		stage.show();
+		fecharTela();
+
+	}
+
+	public void fecharTela() {
+		Stage stage = (Stage) BTNSalvar.getScene().getWindow();
+		stage.close();
+	}
+
 //-------------------------------------------------------------------------------------------------
 	ControllerLogin x = new ControllerLogin();
+
 	// Executar Tela
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

@@ -12,7 +12,9 @@ import com.jfoenix.controls.JFXTextField;
 
 import alerts.ShowAlert;
 import dao.RecadoDao;
+import dao.visitanteDao;
 import entity.Recado;
+import entity.Visitante;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -48,6 +50,9 @@ public class ControllerRecadoTable implements Initializable {
 
 	@FXML
 	private Label lastVisit;
+	
+	@FXML
+	private Label dataVisit;
 
 	@FXML
 	private JFXButton btnCadastrar;
@@ -123,7 +128,12 @@ public class ControllerRecadoTable implements Initializable {
 
 	@FXML
 	void findByName(ActionEvent event) {
-
+		if(txtBuscar.getText().equals("")) {
+			StartTable();
+		}else {
+			StartTable2();
+			txtBuscar.setText("");
+		}
 	}
 
 	@FXML
@@ -233,11 +243,14 @@ public class ControllerRecadoTable implements Initializable {
 	// Listar cadastros na TableView
 	public void StartTable() {
 		List<Recado> list = new RecadoDao().listAll();
+		Recado x = new RecadoDao().ultimoCadastro();
 		colNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
 		colData.setCellValueFactory(new PropertyValueFactory<>("Datarecado"));
 		colRecado.setCellValueFactory(new PropertyValueFactory<>("Texto"));
 		TableView.setItems(atualizaTabela());
 		numRecados.setText(Integer.toString(list.size()));
+		lastVisit.setText(x.getNome());
+		dataVisit.setText(x.getDatarecado().toString());
 
 	}
 
@@ -245,6 +258,21 @@ public class ControllerRecadoTable implements Initializable {
 	public ObservableList<Recado> atualizaTabela() {
 		RecadoDao dao = new RecadoDao();
 		return FXCollections.observableArrayList(dao.listAll());
+	}
+	public void StartTable2() {
+		List<Recado> list = new RecadoDao().listAllName(txtBuscar.getText());
+		colNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
+		colData.setCellValueFactory(new PropertyValueFactory<>("Datarecado"));
+		colRecado.setCellValueFactory(new PropertyValueFactory<>("Texto"));
+		TableView.setItems(atualizaTabela2());
+		numRecados.setText(Integer.toString(list.size()));
+		
+	}
+	
+	// Converter para Collections
+	public ObservableList<Recado> atualizaTabela2() {
+		RecadoDao dao = new RecadoDao();
+		return FXCollections.observableArrayList(dao.listAllName(txtBuscar.getText()));
 	}
 
 //-------------------------------------------------------------------------------------------------

@@ -11,6 +11,7 @@ import java.util.List;
 
 import db.ConexaoHSQLDB;
 import entity.Sindico;
+import entity.Visitante;
 
 public class sindicoDao extends ConexaoHSQLDB{
 	final String SQL_INSERT_SINDICOO = "INSERT INTO SINDICOO(NOMESINDICO, DATANASCIMENTO, SEXOSINDICO, EMAILSINDICO, NUMEROTELEFONESINDICO, DATAADMISSAO) VALUES (?,?,?,?,?,?)";
@@ -18,7 +19,30 @@ public class sindicoDao extends ConexaoHSQLDB{
 	final String SQL_SELECT_SINDICO_ID = "SELECT * FROM SINDICOO WHERE IDSINDICO = ?";
 	final String SQL_ALTERA_SINDICO = "UPDATE SINDICOO SET NOMESINDICO=?, DATANASCIMENTO=? , SEXOSINDICO=?, EMAILSINDICO=?, NUMEROTELEFONESINDICO=?, DATAADMISSAO=? WHERE IDSINDICO = ?";
 	final String SQL_DELETA_SINDICO = "DELETE FROM SINDICOO WHERE IDSINDICO = ?";
+	final String SQL_SELECT_SINDICOO_NOME = "SELECT * FROM SINDICOO WHERE NOMESINDICO = ?";
 
+	public Sindico BuscarDados(String nome) {
+		Sindico sindico = new Sindico();
+		try (Connection connection = this.conectar();
+				PreparedStatement pst = connection.prepareStatement(SQL_SELECT_SINDICOO_NOME);) {
+
+			pst.setString(1, nome);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				sindico.setIdSINDICO(rs.getInt("IDSINDICO"));
+				sindico.setNomeSindico(rs.getString("NOMESINDICO"));
+				sindico.setDataNascimento(java.sql.Date.valueOf((rs.getString("DATANASCIMENTO"))));
+				sindico.setSexoSindico(rs.getString("SEXOSINDICO"));
+				sindico.setEmailSindico(rs.getString("EMAILSINDICO"));
+				sindico.setNumerotelefoneSindico(rs.getString("NUMEROTELEFONESINDICO"));
+				sindico.setDataAdmissao(java.sql.Date.valueOf((rs.getString("DATAADMISSAO"))));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sindico;
+	}
+	
 public int inserir(Sindico sindicoo) {
 	int quantidade = 0;
 

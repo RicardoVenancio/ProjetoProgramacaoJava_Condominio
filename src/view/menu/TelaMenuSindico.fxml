@@ -30,10 +30,11 @@
                   <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <Label fx:id="labelNome" text="Sindico" textFill="WHITE">
+            <JFXButton fx:id="btnNome" onAction="#trataMenu" text="Sindico" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="22.0" />
-               </font></Label>
+               </font>
+            </JFXButton>
             <Button fx:id="btnMenus" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-border-color: white;" stylesheets="@../../services/style.css" text="Menu" />
             <Button fx:id="btnSettings" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-border-color: white;" stylesheets="@../../services/style.css" text="Settings" />
             <Button fx:id="btnSignout" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-border-color: white;" stylesheets="@../../services/style.css" text="Logout" />
@@ -149,12 +150,17 @@
                         </Pane>
                         <Pane prefHeight="118.0" prefWidth="183.0" style="-fx-background-color: #dadada;">
                            <children>
-                              <Label layoutX="85.0" layoutY="72.0" text="Y" textFill="#8f8f8f">
+                              <Label layoutX="60.0" layoutY="72.0" text="Sindicos" textFill="#8f8f8f">
                                  <font>
                                     <Font name="System Bold" size="19.0" />
                                  </font>
                               </Label>
-                              <JFXButton fx:id="btnY" layoutX="1.0" layoutY="-8.0" onAction="#trataMenu" prefHeight="118.0" prefWidth="183.0" ripplerFill="BLACK" text=" " />
+                              <ImageView fitHeight="62.0" fitWidth="66.0" layoutX="66.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../services/out/images/icons8_cat_profile_96px.png" />
+                                 </image>
+                              </ImageView>
+                              <JFXButton fx:id="btnY" layoutY="-7.0" onAction="#trataMenu" prefHeight="118.0" prefWidth="183.0" ripplerFill="BLACK" text=" " />
                            </children>
                         </Pane>
                      </children>

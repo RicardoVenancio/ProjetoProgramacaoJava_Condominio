@@ -12,7 +12,9 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import dao.loginDao;
+import entity.Funcionario;
 import entity.Mouse;
+import entity.Sindico;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -30,23 +32,12 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import services.ValidaCPF;
 import view.funcionario.FuncionarioTable;
 import view.menu.ControllerMenuTable;
 import view.sindico.ControllerSindico;
 
 public class ControllerLogin extends Application implements Initializable {
-//	@FXML
-//	private Button BTNCadastrar;
-//
-//	@FXML
-//	private TextField TXTCpf;
-//
-//	@FXML
-//	private TextField TXTSenha;
-//
-//	@FXML
-//	private Button BTNEntrar;
-
 	@FXML
 	private AnchorPane anchorPane;
 
@@ -77,7 +68,7 @@ public class ControllerLogin extends Application implements Initializable {
 	}
 
 	public static String usuario;
-	public static String nome;
+	public static String cpf;
 
 	@FXML
 	void BTNCadastro(ActionEvent event) throws IOException {
@@ -136,19 +127,19 @@ public class ControllerLogin extends Application implements Initializable {
 	public String validacaoLogin() throws IOException {
 		loginDao logindao = new loginDao();
 		usuario = "";
-		nome = "";
-
+		String senha = ValidaCPF.imprimeTelefone(TXTSenha.getText());
+		
 		if (!TXTCpf.getText().isEmpty() && !TXTSenha.getText().isEmpty()) {
 
-			String resultadoSindico = logindao.authenticateUser(TXTCpf.getText(), TXTSenha.getText());
-			String resultadoFuncionario = logindao.authenticateUserFuncionario(TXTCpf.getText(), TXTSenha.getText());
+			String resultadoSindico = logindao.authenticateUser(TXTCpf.getText(), senha);
+			String resultadoFuncionario = logindao.authenticateUserFuncionario(TXTCpf.getText(), senha);
 
 			if (resultadoFuncionario == null && resultadoSindico == null) {
 				return "" + alerta();
 			}
 			if (resultadoSindico == null || resultadoSindico == "") {
 				usuario = "funcionario";
-				nome = TXTCpf.getText();
+				cpf = TXTCpf.getText();
 				FXMLLoader fxmlLoader = new FXMLLoader(
 						ControllerMenuTable.class.getResource("TelaMenuFuncionario.fxml"));
 				Parent root1 = fxmlLoader.load();
@@ -161,7 +152,7 @@ public class ControllerLogin extends Application implements Initializable {
 			}
 			if (resultadoFuncionario == null || resultadoFuncionario == "") {
 				usuario = "sindico";
-				nome = TXTCpf.getText();
+				cpf = TXTCpf.getText();
 				FXMLLoader fxmlLoader = new FXMLLoader(ControllerMenuTable.class.getResource("TelaMenuSindico.fxml"));
 				Parent root1 = fxmlLoader.load();
 				Stage stage = new Stage();

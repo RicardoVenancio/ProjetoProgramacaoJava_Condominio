@@ -16,17 +16,42 @@ public class FuncionarioDao extends ConexaoHSQLDB {
 	final String SQL_INSERT_FUNCIONARIO = "INSERT INTO FUNCIONARIO(NOME, CARGO, RG, CPF, TELEFONE, SEXO,  DATAADMISSAO, SALARIO) VALUES (?,?,?,?,?,?,?,?)";
 	final String SQL_SELECT_FUNCIONARIO = "SELECT * FROM FUNCIONARIO";
 	final String SQL_SELECT_FUNCIONARIO_ID = "SELECT * FROM FUNCIONARIO WHERE ID = ?";
+	final String SQL_SELECT_FUNCIONARIO_CPF = "SELECT * FROM FUNCIONARIO WHERE CPF = ?";
 	final String SQL_SELECT_FUNCIONARIO_NOME = "SELECT * FROM FUNCIONARIO WHERE NOME LIKE ?";
 	final String SQL_ALTERA_FUNCIONARIO = "UPDATE FUNCIONARIO SET NOME=?, CARGO=? , RG=?, CPF=?, TELEFONE=?, SEXO=?, DATAADMISSAO=?, SALARIO=? WHERE ID = ?";
 	final String SQL_DELETA_FUNCIONARIO = "DELETE FROM FUNCIONARIO WHERE ID = ?";
 	final String SQL_SELECT_FUNCIONARIO_LAST_INSERT = "SELECT * FROM FUNCIONARIO WHERE ID = (SELECT MAX(ID) FROM FUNCIONARIO)";
 	final String SQL_SELECT_FUNCIONARIO_USUARIO = "SELECT * FROM FUNCIONARIO WHERE NOME = ?";
 
+	public Funcionario BuscarCPF(String cpf) {
+		Funcionario funcionario = new Funcionario();
+		try (Connection connection = this.conectar();
+				PreparedStatement pst = connection.prepareStatement(SQL_SELECT_FUNCIONARIO_CPF);) {
+
+			pst.setString(1, cpf);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				funcionario.setId(rs.getInt("ID"));
+				funcionario.setNome(rs.getString("NOME"));
+				funcionario.setCargo(rs.getString("CARGO"));
+				funcionario.setRg(rs.getString("RG"));
+				funcionario.setCpf(rs.getString("CPF"));
+				funcionario.setTelefone(rs.getString("TELEFONE"));
+				funcionario.setSexo(rs.getString("SEXO"));
+				funcionario.setDataadmissao(java.sql.Date.valueOf((rs.getString("DATAADMISSAO"))));
+				funcionario.setSalario(rs.getString("SALARIO"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return funcionario;
+	}
+	
 	public Funcionario BuscarDados(String nome) {
 		Funcionario funcionario = new Funcionario();
 		try (Connection connection = this.conectar();
 				PreparedStatement pst = connection.prepareStatement(SQL_SELECT_FUNCIONARIO_USUARIO);) {
-
+			
 			pst.setString(1, nome);
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {

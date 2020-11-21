@@ -133,8 +133,8 @@ public class Funcionario extends Pessoa {
 
 	@Override
 	public String toString() {
-		return "Funcionario [id=" + id + ", getNome()=" + getNome() + ",cargo=" + cargo + ", rg=" + rg + ", cpf=" + cpf
-				+ ", getTelefone()=" + getTelefone() + ", sexo=" + sexo + ", dataadmissao=" + dataadmissao
+		return "\r Funcionario [id=" + id + ", getNome()=" + getNome() + ",cargo=" + cargo + ", rg=" + rg + ", \r cpf=" + cpf
+				+ ", \r getTelefone()=" + getTelefone() + ", sexo=" + sexo + ", dataadmissao=" + dataadmissao
 				+ ", salario=" + salario + "]";
 	}
 

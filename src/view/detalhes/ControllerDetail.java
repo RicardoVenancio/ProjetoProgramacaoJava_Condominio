@@ -26,6 +26,9 @@ public class ControllerDetail implements Initializable {
 	private Label Nome;
 
 	@FXML
+	private Label CPF;
+
+	@FXML
 	private Label Nascimento;
 
 	@FXML
@@ -78,21 +81,25 @@ public class ControllerDetail implements Initializable {
 	ControllerLogin login = new ControllerLogin();
 
 	void pesquisarUsuario() throws IOException {
+
 		if (login.usuario == "sindico") {
+			Sindico sindico = new sindicoDao().BuscarCPF(login.cpf);
 			hboxSindico.setVisible(true);
 			hboxFuncionario.setVisible(false);
-			Sindico x = new sindicoDao().BuscarDados(login.nome);
+			Sindico x = new sindicoDao().BuscarDados(sindico.getNome());
 			Id.setText(x.getIdSINDICO() + "");
 			Nome.setText(x.getNome());
+			CPF.setText(x.getCpf());
 			Nascimento.setText(x.getDataNascimento().toString());
 			Sexo.setText(x.getSexoSindico());
 			Email.setText(x.getEmailSindico());
 			Telefone.setText(x.getTelefone());
 			Admissao.setText(x.getDataAdmissao().toString());
 		} else if (login.usuario == "funcionario") {
+			Funcionario func = new FuncionarioDao().BuscarCPF(login.cpf);
 			hboxSindico.setVisible(false);
 			hboxFuncionario.setVisible(true);
-			Funcionario x = new FuncionarioDao().BuscarDados(login.nome);
+			Funcionario x = new FuncionarioDao().BuscarDados(func.getNome());
 			IdFunc.setText(x.getId() + "");
 			NomeFunc.setText(x.getNome());
 			CargoFunc.setText(x.getCargo());

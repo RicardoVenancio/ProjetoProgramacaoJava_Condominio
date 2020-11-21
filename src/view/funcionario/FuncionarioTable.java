@@ -34,6 +34,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import services.ValidaCPF;
 import view.login.ControllerLogin;
 import view.menu.ControllerMenuTable;
 import view.proprietario.ControllerPropTable;
@@ -86,7 +87,7 @@ public class FuncionarioTable implements Initializable {
 
 	@FXML
 	private Label lastVisit;
-	
+
 	@FXML
 	private Label cargoFunc;
 
@@ -131,6 +132,8 @@ public class FuncionarioTable implements Initializable {
 
 	@FXML
 	private Label Fechar;
+	@FXML
+	private Label invalidoCPF;
 
 	@FXML
 	private Button btnFuncionario;
@@ -155,6 +158,19 @@ public class FuncionarioTable implements Initializable {
 
 	@FXML
 	private Button btnSignout;
+	private String telefoneValido;
+
+	public boolean validaCPF() {
+		boolean x = ValidaCPF.isCPF(PrCpf.getText());
+
+		if (x == false) {
+			invalidoCPF.setVisible(true);
+			return false;
+		} else {
+			invalidoCPF.setVisible(false);
+			return true;
+		}
+	}
 
 	@FXML
 	void findByName(ActionEvent event) {
@@ -253,14 +269,16 @@ public class FuncionarioTable implements Initializable {
 	}
 
 	private Funcionario obtemDados() {
-		return new Funcionario(PrNome.getText(), PrCargo.getText(), PrRg.getText(), PrCpf.getText(),
-				PrTelefone.getText(), PrSexo.getText(), java.sql.Date.valueOf(datePickerEmissao.getValue()),
-				PrSalario.getText());
+		telefoneValido = ValidaCPF.imprimeTelefone(PrTelefone.getText());
+		return new Funcionario(PrNome.getText(), PrCargo.getText(), PrRg.getText(), PrCpf.getText(), telefoneValido,
+				PrSexo.getText(), java.sql.Date.valueOf(datePickerEmissao.getValue()), PrSalario.getText());
 	}
 
 	private Funcionario obtemDadosID() {
+		telefoneValido = ValidaCPF.imprimeTelefone(PrTelefone.getText());
+
 		return new Funcionario(Integer.valueOf(LabelLabel.getText()), PrNome.getText(), PrCargo.getText(),
-				PrRg.getText(), PrCpf.getText(), PrTelefone.getText(), PrSexo.getText(),
+				PrRg.getText(), PrCpf.getText(), telefoneValido, PrSexo.getText(),
 				java.sql.Date.valueOf(datePickerEmissao.getValue()), PrSalario.getText());
 
 	}
@@ -286,7 +304,7 @@ public class FuncionarioTable implements Initializable {
 	public boolean validaCampos() {
 		if (PrNome.getText().isEmpty() | PrRg.getText().isEmpty() | PrCpf.getText().isEmpty()
 				| PrTelefone.getText().isEmpty() | PrSalario.getText().isEmpty() | PrCargo.getText().isEmpty()
-				| PrSexo.getText().isEmpty()) {
+				| PrSexo.getText().isEmpty() | PrCpf.getText().length() < 11 | PrTelefone.getText().length() < 10) {
 			return false;
 		}
 		return true;

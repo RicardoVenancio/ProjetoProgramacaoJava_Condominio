@@ -8,6 +8,8 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
+import dao.FuncionarioDao;
+import entity.Funcionario;
 import entity.Mouse;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -39,7 +41,7 @@ public class ControllerMenuFuncionario extends Application implements Initializa
 
 	@FXML
 	private JFXButton btnNome;
-	
+
 	@FXML
 	private JFXButton btnVisitante;
 
@@ -85,7 +87,8 @@ public class ControllerMenuFuncionario extends Application implements Initializa
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		btnNome.setText(x.nome);
+		Funcionario func = new FuncionarioDao().BuscarCPF(x.cpf);
+		btnNome.setText(func.getNome());
 		mapPanels.put(btnVisitante, "/view/visitante/VisitanteTable.fxml");
 		mapPanels.put(btnRecado, "/view/recado/RecadoTable.fxml");
 		mapPanels.put(btnMorador, "/view/morador/MoradorTable.fxml");

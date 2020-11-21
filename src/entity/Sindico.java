@@ -2,33 +2,33 @@ package entity;
 
 import java.sql.Date;
 
-public class Sindico extends Pessoa{
+public class Sindico extends Pessoa {
 
-	public Sindico(String nome, int idSINDICO, Date dataNascimento, String sexoSindico, String emailSindico,
+	public Sindico(String nome, String cpf, int idSINDICO, Date dataNascimento, String sexoSindico, String emailSindico,
 			String telefone, Date dataAdmissao) {
 		super(nome, telefone);
-	this.idSINDICO = idSINDICO;
-	this.dataNascimento = dataNascimento;
-	this.sexoSindico = sexoSindico;
-	this.emailSindico = emailSindico;
-	this.dataAdmissao = dataAdmissao;
-}
-	public Sindico(String nome, Date dataNascimento, String sexoSindico, String emailSindico,
+		this.idSINDICO = idSINDICO;
+		this.cpf = cpf;
+		this.dataNascimento = dataNascimento;
+		this.sexoSindico = sexoSindico;
+		this.emailSindico = emailSindico;
+		this.dataAdmissao = dataAdmissao;
+	}
+
+	public Sindico(String nome, String cpf, Date dataNascimento, String sexoSindico, String emailSindico,
 			String telefone, Date dataAdmissao) {
 		super(nome, telefone);
-	
-	this.dataNascimento = dataNascimento;
-	this.sexoSindico = sexoSindico;
-	this.emailSindico = emailSindico;
-	this.dataAdmissao = dataAdmissao;
-}
-	
 
+		this.cpf = cpf;
+		this.dataNascimento = dataNascimento;
+		this.sexoSindico = sexoSindico;
+		this.emailSindico = emailSindico;
+		this.dataAdmissao = dataAdmissao;
+	}
 
 	public Sindico() {
 		super();
 	}
-
 
 	public Sindico(String nome, String telefone) {
 		super(nome, telefone);
@@ -36,60 +36,79 @@ public class Sindico extends Pessoa{
 	}
 
 	private int idSINDICO;
+	private String cpf;
 	private Date dataNascimento;
 	private String sexoSindico;
 	private String emailSindico;
 	private Date dataAdmissao;
-	
-	
-	
-	
-	/////////////////////////////////////GET SET/////////////////////////////////////////////
+
+	///////////////////////////////////// GET
+	///////////////////////////////////// SET/////////////////////////////////////////////
+
 	public int getIdSINDICO() {
 		return idSINDICO;
 	}
+
 	public void setIdSINDICO(int idSINDICO) {
 		this.idSINDICO = idSINDICO;
 	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
 	public Date getDataNascimento() {
 		return dataNascimento;
 	}
+
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
+
 	public String getSexoSindico() {
 		return sexoSindico;
 	}
+
 	public void setSexoSindico(String sexoSindico) {
 		this.sexoSindico = sexoSindico;
 	}
+
 	public String getEmailSindico() {
 		return emailSindico;
 	}
+
 	public void setEmailSindico(String emailSindico) {
 		this.emailSindico = emailSindico;
 	}
+
 	public Date getDataAdmissao() {
 		return dataAdmissao;
 	}
+
 	public void setDataAdmissao(Date dataAdmissao) {
 		this.dataAdmissao = dataAdmissao;
 	}
-	
-	
-	/////////////////////////////////////TOSTRING/////////////////////////////////////////////
+
+	///////////////////////////////////// TOSTRING/////////////////////////////////////////////
 
 	@Override
 	public String toString() {
-		return "Sindico [idSINDICO=" + idSINDICO + ",getNome()=" + getNome() + ", dataNascimento=" + dataNascimento + ", sexoSindico=" + sexoSindico
-				+ ", emailSindico=" + emailSindico + ", get Telefone()=" + getTelefone() + ", dataAdmissao=" + dataAdmissao + "]";
+		return "\r Sindico [idSINDICO=" + idSINDICO + ",getNome()=" + getNome() + ",\r cpf=" + cpf + ", dataNascimento="
+				+ dataNascimento + ", sexoSindico=" + sexoSindico + ", emailSindico=" + emailSindico
+				+ ",\r Telefone=" + getTelefone() + ", dataAdmissao=" + dataAdmissao + "]";
 	}
-	
-	/////////////////////////////////////HASHCODE/////////////////////////////////////////////
+
+	///////////////////////////////////// HASHCODE/////////////////////////////////////////////
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
+		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
 		result = prime * result + ((dataAdmissao == null) ? 0 : dataAdmissao.hashCode());
 		result = prime * result + ((dataNascimento == null) ? 0 : dataNascimento.hashCode());
 		result = prime * result + ((emailSindico == null) ? 0 : emailSindico.hashCode());
@@ -102,11 +121,16 @@ public class Sindico extends Pessoa{
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Sindico other = (Sindico) obj;
+		if (cpf == null) {
+			if (other.cpf != null)
+				return false;
+		} else if (!cpf.equals(other.cpf))
+			return false;
 		if (dataAdmissao == null) {
 			if (other.dataAdmissao != null)
 				return false;
@@ -131,4 +155,5 @@ public class Sindico extends Pessoa{
 			return false;
 		return true;
 	}
+
 }

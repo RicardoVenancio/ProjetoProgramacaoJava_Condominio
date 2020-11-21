@@ -7,16 +7,17 @@ public class Apartamento {
 	private int idAp;
 	private int numAp;
 	private int qtdMorador;
-	private char animalEstimacao;
+	private String animalEstimacao;
 	private int qtdAnimal;
 	private int andarAp;
 	private int blocoAp;
 	private Date dataEntrada;
 	private String statusAp;
 	private int vagaVeiculo;
+	private String proprietarioAp;
 
-	public Apartamento(int idAp, int numAp, int qtdMorador, char animalEstimacao, int qtdAnimal, int andarAp,
-			int blocoAp, Date dataEntrada, String statusAp, int vagaVeiculo) {
+	public Apartamento(int idAp, int numAp, int qtdMorador, String animalEstimacao, int qtdAnimal, int andarAp,
+			int blocoAp, Date dataEntrada, String statusAp, int vagaVeiculo, String proprietarioAp) {
 		super();
 		this.idAp = idAp;
 		this.numAp = numAp;
@@ -28,10 +29,11 @@ public class Apartamento {
 		this.dataEntrada = dataEntrada;
 		this.statusAp = statusAp;
 		this.vagaVeiculo = vagaVeiculo;
+		this.proprietarioAp = proprietarioAp;
 	}
 
-	public Apartamento(int numAp, int qtdMorador, char animalEstimacao, int qtdAnimal, int andarAp, int blocoAp,
-			Date dataEntrada, String statusAp, int vagaVeiculo) {
+	public Apartamento(int numAp, int qtdMorador, String animalEstimacao, int qtdAnimal, int andarAp, int blocoAp,
+			Date dataEntrada, String statusAp, int vagaVeiculo, String proprietarioAp) {
 		super();
 		this.numAp = numAp;
 		this.qtdMorador = qtdMorador;
@@ -42,6 +44,15 @@ public class Apartamento {
 		this.dataEntrada = dataEntrada;
 		this.statusAp = statusAp;
 		this.vagaVeiculo = vagaVeiculo;
+		this.proprietarioAp = proprietarioAp;
+	}
+
+	public String getProprietarioAp() {
+		return proprietarioAp;
+	}
+
+	public void setProprietarioAp(String proprietarioAp) {
+		this.proprietarioAp = proprietarioAp;
 	}
 
 	public Apartamento() {
@@ -72,11 +83,11 @@ public class Apartamento {
 		this.qtdMorador = qtdMorador;
 	}
 
-	public char getAnimalEstimacao() {
+	public String getAnimalEstimacao() {
 		return animalEstimacao;
 	}
 
-	public void setAnimalEstimacao(char animalEstimacao) {
+	public void setAnimalEstimacao(String animalEstimacao) {
 		this.animalEstimacao = animalEstimacao;
 	}
 
@@ -133,11 +144,12 @@ public class Apartamento {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + andarAp;
-		result = prime * result + animalEstimacao;
+		result = prime * result + ((animalEstimacao == null) ? 0 : animalEstimacao.hashCode());
 		result = prime * result + blocoAp;
 		result = prime * result + ((dataEntrada == null) ? 0 : dataEntrada.hashCode());
 		result = prime * result + idAp;
 		result = prime * result + numAp;
+		result = prime * result + ((proprietarioAp == null) ? 0 : proprietarioAp.hashCode());
 		result = prime * result + qtdAnimal;
 		result = prime * result + qtdMorador;
 		result = prime * result + ((statusAp == null) ? 0 : statusAp.hashCode());
@@ -156,7 +168,10 @@ public class Apartamento {
 		Apartamento other = (Apartamento) obj;
 		if (andarAp != other.andarAp)
 			return false;
-		if (animalEstimacao != other.animalEstimacao)
+		if (animalEstimacao == null) {
+			if (other.animalEstimacao != null)
+				return false;
+		} else if (!animalEstimacao.equals(other.animalEstimacao))
 			return false;
 		if (blocoAp != other.blocoAp)
 			return false;
@@ -168,6 +183,11 @@ public class Apartamento {
 		if (idAp != other.idAp)
 			return false;
 		if (numAp != other.numAp)
+			return false;
+		if (proprietarioAp == null) {
+			if (other.proprietarioAp != null)
+				return false;
+		} else if (!proprietarioAp.equals(other.proprietarioAp))
 			return false;
 		if (qtdAnimal != other.qtdAnimal)
 			return false;
@@ -187,6 +207,7 @@ public class Apartamento {
 	public String toString() {
 		return "Apartamento [idAp=" + idAp + ", numAp=" + numAp + ", qtdMorador=" + qtdMorador + ", animalEstimacao="
 				+ animalEstimacao + ", qtdAnimal=" + qtdAnimal + ", andarAp=" + andarAp + ", blocoAp=" + blocoAp
-				+ ", dataEntrada=" + dataEntrada + ", statusAp=" + statusAp + ", vagaVeiculo=" + vagaVeiculo + "]";
+				+ ", dataEntrada=" + dataEntrada + ", statusAp=" + statusAp + ", vagaVeiculo=" + vagaVeiculo
+				+ ", proprietarioAp=" + proprietarioAp + "]";
 	}
 }

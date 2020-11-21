@@ -54,7 +54,7 @@ public class ControllerFuncionario implements Initializable {
 
 	@FXML
 	private JFXTextField PrCpf;
-
+	
 	@FXML
 	private JFXTextField PrSexo;
 
@@ -340,6 +340,7 @@ public class ControllerFuncionario implements Initializable {
 	// Executar Tela
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
 	}
 
 //-------------------------------------------------------------------------------------------------

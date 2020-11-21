@@ -150,17 +150,17 @@
                         </Pane>
                         <Pane prefHeight="118.0" prefWidth="183.0" style="-fx-background-color: #dadada;">
                            <children>
-                              <Label layoutX="60.0" layoutY="72.0" text="Sindicos" textFill="#8f8f8f">
+                              <Label layoutX="33.0" layoutY="72.0" text="Apartamentos" textFill="#8f8f8f">
                                  <font>
                                     <Font name="System Bold" size="19.0" />
                                  </font>
                               </Label>
                               <ImageView fitHeight="62.0" fitWidth="66.0" layoutX="66.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../services/out/images/icons8_cat_profile_96px.png" />
+                                    <Image url="@../../services/out/images/icons8_building_with_rooftop_terrace_96px.png" />
                                  </image>
                               </ImageView>
-                              <JFXButton fx:id="btnY" layoutY="-7.0" onAction="#trataMenu" prefHeight="118.0" prefWidth="183.0" ripplerFill="BLACK" text=" " />
+                              <JFXButton fx:id="btnApartamentos" layoutY="-7.0" onAction="#trataMenu" prefHeight="118.0" prefWidth="183.0" ripplerFill="BLACK" text=" " />
                            </children>
                         </Pane>
                      </children>

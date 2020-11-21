@@ -9,6 +9,8 @@ import java.util.List;
 
 import db.ConexaoHSQLDB;
 import entity.Proprietario;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class proprietarioDao extends ConexaoHSQLDB{
 	
@@ -19,7 +21,22 @@ public class proprietarioDao extends ConexaoHSQLDB{
 	final String SQL_ALTERA_PROPRIETARIO = "UPDATE PROPRIETARIO SET NOMEPROPRIETARIO=?, CPFPROPRIETARIO=? , RGPROPRIETARIO=?, NUMEROTELEFONEPROPRIETARIO=?, EMAILPROPRIETARIO=? WHERE IDPROPRIETARIO = ?";
 	final String SQL_DELETA_PROPRIETARIO = "DELETE FROM PROPRIETARIO WHERE IDPROPRIETARIO = ?";
 	final String SQL_SELECT_PROPRIETARIO_LAST_INSERT = "SELECT * FROM PROPRIETARIO WHERE IDPROPRIETARIO = (SELECT MAX(IDPROPRIETARIO) FROM PROPRIETARIO)";
+	final String SQL_SELECT_PROPRIETARIO_NOMES = "SELECT NOMEPROPRIETARIO FROM PROPRIETARIO";
 
+	public ObservableList<String> listaProprietarios() throws SQLException{
+		ObservableList options = FXCollections.observableArrayList();
+		
+		try (Connection connection = this.conectar();
+				PreparedStatement pst = connection.prepareStatement(SQL_SELECT_PROPRIETARIO_NOMES);) {
+			ResultSet rs = pst.executeQuery();
+			
+			while(rs.next()) {
+				options.add(rs.getString("NOMEPROPRIETARIO"));
+			}
+		}
+		return options;
+	}
+	
 	public Proprietario ultimoCadastro() {
 		Proprietario proprietario = new Proprietario();
 		try (Connection connection = this.conectar();

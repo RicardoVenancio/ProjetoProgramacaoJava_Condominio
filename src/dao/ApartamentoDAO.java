@@ -1,4 +1,5 @@
 package dao;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,16 +9,16 @@ import java.util.List;
 
 import db.ConexaoHSQLDB;
 import entity.Apartamento;
+import entity.Proprietario;
 
-public class ApartamentoDAO extends ConexaoHSQLDB{
-	final String SQL_INSERT_APARTAMENTO = "INSERT INTO APARTAMENTO(NUMERO_AP, QTD_MORADOR, ANIMAL_ESTIMACAO, QTD_ANIMAL, ANDAR_AP, BLOCO_AP, DATAENTRADA, STATUS_AP, VAGA_VEICULO) VALUES (?,?,?,?,?,?,?,?,?)";
+public class ApartamentoDAO extends ConexaoHSQLDB {
+	final String SQL_INSERT_APARTAMENTO = "INSERT INTO APARTAMENTO(NUMERO_AP, QTD_MORADOR, ANIMAL_ESTIMACAO, QTD_ANIMAL, ANDAR_AP, BLOCO_AP, DATAENTRADA, STATUS_AP, VAGA_VEICULO, PROPRIETARIOAP) VALUES (?,?,?,?,?,?,?,?,?,?)";
 	final String SQL_SELECT_APARTAMENTO = "SELECT * FROM APARTAMENTO";
 	final String SQL_SELECT_APARTAMENTO_ID = "SELECT * FROM APARTAMENTO WHERE ID_AP = ?";
-	final String SQL_UPDATE_APARTAMENTO = "UPDATE APARTAMENTO SET NUMERO_AP=?, QTD_MORADOR=? , ANIMAL_ESTIMACAO=?, QTD_ANIMAL=?, ANDAR_AP =?, BLOCO_AP=?, DATAENTRADA=?, STATUS_AP =?, VAGA_VEICULO=? WHERE ID_AP = ?";
+	final String SQL_UPDATE_APARTAMENTO = "UPDATE APARTAMENTO SET NUMERO_AP=?, QTD_MORADOR=? , ANIMAL_ESTIMACAO=?, QTD_ANIMAL=?, ANDAR_AP =?, BLOCO_AP=?, DATAENTRADA=?, STATUS_AP =?, VAGA_VEICULO=?, PROPRIETARIOAP=? WHERE ID_AP = ?";
 	final String SQL_DELETE_APARTAMENTO = "DELETE FROM APARTAMENTO WHERE ID_AP =?";
+	final String SQL_SELECT_APARTAMENTO_LAST_INSERT = "SELECT * FROM APARTAMENTO WHERE ID_AP = (SELECT MAX(ID_AP) FROM APARTAMENTO)";
 
-	
-	
 	public int createAp(Apartamento apartamento) {
 
 		int quantidade = 0;
@@ -31,8 +32,9 @@ public class ApartamentoDAO extends ConexaoHSQLDB{
 			pst.setInt(5, apartamento.getAndarAp());
 			pst.setInt(6, apartamento.getBlocoAp());
 			pst.setDate(7, apartamento.getDataEntrada());
-			pst.setString(8,  apartamento.getStatusAp());
-			pst.setInt(9,  apartamento.getVagaVeiculo());
+			pst.setString(8, apartamento.getStatusAp());
+			pst.setInt(9, apartamento.getVagaVeiculo());
+			pst.setString(10, apartamento.getProprietarioAp());
 			quantidade = pst.executeUpdate();
 
 		} catch (SQLException e) {
@@ -41,8 +43,6 @@ public class ApartamentoDAO extends ConexaoHSQLDB{
 
 		return quantidade;
 	}
-	
-	
 
 	public List<Apartamento> listAllAp() {
 		List<Apartamento> listaApartamento = new ArrayList<Apartamento>();
@@ -58,13 +58,14 @@ public class ApartamentoDAO extends ConexaoHSQLDB{
 				apartamento.setIdAp(rs.getInt("ID_AP"));
 				apartamento.setNumAp(rs.getInt("NUMERO_AP"));
 				apartamento.setQtdMorador(rs.getInt("QTD_MORADOR"));
-				apartamento.setAnimalEstimacao(rs.getString("ANIMAL_ESTIMACAO").charAt(0));
+				apartamento.setAnimalEstimacao(rs.getString("ANIMAL_ESTIMACAO"));
 				apartamento.setQtdAnimal(rs.getInt("QTD_ANIMAL"));
 				apartamento.setAndarAp(rs.getInt("ANDAR_AP"));
 				apartamento.setBlocoAp(rs.getInt("BLOCO_AP"));
 				apartamento.setDataEntrada(rs.getDate("DATAENTRADA"));
 				apartamento.setStatusAp(rs.getString("STATUS_AP"));
-				apartamento.setVagaVeiculo(rs.getInt("VAGA_VEICULO"));	
+				apartamento.setVagaVeiculo(rs.getInt("VAGA_VEICULO"));
+				apartamento.setProprietarioAp(rs.getString("PROPRIETARIOAP"));
 				listaApartamento.add(apartamento);
 			}
 		} catch (SQLException e) {
@@ -72,8 +73,7 @@ public class ApartamentoDAO extends ConexaoHSQLDB{
 		}
 		return listaApartamento;
 	}
-	
-	
+
 	public Apartamento findByIdAp(int idApartamento) {
 		Apartamento apartamento = null;
 		try (Connection connection = this.conectar();
@@ -87,13 +87,14 @@ public class ApartamentoDAO extends ConexaoHSQLDB{
 				apartamento.setIdAp(rs.getInt("ID_AP"));
 				apartamento.setNumAp(rs.getInt("NUMERO_AP"));
 				apartamento.setQtdMorador(rs.getInt("QTD_MORADOR"));
-				apartamento.setAnimalEstimacao(rs.getString("ANIMAL_ESTIMACAO").charAt(0));
+				apartamento.setAnimalEstimacao(rs.getString("ANIMAL_ESTIMACAO"));
 				apartamento.setQtdAnimal(rs.getInt("QTD_ANIMAL"));
 				apartamento.setAndarAp(rs.getInt("ANDAR_AP"));
 				apartamento.setBlocoAp(rs.getInt("BLOCO_AP"));
 				apartamento.setDataEntrada(rs.getDate("DATAENTRADA"));
 				apartamento.setStatusAp(rs.getString("STATUS_AP"));
-				apartamento.setVagaVeiculo(rs.getInt("VAGA_VEICULO"));	
+				apartamento.setVagaVeiculo(rs.getInt("VAGA_VEICULO"));
+				apartamento.setProprietarioAp(rs.getString("PROPRIETARIOAP"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -116,7 +117,8 @@ public class ApartamentoDAO extends ConexaoHSQLDB{
 			pst.setDate(7, apartamento.getDataEntrada());
 			pst.setString(8, apartamento.getStatusAp());
 			pst.setInt(9, apartamento.getVagaVeiculo());
-			pst.setInt(10, apartamento.getIdAp());
+			pst.setString(10, apartamento.getProprietarioAp());
+			pst.setInt(11, apartamento.getIdAp());
 			quantidade = pst.executeUpdate();
 
 		} catch (SQLException e) {
@@ -124,7 +126,6 @@ public class ApartamentoDAO extends ConexaoHSQLDB{
 		}
 		return quantidade;
 	}
-	
 
 	public int deleteAp(int idApartamento) {
 		int quantidade = 0;
@@ -138,5 +139,36 @@ public class ApartamentoDAO extends ConexaoHSQLDB{
 			System.out.println(e);
 		}
 		return quantidade;
+	}
+
+	public Apartamento ultimoCadastro() {
+		Apartamento apartamento = new Apartamento();
+		try (Connection connection = this.conectar();
+				PreparedStatement pst = connection.prepareStatement(SQL_SELECT_APARTAMENTO_LAST_INSERT);) {
+
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				apartamento = new Apartamento();
+				apartamento.setIdAp(rs.getInt("ID_AP"));
+				apartamento.setNumAp(rs.getInt("NUMERO_AP"));
+				apartamento.setQtdMorador(rs.getInt("QTD_MORADOR"));
+				apartamento.setAnimalEstimacao(rs.getString("ANIMAL_ESTIMACAO"));
+				apartamento.setQtdAnimal(rs.getInt("QTD_ANIMAL"));
+				apartamento.setAndarAp(rs.getInt("ANDAR_AP"));
+				apartamento.setBlocoAp(rs.getInt("BLOCO_AP"));
+				apartamento.setDataEntrada(rs.getDate("DATAENTRADA"));
+				apartamento.setStatusAp(rs.getString("STATUS_AP"));
+				apartamento.setVagaVeiculo(rs.getInt("VAGA_VEICULO"));
+				apartamento.setProprietarioAp(rs.getString("PROPRIETARIOAP"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return apartamento;
+	}
+
+	public List<Apartamento> listAllName(String text) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -70,6 +70,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </JFXButton>
+                  <Label fx:id="invalidoCPF" layoutX="444.0" layoutY="216.0" text="CPF Invalido, digite um CPF válido!" textFill="RED" visible="false" />
                </children>
             </Pane>
             <Pane fx:id="paneList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="793.0" style="-fx-background-color: black;">

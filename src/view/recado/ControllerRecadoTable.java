@@ -34,6 +34,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import services.ValidaCPF;
 import view.funcionario.FuncionarioTable;
 import view.login.ControllerLogin;
 import view.menu.ControllerMenuTable;
@@ -221,7 +222,7 @@ public class ControllerRecadoTable implements Initializable {
 	}
 
 	public boolean validaCampos() {
-		if (PrNome.getText().isEmpty() | PrRecado.getText().isEmpty()) {
+		if (PrNome.getText().isEmpty() | PrRecado.getText().isEmpty() | PrRecado.getText().length() < 10) {
 			return false;
 		}
 		return true;

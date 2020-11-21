@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import javax.swing.event.ChangeListener;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
 
 import alerts.ShowAlert;
 import dao.visitanteDao;
@@ -32,6 +35,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import services.ValidaCPF;
 import view.funcionario.FuncionarioTable;
 import view.login.ControllerLogin;
 import view.menu.ControllerMenuTable;
@@ -144,6 +148,26 @@ public class ControllerTable implements Initializable {
 
 	@FXML
 	private Button btnSignout;
+	
+	@FXML
+	private Label invalidoCPF;
+	
+	@FXML
+    private JFXToggleButton teste;
+
+	
+	public boolean validaCPF() {
+		boolean x = ValidaCPF.isCPF(TxtCPF.getText());
+		
+		if(x == false) {
+			invalidoCPF.setVisible(true);
+			return false;
+		}
+		else {
+			invalidoCPF.setVisible(false);
+			return true;
+		}
+	}
 
 	@FXML
 	void find(ActionEvent event) {
@@ -157,28 +181,34 @@ public class ControllerTable implements Initializable {
 
 	@FXML
 	void Salvar(ActionEvent event) {
-		if (validaCampos()) {
-			Visitante visitante = obtemDados();
-			limpaCampo();
-			int qtde = new visitanteDao().inserir(visitante);
-			StartTable();
-			paneList.toFront();
-			System.out.println(qtde);
-		} else {
-			new ShowAlert().validaAlert();
+		teste.selectedProperty().set(true);
+		System.out.println(teste.selectedProperty().get());
+		if(validaCPF()== true) {
+			if (validaCampos()) {
+				Visitante visitante = obtemDados();
+				limpaCampo();
+				int qtde = new visitanteDao().inserir(visitante);
+				StartTable();
+				paneList.toFront();
+				System.out.println(qtde);
+			} else {
+				new ShowAlert().validaAlert();
+			}
 		}
 	}
 
 	@FXML
 	void Editar(ActionEvent event) {
-		if (validaCampos()) {
-			Visitante visitante = obtemDadosID();
-			limpaCampo();
-			int qtde = new visitanteDao().alterar(visitante);
-			StartTable();
-			paneList.toFront();
-		} else {
-			new ShowAlert().validaAlert();
+		if(validaCPF() == true) {
+			if (validaCampos()) {
+				Visitante visitante = obtemDadosID();
+				limpaCampo();
+				int qtde = new visitanteDao().alterar(visitante);
+				StartTable();
+				paneList.toFront();
+			} else {
+				new ShowAlert().validaAlert();
+			}
 		}
 	}
 
@@ -320,7 +350,6 @@ public class ControllerTable implements Initializable {
 	// Executar Tela
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
 		ControllerLogin x = new ControllerLogin();
 		if (x.usuario == "funcionario") {
 			btnApagar.setVisible(false);

@@ -33,6 +33,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import services.ValidaCPF;
 import view.funcionario.FuncionarioTable;
 import view.login.ControllerLogin;
 import view.menu.ControllerMenuTable;
@@ -207,6 +208,7 @@ public class ControllerPropTable implements Initializable {
 	}
 
 	private void limpaCampo() {
+		LabelLabel.setText("");
 		TxtNome.clear();
 		TxtRg.clear();
 		TxtCpf.clear();
@@ -215,14 +217,16 @@ public class ControllerPropTable implements Initializable {
 
 	}
 
+
 	private Proprietario obtemDados() {
-		return new Proprietario(TxtNome.getText(), TxtCpf.getText(), TxtRg.getText(), TxtFone.getText(),
-				TxtEmail.getText());
+		return new Proprietario(TxtNome.getText(), TxtCpf.getText(), TxtRg.getText(), TxtFone.getText(), TxtEmail.getText());
 	}
 
 	private Proprietario obtemDadosID() {
-		return new Proprietario(Integer.valueOf(LabelLabel.getText()), TxtNome.getText(), TxtRg.getText(),
-				TxtCpf.getText(), TxtFone.getText(), TxtEmail.getText());
+		 String fone = ValidaCPF.imprimeTelefone(TxtFone.getText());
+		 String cpf = ValidaCPF.imprimeCPF(TxtCpf.getText());
+		return new Proprietario(Integer.valueOf(LabelLabel.getText()), TxtNome.getText(), cpf, TxtRg.getText(), fone,
+				TxtEmail.getText());
 
 	}
 
@@ -241,7 +245,8 @@ public class ControllerPropTable implements Initializable {
 
 	public boolean validaCampos() {
 		if (TxtNome.getText().isEmpty() | TxtRg.getText().isEmpty() | TxtCpf.getText().isEmpty()
-				| TxtFone.getText().isEmpty() | TxtEmail.getText().isEmpty()) {
+				| TxtFone.getText().isEmpty() | TxtEmail.getText().isEmpty() | TxtCpf.getText().length() < 11
+				| TxtFone.getText().length() < 10) {
 			return false;
 		}
 		return true;

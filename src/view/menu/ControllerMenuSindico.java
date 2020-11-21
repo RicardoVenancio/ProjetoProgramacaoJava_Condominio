@@ -8,7 +8,9 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
+import dao.sindicoDao;
 import entity.Mouse;
+import entity.Sindico;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -40,12 +42,15 @@ public class ControllerMenuSindico extends Application implements Initializable 
 
 	@FXML
 	private JFXButton btnNome;
-	
+
 	@FXML
 	private JFXButton btnFuncionario;
 
 	@FXML
 	private JFXButton btnVisitante;
+	
+	@FXML
+	private JFXButton btnApartamentos;
 
 	@FXML
 	private JFXButton btnMorador;
@@ -91,8 +96,8 @@ public class ControllerMenuSindico extends Application implements Initializable 
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
-		btnNome.setText(x.nome);
+		Sindico sindico = new sindicoDao().BuscarCPF(x.cpf);
+		btnNome.setText(sindico.getNome());
 		mapPanels.put(btnVisitante, "/view/visitante/VisitanteTable.fxml");
 		mapPanels.put(btnProprietario, "/view/proprietario/ProprietarioTable.fxml");
 		mapPanels.put(btnSettings, "/view/visitante/VisitTela.fxml");
@@ -100,6 +105,7 @@ public class ControllerMenuSindico extends Application implements Initializable 
 		mapPanels.put(btnRecado, "/view/recado/RecadoTable.fxml");
 		mapPanels.put(btnMorador, "/view/morador/MoradorTable.fxml");
 		mapPanels.put(btnNome, "/view/detalhes/Details.fxml");
+		mapPanels.put(btnApartamentos, "/view/apartamento/ApartamentoTable.fxml");
 
 		// -----Inicio metodo de mover a tela-----
 		Mouse mouse = new Mouse();
@@ -126,7 +132,7 @@ public class ControllerMenuSindico extends Application implements Initializable 
 	ControllerLogin x = new ControllerLogin();
 
 	public void handleClicks(ActionEvent actionEvent) throws IOException, InterruptedException {
-		
+
 		if (actionEvent.getSource() == btnMenus) {
 			borderpane.setCenter(paneMenu);
 		}

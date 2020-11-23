@@ -136,7 +136,22 @@ public class ControllerPropTable implements Initializable {
 	private Button btnSettings;
 
 	@FXML
+	private Label invalidoCPF;
+
+	@FXML
 	private Button btnSignout;
+
+	public boolean validaCPF() {
+		boolean x = ValidaCPF.isCPF(TxtCpf.getText());
+
+		if (x == false) {
+			invalidoCPF.setVisible(true);
+			return false;
+		} else {
+			invalidoCPF.setVisible(false);
+			return true;
+		}
+	}
 
 	@FXML
 	void findByName(ActionEvent event) {
@@ -150,28 +165,33 @@ public class ControllerPropTable implements Initializable {
 
 	@FXML
 	void Salvar(ActionEvent event) {
-		if (validaCampos()) {
-			Proprietario proprietario = obtemDados();
-			limpaCampo();
-			int qtde = new proprietarioDao().inserir(proprietario);
-			StartTable();
-			paneList.toFront();
-			System.out.println(qtde);
-		} else {
-			new ShowAlert().validaAlert();
+		if (validaCPF() == true) {
+			if (validaCampos()) {
+				Proprietario proprietario = obtemDados();
+				limpaCampo();
+				int qtde = new proprietarioDao().inserir(proprietario);
+				StartTable();
+				paneList.toFront();
+				System.out.println(qtde);
+			} else {
+				new ShowAlert().validaAlert();
+			}
 		}
 	}
 
 	@FXML
 	void Editar(ActionEvent event) {
-		if (validaCampos()) {
-			Proprietario proprietario = obtemDadosID();
-			limpaCampo();
-			int qtde = new proprietarioDao().alterar(proprietario);
-			StartTable();
-			paneList.toFront();
-		} else {
-			new ShowAlert().validaAlert();
+		if (validaCPF() == true) {
+
+			if (validaCampos()) {
+				Proprietario proprietario = obtemDadosID();
+				limpaCampo();
+				int qtde = new proprietarioDao().alterar(proprietario);
+				StartTable();
+				paneList.toFront();
+			} else {
+				new ShowAlert().validaAlert();
+			}
 		}
 	}
 
@@ -199,10 +219,11 @@ public class ControllerPropTable implements Initializable {
 
 	void EditarCadastro() {
 		Proprietario v = TableView.getSelectionModel().getSelectedItem();
+		String cpf = v.getCpfProprietario().replace("-", "").replace(".", "");
 		LabelLabel.setText(Integer.toString(v.getIdProprietario()));
 		TxtNome.setText(v.getNome());
 		TxtRg.setText(v.getRgProprietario());
-		TxtCpf.setText(v.getCpfProprietario());
+		TxtCpf.setText(cpf);
 		TxtFone.setText(v.getTelefone());
 		TxtEmail.setText(v.getEmailProprietario());
 	}
@@ -217,14 +238,14 @@ public class ControllerPropTable implements Initializable {
 
 	}
 
-
 	private Proprietario obtemDados() {
-		return new Proprietario(TxtNome.getText(), TxtCpf.getText(), TxtRg.getText(), TxtFone.getText(), TxtEmail.getText());
+		return new Proprietario(TxtNome.getText(), TxtCpf.getText(), TxtRg.getText(), TxtFone.getText(),
+				TxtEmail.getText());
 	}
 
 	private Proprietario obtemDadosID() {
-		 String fone = ValidaCPF.imprimeTelefone(TxtFone.getText());
-		 String cpf = ValidaCPF.imprimeCPF(TxtCpf.getText());
+		String fone = ValidaCPF.imprimeTelefone(TxtFone.getText());
+		String cpf = ValidaCPF.imprimeCPF(TxtCpf.getText());
 		return new Proprietario(Integer.valueOf(LabelLabel.getText()), TxtNome.getText(), cpf, TxtRg.getText(), fone,
 				TxtEmail.getText());
 
@@ -247,6 +268,11 @@ public class ControllerPropTable implements Initializable {
 		if (TxtNome.getText().isEmpty() | TxtRg.getText().isEmpty() | TxtCpf.getText().isEmpty()
 				| TxtFone.getText().isEmpty() | TxtEmail.getText().isEmpty() | TxtCpf.getText().length() < 11
 				| TxtFone.getText().length() < 10) {
+			return false;
+		} else if (!TxtNome.getText().matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$")
+				| TxtRg.getText().matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$")
+				| TxtFone.getText().matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$")
+				| !TxtEmail.getText().matches("^[a-z0-9.|_|-]+@[a-z0-9]+\\.[a-z]+(\\.[a-z]{2})?$")) {
 			return false;
 		}
 		return true;

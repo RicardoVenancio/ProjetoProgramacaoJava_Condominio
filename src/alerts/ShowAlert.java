@@ -9,7 +9,7 @@ public class ShowAlert {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Atenção");
 		alert.setHeaderText(null);
-		alert.setContentText("Preencha todos os campos!");
+		alert.setContentText("Preencha todos os campos corretamente!");
 		alert.showAndWait();
 	}
 	

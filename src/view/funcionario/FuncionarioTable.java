@@ -306,7 +306,14 @@ public class FuncionarioTable implements Initializable {
 				| PrTelefone.getText().isEmpty() | PrSalario.getText().isEmpty() | PrCargo.getText().isEmpty()
 				| PrSexo.getText().isEmpty() | PrCpf.getText().length() < 11 | PrTelefone.getText().length() < 10) {
 			return false;
-		}
+		}else if (!PrNome.getText().matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$")
+                | PrRg.getText().matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$")
+                | PrTelefone.getText().matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$")
+                | !PrSalario.getText().matches("\\d+(?:((?:\\d+\\.)*\\d+,|\\.\\d+|,\\d{2}))+")
+                | !PrCargo.getText().matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$")
+                | PrSexo.getText().matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$")){
+            return false;
+        }
 		return true;
 	}
 

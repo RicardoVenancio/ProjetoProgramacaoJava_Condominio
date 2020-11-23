@@ -10,6 +10,8 @@ import java.util.List;
 import db.ConexaoHSQLDB;
 import entity.Apartamento;
 import entity.Proprietario;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class ApartamentoDAO extends ConexaoHSQLDB {
 	final String SQL_INSERT_APARTAMENTO = "INSERT INTO APARTAMENTO(NUMERO_AP, QTD_MORADOR, ANIMAL_ESTIMACAO, QTD_ANIMAL, ANDAR_AP, BLOCO_AP, DATAENTRADA, STATUS_AP, VAGA_VEICULO, PROPRIETARIOAP) VALUES (?,?,?,?,?,?,?,?,?,?)";
@@ -18,6 +20,21 @@ public class ApartamentoDAO extends ConexaoHSQLDB {
 	final String SQL_UPDATE_APARTAMENTO = "UPDATE APARTAMENTO SET NUMERO_AP=?, QTD_MORADOR=? , ANIMAL_ESTIMACAO=?, QTD_ANIMAL=?, ANDAR_AP =?, BLOCO_AP=?, DATAENTRADA=?, STATUS_AP =?, VAGA_VEICULO=?, PROPRIETARIOAP=? WHERE ID_AP = ?";
 	final String SQL_DELETE_APARTAMENTO = "DELETE FROM APARTAMENTO WHERE ID_AP =?";
 	final String SQL_SELECT_APARTAMENTO_LAST_INSERT = "SELECT * FROM APARTAMENTO WHERE ID_AP = (SELECT MAX(ID_AP) FROM APARTAMENTO)";
+	final String SQL_SELECT_APARTAMENTOS = "SELECT NUMERO_AP FROM APARTAMENTO";
+
+	public ObservableList<String> listaApartamentos() throws SQLException{
+		ObservableList options = FXCollections.observableArrayList();
+		
+		try (Connection connection = this.conectar();
+				PreparedStatement pst = connection.prepareStatement(SQL_SELECT_APARTAMENTOS);) {
+			ResultSet rs = pst.executeQuery();
+			
+			while(rs.next()) {
+				options.add(rs.getString("NUMERO_AP"));
+			}
+		}
+		return options;
+	}
 
 	public int createAp(Apartamento apartamento) {
 

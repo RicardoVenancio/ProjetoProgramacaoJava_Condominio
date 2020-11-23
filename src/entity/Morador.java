@@ -8,19 +8,28 @@ public class Morador {
 	private String nomeMorador;
 	private String telefoneMorador;
 	private String emailMorador;
+	private String apartamento;
 	
-	public Morador(int idMorador, String nomeMorador, String telefoneMorador, String emailMorador) {
+	public Morador(int idMorador, String nomeMorador, String telefoneMorador, String emailMorador, String apartamento) {
 		super();
 		this.idMorador = idMorador;
 		this.nomeMorador = nomeMorador;
 		this.telefoneMorador = telefoneMorador;
 		this.emailMorador = emailMorador;
+		this.apartamento = apartamento;
 	}
-	public Morador(String nomeMorador, String telefoneMorador, String emailMorador) {
+	public Morador(String nomeMorador, String telefoneMorador, String emailMorador, String apartamento) {
 		super();
 		this.nomeMorador = nomeMorador;
 		this.telefoneMorador = telefoneMorador;
 		this.emailMorador = emailMorador;
+		this.apartamento = apartamento;
+	}
+	public String getApartamento() {
+		return apartamento;
+	}
+	public void setApartamento(String apartamento) {
+		this.apartamento = apartamento;
 	}
 	public Morador() {
 		super();
@@ -53,6 +62,7 @@ public class Morador {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((apartamento == null) ? 0 : apartamento.hashCode());
 		result = prime * result + ((emailMorador == null) ? 0 : emailMorador.hashCode());
 		result = prime * result + idMorador;
 		result = prime * result + ((nomeMorador == null) ? 0 : nomeMorador.hashCode());
@@ -68,6 +78,11 @@ public class Morador {
 		if (getClass() != obj.getClass())
 			return false;
 		Morador other = (Morador) obj;
+		if (apartamento == null) {
+			if (other.apartamento != null)
+				return false;
+		} else if (!apartamento.equals(other.apartamento))
+			return false;
 		if (emailMorador == null) {
 			if (other.emailMorador != null)
 				return false;
@@ -90,7 +105,7 @@ public class Morador {
 	@Override
 	public String toString() {
 		return "Morador [idMorador=" + idMorador + ", nomeMorador=" + nomeMorador + ", telefoneMorador="
-				+ telefoneMorador + ", emailMorador=" + emailMorador + "]";
+				+ telefoneMorador + ", emailMorador=" + emailMorador + ", apartamento=" + apartamento + "]";
 	}	
 	
 }

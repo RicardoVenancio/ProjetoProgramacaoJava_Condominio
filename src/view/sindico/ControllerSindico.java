@@ -208,7 +208,12 @@ public class ControllerSindico implements Initializable {
 		if (TXNome.getText().isEmpty() | TXSexo.getText().isEmpty() | TXEmail.getText().isEmpty()
 				| TXTelefone.getText().isEmpty() | TXEmail.getText().isEmpty()) {
 			return false;
-		}
+		}else if(!TXNome.getText().matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$") 
+                | !TXSexo.getText(). matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$")
+                | TXTelefone.getText().matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$") 
+                | !TXEmail.getText().matches("^[a-z0-9.|_|-]+@[a-z0-9]+\\.[a-z]+(\\.[a-z]{2})?$")) {
+            return false;
+        }
 		return true;
 	}
 

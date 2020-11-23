@@ -236,6 +236,7 @@ public class ControllerTable implements Initializable {
 
 	void EditarCadastro() {
 		Visitante v = TableView.getSelectionModel().getSelectedItem();
+		String cpf = v.getCPF().replace("-", "").replace(".", "");
 		LabelLabel.setText(Integer.toString(v.getId()));
 		TxtNome.setText(v.getNome());
 		TxtRG.setText(v.getRG());

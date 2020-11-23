@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -22,19 +23,21 @@
          <children>
             <Pane fx:id="paneCadastro" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="793.0" style="-fx-background-color: #fff; -fx-border-color: black; -fx-border-width: 40;">
                <children>
-                  <HBox layoutX="135.0" layoutY="179.0" prefHeight="168.0" prefWidth="543.0" spacing="30.0">
+                  <HBox layoutX="136.0" layoutY="184.0" prefHeight="80.0" prefWidth="543.0" spacing="30.0">
                      <children>
-                        <VBox alignment="CENTER_LEFT" prefHeight="270.0" prefWidth="254.0">
+                        <VBox alignment="CENTER" prefHeight="167.0" prefWidth="254.0" spacing="30.0">
                            <children>
                               <JFXTextField fx:id="txtTelefone" focusColor="#2fb4ad" promptText="Telefone" />
+                              <ComboBox fx:id="apartamento" prefWidth="150.0" />
                            </children>
                            <HBox.margin>
                               <Insets bottom="50.0" />
                            </HBox.margin>
                         </VBox>
-                        <VBox alignment="CENTER_LEFT" prefHeight="270.0" prefWidth="254.0">
+                        <VBox alignment="CENTER_LEFT" prefHeight="270.0" prefWidth="254.0" spacing="30.0">
                            <children>
                               <JFXTextField fx:id="txtEmail" focusColor="#2fb4ad" promptText="Email" />
+                              <JFXTextField fx:id="txtEmail1" focusColor="#2fb4ad" promptText="Email" visible="false" />
                            </children>
                            <HBox.margin>
                               <Insets bottom="50.0" />
@@ -53,7 +56,7 @@
                      </font>
                   </Label>
                   <Label fx:id="lblNumId" layoutX="43.0" layoutY="14.0" prefHeight="17.0" prefWidth="14.0" />
-                  <JFXTextField fx:id="txtNome" focusColor="#2fb4ad" layoutX="136.0" layoutY="179.0" prefHeight="25.0" prefWidth="537.0" promptText="Nome" />
+                  <JFXTextField fx:id="txtNome" focusColor="#2fb4ad" layoutX="136.0" layoutY="135.0" prefHeight="25.0" prefWidth="537.0" promptText="Nome" />
                   <JFXButton fx:id="btnUpdate" layoutX="301.0" layoutY="359.0" onAction="#Editar" prefHeight="42.0" prefWidth="192.0" ripplerFill="WHITE" style="-fx-background-color: #5e5a5a;" text="Editar" textFill="WHITE" visible="false">
                      <font>
                         <Font name="System Bold" size="18.0" />
@@ -138,8 +141,9 @@
                   <TableView fx:id="TableView" layoutY="208.0" prefHeight="368.0" prefWidth="793.0" style="-fx-background-color: black;">
                      <columns>
                         <TableColumn fx:id="tcNome" prefWidth="247.20001828670502" styleClass="-fx-text-alignment: right" text="Nome" />
-                        <TableColumn fx:id="tcTelefone" prefWidth="313.5999450683594" text="Telefone" />
-                        <TableColumn fx:id="tcEmail" prefWidth="232.0" text="E-mail" />
+                        <TableColumn fx:id="tcTelefone" prefWidth="216.7999267578125" text="Telefone" />
+                        <TableColumn fx:id="tcEmail" prefWidth="173.59988403320312" text="E-mail" />
+                        <TableColumn fx:id="tcAp" prefWidth="153.800048828125" text="Apartamento" />
                      </columns>
                   </TableView>
                   <ImageView fitHeight="20.0" fitWidth="18.0" layoutX="746.0" layoutY="49.0" onMouseClicked="#findByName" pickOnBounds="true" preserveRatio="true">

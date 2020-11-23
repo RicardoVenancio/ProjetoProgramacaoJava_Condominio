@@ -2,6 +2,7 @@ package view.morador;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -10,9 +11,12 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 
 import alerts.ShowAlert;
+import dao.ApartamentoDAO;
 import dao.moradorDao;
 import dao.visitanteDao;
+import entity.Apartamento;
 import entity.Morador;
+import entity.Proprietario;
 import entity.Visitante;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -26,6 +30,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
@@ -42,72 +47,77 @@ import view.morador.MoradorController;
 
 public class MoradorController implements Initializable {
 
+	@FXML
+	private Pane paneCadastro;
 
-    @FXML
-    private Pane paneCadastro;
+	@FXML
+	private JFXTextField txtTelefone;
 
-    @FXML
-    private JFXTextField txtTelefone;
+	@FXML
+	private JFXTextField txtEmail;
 
-    @FXML
-    private JFXTextField txtEmail;
+	@FXML
+	private Label lblNumId;
 
-    @FXML
-    private Label lblNumId;
+	@FXML
+	private JFXTextField txtNome;
 
-    @FXML
-    private JFXTextField txtNome;
+	@FXML
+	private JFXButton btnUpdate;
 
-    @FXML
-    private JFXButton btnUpdate;
+	@FXML
+	private JFXButton btnCreate;
 
-    @FXML
-    private JFXButton btnCreate;
+	@FXML
+	private JFXButton btnVoltar;
 
-    @FXML
-    private JFXButton btnVoltar;
+	@FXML
+	private Pane paneList;
 
-    @FXML
-    private Pane paneList;
+	@FXML
+	private Label numVisitantes;
 
-    @FXML
-    private Label numVisitantes;
+	@FXML
+	private Label lastVisit;
 
-    @FXML
-    private Label lastVisit;
+	@FXML
+	private JFXButton btnCadastrar;
 
-    @FXML
-    private JFXButton btnCadastrar;
+	@FXML
+	private JFXButton btnEditar;
 
-    @FXML
-    private JFXButton btnEditar;
+	@FXML
+	private JFXButton btnApagar;
 
-    @FXML
-    private JFXButton btnApagar;
+	@FXML
+	private TableView<Morador> TableView;
 
-    @FXML
-    private TableView<Morador> TableView;
+	@FXML
+	private TableColumn<Morador, String> tcNome;
 
-    @FXML
-    private TableColumn<Morador, String> tcNome;
+	@FXML
+	private TableColumn<Morador, String> tcTelefone;
 
-    @FXML
-    private TableColumn<Morador, String> tcTelefone;
+	@FXML
+	private TableColumn<Morador, String> tcEmail;
 
-    @FXML
-    private TableColumn<Morador, String> tcEmail;
+	@FXML
+	private TableColumn<Morador, String> tcAp;
 
-    @FXML
-    private TextField txtBuscar;
+	@FXML
+	private TextField txtBuscar;
 
-    @FXML
-    private Label Fechar;
+	@FXML
+	private Label Fechar;
 
-    @FXML
+	@FXML
+	private ComboBox<Apartamento> apartamento;
+
+	@FXML
 	void findByName(ActionEvent event) {
-    	if(txtBuscar.getText().equals("")) {
+		if (txtBuscar.getText().equals("")) {
 			StartTable();
-		}else {
+		} else {
 			StartTable2();
 			txtBuscar.setText("");
 		}
@@ -118,7 +128,7 @@ public class MoradorController implements Initializable {
 		if (validaCampos()) {
 			Morador morador = obtemDados();
 			limpaCampo();
-			int qtde = new  moradorDao().create(morador);
+			int qtde = new moradorDao().create(morador);
 			StartTable();
 			paneList.toFront();
 		} else {
@@ -173,14 +183,19 @@ public class MoradorController implements Initializable {
 		txtNome.clear();
 		txtTelefone.clear();
 		txtEmail.clear();
+		apartamento.setValue(null);
 	}
 
 	private Morador obtemDados() {
-		return new Morador(txtNome.getText(), txtTelefone.getText(),	txtEmail.getText());
+		String ap = String.valueOf(apartamento.getSelectionModel().getSelectedItem());
+		return new Morador(txtNome.getText(), txtTelefone.getText(), txtEmail.getText(), ap);
 	}
 
 	private Morador obtemDadosID() {
-		return new Morador(Integer.valueOf(lblNumId.getText()), txtNome.getText(), txtTelefone.getText(), txtEmail.getText());
+		String ap = String.valueOf(apartamento.getSelectionModel().getSelectedItem());
+
+		return new Morador(Integer.valueOf(lblNumId.getText()), txtNome.getText(), txtTelefone.getText(),
+				txtEmail.getText(), ap);
 	}
 
 	private Morador obtemDadosIDDeletar() {
@@ -189,15 +204,25 @@ public class MoradorController implements Initializable {
 		txtNome.setText(v.getNomeMorador());
 		txtTelefone.setText(v.getTelefoneMorador());
 		txtEmail.setText(v.getEmailMorador());
-		return new Morador(Integer.valueOf(lblNumId.getText()), txtNome.getText(), txtTelefone.getText(), txtEmail.getText());
+		apartamento.setValue(null);
+		String ap = v.getApartamento();
+
+		return new Morador(Integer.valueOf(lblNumId.getText()), txtNome.getText(), txtTelefone.getText(),
+				txtEmail.getText(), ap);
 	}
 
 	public boolean validaCampos() {
 		if (txtNome.getText().isEmpty() | txtTelefone.getText().isEmpty() | txtEmail.getText().isEmpty()) {
 			return false;
 		}
+		else if (!txtNome.getText().matches("^[A-Za-z·‡‚„ÈËÍÌÔÛÙıˆ˙ÁÒ¡¿¬√…»Õœ”‘’÷⁄«— ]+$") 
+				| txtTelefone.getText().matches("^[A-Za-z·‡‚„ÈËÍÌÔÛÙıˆ˙ÁÒ¡¿¬√…»Õœ”‘’÷⁄«— ]+$") 
+				| !txtEmail.getText().matches("^[a-z0-9.|_|-]+@[a-z0-9]+\\.[a-z]+(\\.[a-z]{2})?$")) {
+			return false;
+		}
 		return true;
 	}
+	
 
 	// Sair ou fechar o programa
 	public void Exit() {
@@ -219,6 +244,7 @@ public class MoradorController implements Initializable {
 		tcNome.setCellValueFactory(new PropertyValueFactory<>("nomeMorador"));
 		tcTelefone.setCellValueFactory(new PropertyValueFactory<>("telefoneMorador"));
 		tcEmail.setCellValueFactory(new PropertyValueFactory<>("emailMorador"));
+		tcAp.setCellValueFactory(new PropertyValueFactory<>("apartamento"));
 		TableView.setItems(atualizaTabela());
 		numVisitantes.setText(Integer.toString(list.size()));
 		lastVisit.setText(x.getNomeMorador());
@@ -230,16 +256,18 @@ public class MoradorController implements Initializable {
 		moradorDao dao = new moradorDao();
 		return FXCollections.observableArrayList(dao.listAllName(txtBuscar.getText()));
 	}
+
 	public void StartTable2() {
 		List<Morador> list = new moradorDao().listAllName(txtBuscar.getText());
 		tcNome.setCellValueFactory(new PropertyValueFactory<>("nomeMorador"));
 		tcTelefone.setCellValueFactory(new PropertyValueFactory<>("telefoneMorador"));
 		tcEmail.setCellValueFactory(new PropertyValueFactory<>("emailMorador"));
+		tcAp.setCellValueFactory(new PropertyValueFactory<>("apartamento"));
 		TableView.setItems(atualizaTabela2());
 		numVisitantes.setText(Integer.toString(list.size()));
-		
+
 	}
-	
+
 	// Converter para Collections
 	public ObservableList<Morador> atualizaTabela2() {
 		moradorDao dao = new moradorDao();
@@ -250,13 +278,21 @@ public class MoradorController implements Initializable {
 	// Executar Tela
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+
+		try {
+			ObservableList y = new ApartamentoDAO().listaApartamentos();
+			apartamento.setItems(y);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		ControllerLogin x = new ControllerLogin();
-		if(x.usuario == "funcionario") {
+		if (x.usuario == "funcionario") {
 			btnApagar.setVisible(false);
 			btnCadastrar.setVisible(false);
 			btnEditar.setVisible(false);
-		}else {
+		} else {
 			btnApagar.setVisible(true);
 			btnCadastrar.setVisible(true);
 			btnEditar.setVisible(true);
@@ -267,7 +303,7 @@ public class MoradorController implements Initializable {
 
 //-------------------------------------------------------------------------------------------------
 	public void handleClicks(ActionEvent actionEvent) throws IOException {
-		
+
 		if (actionEvent.getSource() == btnCadastrar) {
 			btnCreate.toFront();
 			btnCreate.setVisible(true);

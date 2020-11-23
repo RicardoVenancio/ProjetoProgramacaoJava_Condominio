@@ -12,11 +12,11 @@ import entity.Morador;
 import entity.Proprietario;
 
 public class moradorDao extends ConexaoHSQLDB {
-	final String SQL_INSERT_MORADOR = "INSERT INTO MORADOR(NOME_MORADOR, TELEFONE_MORADOR, EMAIL_MORADOR) VALUES (?,?,?)";
+	final String SQL_INSERT_MORADOR = "INSERT INTO MORADOR(NOME_MORADOR, TELEFONE_MORADOR, EMAIL_MORADOR, APARTAMENTO) VALUES (?,?,?,?)";
 	final String SQL_SELECT_MORADOR = "SELECT * FROM MORADOR";
 	final String SQL_SELECT_MORADOR_ID = "SELECT * FROM MORADOR WHERE ID_MORADOR = ?";
 	final String SQL_SELECT_MORADOR_NOME = "SELECT * FROM MORADOR WHERE NOME_MORADOR LIKE ?";
-	final String SQL_UPDATE_MORADOR = "UPDATE MORADOR SET NOME_MORADOR=?, TELEFONE_MORADOR=?, EMAIL_MORADOR=? WHERE ID_MORADOR = ?";
+	final String SQL_UPDATE_MORADOR = "UPDATE MORADOR SET NOME_MORADOR=?, TELEFONE_MORADOR=?, EMAIL_MORADOR=?, APARTAMENTO=? WHERE ID_MORADOR = ?";
 	final String SQL_DELETE_MORADOR = "DELETE FROM MORADOR WHERE ID_MORADOR =?";
 	final String SQL_SELECT_MORADOR_LAST_INSERT = "SELECT * FROM MORADOR WHERE ID_MORADOR = (SELECT MAX(ID_MORADOR) FROM MORADOR)";
 
@@ -47,6 +47,7 @@ public class moradorDao extends ConexaoHSQLDB {
 			pst.setString(1, morador.getNomeMorador());
 			pst.setString(2, morador.getTelefoneMorador());
 			pst.setString(3, morador.getEmailMorador());
+			pst.setString(4, morador.getApartamento());
 			quantidade = pst.executeUpdate();
 
 		} catch (SQLException e) {
@@ -71,6 +72,7 @@ public class moradorDao extends ConexaoHSQLDB {
 				morador.setNomeMorador(rs.getString("NOME_MORADOR"));
 				morador.setTelefoneMorador(rs.getString("TELEFONE_MORADOR"));
 				morador.setEmailMorador(rs.getString("EMAIL_MORADOR"));
+				morador.setApartamento(rs.getString("APARTAMENTO"));
 				listaMorador.add(morador);
 			}
 		} catch (SQLException e) {
@@ -94,6 +96,7 @@ public class moradorDao extends ConexaoHSQLDB {
 				morador.setNomeMorador(rs.getString("NOME_MORADOR"));
 				morador.setTelefoneMorador(rs.getString("TELEFONE_MORADOR"));
 				morador.setEmailMorador(rs.getString("EMAIL_MORADOR"));
+				morador.setApartamento(rs.getString("APARTAMENTO"));
 				listaMorador.add(morador);
 			}
 		} catch (SQLException e) {
@@ -116,6 +119,7 @@ public class moradorDao extends ConexaoHSQLDB {
 				morador.setNomeMorador(rs.getString("NOME_MORADOR"));
 				morador.setTelefoneMorador(rs.getString("TELEFONE_MORADOR"));
 				morador.setEmailMorador(rs.getString("EMAIL_MORADOR"));
+				morador.setApartamento(rs.getString("APARTAMENTO"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -132,7 +136,8 @@ public class moradorDao extends ConexaoHSQLDB {
 			pst.setString(1, morador.getNomeMorador());
 			pst.setString(2, morador.getTelefoneMorador());
 			pst.setString(3, morador.getEmailMorador());
-			pst.setInt(4, morador.getIdMorador());
+			pst.setString(4, morador.getApartamento());
+			pst.setInt(5, morador.getIdMorador());
 
 			quantidade = pst.executeUpdate();
 
